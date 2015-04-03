@@ -60,7 +60,7 @@ abstract class Source {
      * throws BadTypeException, StringAttributeTooLong
      */
     public function setlibelle($libelle) {
-        $_libelle = CheckTyper::isString($_libelle, 'libelle', __CLASS__);
+        $_libelle = CheckTyper::isString($libelle, 'libelle', __CLASS__);
         
         if(strlen($_libelle) > self::MAX_SIZE_LIBELLE) {
             throw new StringAttributeTooLong('libelle', __CLASS__);
