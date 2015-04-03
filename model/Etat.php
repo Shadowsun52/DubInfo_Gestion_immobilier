@@ -2,11 +2,12 @@
 namespace DubInfo_gestion_immobilier\model;
 
 /**
- * Description of Source
+ * Description of Etat
  *
  * @author Jenicot Alexandre
  */
-abstract class Source {
+class Etat {
+    
     /**
      * @var int 
      */
@@ -18,8 +19,9 @@ abstract class Source {
     private $_libelle;
     
     /**
-     * @param int $id identifiant dans la base de données de la source
-     * @param string $libelle
+     * 
+     * @param int $id
+     * @param libelle $libelle
      */
     public function __construct($id, $libelle) {
         $this->setId($id);
