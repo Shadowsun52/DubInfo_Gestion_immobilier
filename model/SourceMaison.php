@@ -1,13 +1,14 @@
 <?php
 namespace DubInfo_gestion_immobilier\model;
 
+use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
 /**
  * Description of SourceMaison
  *
  * @author Jenicot Alexandre
  */
 class SourceMaison extends Source{
-    
+    const MAX_SIZE_REFERENCE = 70;
     /**
      * @var string référence de la maison chez la source 
      */
@@ -18,8 +19,9 @@ class SourceMaison extends Source{
      * @param int $id
      * @param string $libelle
      * @param string $reference référence de la maison chez la source
+     * throws BadTypeException, StringAttributeTooLong
      */
-    public function __construct($id, $libelle, $reference = NULL) {
+    public function __construct($id = NULL, $libelle = NULL, $reference = NULL) {
         parent::__construct($id, $libelle);
         $this->setReference($reference);
     }
@@ -35,8 +37,15 @@ class SourceMaison extends Source{
     /**
      * 
      * @param string $reference
+     * throws BadTypeException, StringAttributeTooLong
      */
     public function setReference($reference) {
+        $_reference = CheckTyper::isString($reference, 'reference', __CLASS__);
+        
+        if(strlen($_reference) > self::MAX_SIZE_REFERENCE) {
+            throw new StringAttributeTooLong('reference', __CLASS__);
+        }
+        
         $this->_reference = $reference;
     }
 }

@@ -28,8 +28,9 @@ class Paiement {
      * @param int $id
      * @param int $mois
      * @param int $annee
+     * throws BadTypeException
      */
-    public function __construct($id, $mois, $annee) {
+    public function __construct($id = NULL, $mois = NULL, $annee = NULL) {
         $this->setId($id);
         $this->setMois($mois);
         $this->setAnnee($annee);
@@ -46,9 +47,10 @@ class Paiement {
     /**
      * 
      * @param int $id
+     * throws BadTypeException
      */
     public function setId($id) {
-        $this->_id = $id;
+        $this->_id = CheckTyper::isInteger($id, 'id', __CLASS__);
     }
     
     /**
@@ -62,9 +64,10 @@ class Paiement {
     /**
      * 
      * @param int $mois
+     * throws BadTypeException
      */
     public function setMois($mois) {
-        $this->_mois = $mois;
+        $this->_mois = CheckTyper::isInteger($mois, 'mois', __CLASS__);
     }
     
     /**
@@ -78,8 +81,9 @@ class Paiement {
     /**
      * 
      * @param int $annee
+     * throws BadTypeException
      */
     public function setAnnee($annee) {
-        $this->_annee = $annee;
+        $this->_annee = CheckTyper::isInteger($annee, 'annee', __CLASS__);
     }
 }

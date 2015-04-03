@@ -11,8 +11,9 @@ class SourceLocataire extends Source{
     /**
      * @param int $id
      * @param string $libelle
+     * throws BadTypeException, StringAttributeTooLong
      */
-    public function __construct($id, $libelle) {
+    public function __construct($id = NULL, $libelle = NULL) {
         parent::__construct($id, $libelle);
     }
 }

@@ -1,12 +1,14 @@
 <?php
 namespace DubInfo_gestion_immobilier\model;
 
+use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
 /**
  * Description of Etat
  *
  * @author Jenicot Alexandre
  */
 class Etat {
+    const MAX_SIZE_LIBELLE = 15;
     
     /**
      * @var int 
@@ -22,8 +24,9 @@ class Etat {
      * 
      * @param int $id
      * @param libelle $libelle
+     * @throws BadTypeException, StringAttributeTooLong
      */
-    public function __construct($id, $libelle) {
+    public function __construct($id = NULL, $libelle = NULL) {
         $this->setId($id);
         $this->setlibelle($libelle);
     }
@@ -39,9 +42,10 @@ class Etat {
     /**
      * 
      * @param int $id
+     * @throws BadTypeException
      */
     public function setId($id) {
-        $this->_id = $id;
+        $this->_id = CheckTyper::isInteger($id, 'id', __CLASS__);
     }
     
     /**
@@ -54,8 +58,15 @@ class Etat {
     /**
      * 
      * @param string $libelle
+     * @throws BadTypeException, StringAttributeTooLong
      */
     public function setlibelle($libelle) {
-        $this->_libelle = $libelle;
+        $_libelle = CheckTyper::isString($libelle, 'libelle', __CLASS__);
+        
+        if(strlen($_libelle) > self::MAX_SIZE_LIBELLE)
+        {
+            throw new StringAttributeTooLong('libelle', __CLASS__);
+        }
+        $this->_libelle = CheckTyper::isString($libelle, 'libelle', __CLASS__);
     }
 }

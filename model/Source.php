@@ -1,12 +1,15 @@
 <?php
 namespace DubInfo_gestion_immobilier\model;
 
+use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
 /**
  * Description of Source
  *
  * @author Jenicot Alexandre
  */
 abstract class Source {
+    const MAX_SIZE_LIBELLE = 45;
+    
     /**
      * @var int 
      */
@@ -20,8 +23,9 @@ abstract class Source {
     /**
      * @param int $id identifiant dans la base de données de la source
      * @param string $libelle
+     * throws BadTypeException, StringAttributeTooLong
      */
-    public function __construct($id, $libelle) {
+    public function __construct($id = NULL, $libelle = NULL) {
         $this->setId($id);
         $this->setlibelle($libelle);
     }
@@ -37,9 +41,10 @@ abstract class Source {
     /**
      * 
      * @param int $id
+     * throws BadTypeException
      */
     public function setId($id) {
-        $this->_id = $id;
+        $this->_id = CheckTyper::isInteger($id, 'id', __CLASS__);
     }
     
     /**
@@ -52,8 +57,15 @@ abstract class Source {
     /**
      * 
      * @param string $libelle
+     * throws BadTypeException, StringAttributeTooLong
      */
     public function setlibelle($libelle) {
+        $_libelle = CheckTyper::isString($_libelle, 'libelle', __CLASS__);
+        
+        if(strlen($_libelle) > self::MAX_SIZE_LIBELLE) {
+            throw new StringAttributeTooLong('libelle', __CLASS__);
+        }
+        
         $this->_libelle = $libelle;
     }
 }
