@@ -32,6 +32,11 @@ class Contact extends Person{
     private $_mail;
     
     /**
+     * @var Etat 
+     */
+    private $_etat;
+    
+    /**
      * 
      * @param type $id
      * @param type $nom
@@ -43,12 +48,14 @@ class Contact extends Person{
      * throws BadTypeException, StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
-            $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL) {
+            $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, 
+            $mail = NULL, $etat = NULL) {
         parent::__construct($id, $nom, $prenom);
         $this->setNumTelephone($num_telephone);
         $this->setNumGsm($num_gsm);
         $this->setNumFax($num_fax);
         $this->setMail($mail);
+        $this->setEtat($etat);
     }
     
     /**
@@ -141,5 +148,21 @@ class Contact extends Person{
         }
         
         $this->_mail = $mail;
+    }
+    
+    /**
+     * 
+     * @return Etat
+     */
+    public function getEtat() {
+        return $this->_etat;
+    }
+    
+    /**
+     * 
+     * @param Etat $etat
+     */
+    public function setEtat($etat) {
+        $this->_etat = CheckTyper::isModel($etat, 'Etat', 'etat', __CLASS__);
     }
 }

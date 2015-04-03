@@ -9,7 +9,8 @@ use DateTime;
  * @author Jenicot Alexandre
  */
 final class CheckTyper {
-    
+    const NAMESPACE_MODEL = "DubInfo_gestion_immobilier\model\\";
+        
     /**
      * Verifie que le valeur d'un attribut d'une classe est bien du type integer
      * si $value vaut null la fonction retourne null
@@ -138,6 +139,9 @@ final class CheckTyper {
      * @throws BadTypeException
      */
     public static function isModel($value, $model_name, $attribute_name, $class_name) {
+        if(strpos($model_name, self::NAMESPACE_MODEL) === FALSE) {
+            $model_name = self::NAMESPACE_MODEL . $model_name;
+        }
         
         if($value === NULL) {
             return new $model_name();
