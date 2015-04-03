@@ -5,7 +5,7 @@ use \Exception;
 /**
  * Description of ClassNotFoundException
  *
- * @author Alexandre
+ * @author Jenicot Alexandre
  */
 class ClassNotFoundException extends Exception{
     public function __construct($class, $code = 0) {

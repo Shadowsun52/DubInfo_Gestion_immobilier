@@ -4,7 +4,7 @@ namespace DubInfo_gestion_immobilier\model;
 /**
  * Description of Source
  *
- * @author Alexandre
+ * @author Jenicot Alexandre
  */
 abstract class Source {
     /**

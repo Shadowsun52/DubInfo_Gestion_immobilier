@@ -5,7 +5,7 @@ use DubInfo_gestion_immobilier\Exception\ClassNotFoundException;
 /**
  * Classe static pour charger les classes utilisées dans l'app
  * 
- * @author Alexandre
+ * @author Jenicot Alexandre
  */
 class Autoloader {
     

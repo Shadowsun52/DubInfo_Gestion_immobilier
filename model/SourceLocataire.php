@@ -4,7 +4,7 @@ namespace DubInfo_gestion_immobilier\model;
 /**
  * Description of SourceLocataire
  *
- * @author Alexandre
+ * @author Jenicot Alexandre
  */
 class SourceLocataire extends Source{
     
