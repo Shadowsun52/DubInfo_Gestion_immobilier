@@ -2,6 +2,8 @@
 namespace DubInfo_gestion_immobilier\model;
 
 use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
+use DubInfo_gestion_immobilier\Exception\BadTypeException;
+
 /**
  * Description of Contact
  *
@@ -38,14 +40,15 @@ class Contact extends Person{
     
     /**
      * 
-     * @param type $id
-     * @param type $nom
-     * @param type $prenom
-     * @param type $num_telephone
-     * @param type $num_gsm
-     * @param type $num_fax
-     * @param type $mail
-     * throws BadTypeException, StringAttributeTooLong
+     * @param int $id
+     * @param string $nom
+     * @param string $prenom
+     * @param string $num_telephone
+     * @param string $num_gsm
+     * @param string $num_fax
+     * @param string $mail
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
             $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, 
@@ -69,7 +72,8 @@ class Contact extends Person{
     /**
      * 
      * @param string $num_telephone
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setNumTelephone($num_telephone) {
         $_num_telephone = CheckTyper::isString($num_telephone, 'num_telephone', __CLASS__);
@@ -92,7 +96,8 @@ class Contact extends Person{
     /**
      * 
      * @param string $num_gsm
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setNumGsm($num_gsm) {
         $_num_gsm = CheckTyper::isString($num_gsm, 'num_gsm', __CLASS__);
@@ -115,7 +120,8 @@ class Contact extends Person{
     /**
      * 
      * @param string $num_fax
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setNumFax($num_fax) {
         $_num_fax = CheckTyper::isString($num_fax, 'num_fax', __CLASS__);
@@ -138,7 +144,8 @@ class Contact extends Person{
     /**
      * 
      * @param string $mail
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setMail($mail) {
         $_mail = CheckTyper::isString($mail, 'mail', __CLASS__);
@@ -161,6 +168,7 @@ class Contact extends Person{
     /**
      * 
      * @param Etat $etat
+     * @throws BadTypeException
      */
     public function setEtat($etat) {
         $this->_etat = CheckTyper::isModel($etat, 'Etat', 'etat', __CLASS__);

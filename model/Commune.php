@@ -1,6 +1,8 @@
 <?php
 namespace DubInfo_gestion_immobilier\model;
 
+use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
+use DubInfo_gestion_immobilier\Exception\BadTypeException;
 /**
  * Description of Commune
  *
@@ -19,8 +21,16 @@ class Commune {
      */
     private $_libelle;
     
-    public function __construct() {
-        ;
+    /**
+     * 
+     * @param int $id
+     * @param string $libelle
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
+    public function __construct($id = NULL, $libelle = NULL) {
+        $this->setId($id);
+        $this->setLibelle($libelle);
     }
     
     /**
@@ -34,7 +44,7 @@ class Commune {
     /**
      * 
      * @param int $id
-     * throws BadTypeException
+     * @throws BadTypeException
      */
     public function setId($id) {
         $this->_id = CheckTyper::isInteger($id, 'id', __CLASS__);
@@ -51,7 +61,8 @@ class Commune {
     /**
      * 
      * @param string $libelle
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setLibelle($libelle) {
         $_libelle = CheckTyper::isString($libelle, 'libelle', __CLASS__);

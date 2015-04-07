@@ -2,6 +2,8 @@
 namespace DubInfo_gestion_immobilier\model;
 
 use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
+use DubInfo_gestion_immobilier\Exception\BadTypeException;
+
 /**
  * Description of Etat
  *
@@ -24,7 +26,8 @@ class Etat {
      * 
      * @param int $id
      * @param libelle $libelle
-     * @throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $libelle = NULL) {
         $this->setId($id);
@@ -58,7 +61,8 @@ class Etat {
     /**
      * 
      * @param string $libelle
-     * @throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setlibelle($libelle) {
         $_libelle = CheckTyper::isString($libelle, 'libelle', __CLASS__);

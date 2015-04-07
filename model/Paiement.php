@@ -1,6 +1,8 @@
 <?php
 namespace DubInfo_gestion_immobilier\model;
 
+use DubInfo_gestion_immobilier\Exception\BadTypeException;
+
 /**
  * Description of Paiement
  *
@@ -28,7 +30,7 @@ class Paiement {
      * @param int $id
      * @param int $mois
      * @param int $annee
-     * throws BadTypeException
+     * @throws BadTypeException
      */
     public function __construct($id = NULL, $mois = NULL, $annee = NULL) {
         $this->setId($id);
@@ -47,7 +49,7 @@ class Paiement {
     /**
      * 
      * @param int $id
-     * throws BadTypeException
+     * @throws BadTypeException
      */
     public function setId($id) {
         $this->_id = CheckTyper::isInteger($id, 'id', __CLASS__);
@@ -64,7 +66,7 @@ class Paiement {
     /**
      * 
      * @param int $mois
-     * throws BadTypeException
+     * @throws BadTypeException
      */
     public function setMois($mois) {
         $this->_mois = CheckTyper::isInteger($mois, 'mois', __CLASS__);
@@ -81,7 +83,7 @@ class Paiement {
     /**
      * 
      * @param int $annee
-     * throws BadTypeException
+     * @throws BadTypeException
      */
     public function setAnnee($annee) {
         $this->_annee = CheckTyper::isInteger($annee, 'annee', __CLASS__);

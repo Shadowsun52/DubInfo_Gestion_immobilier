@@ -2,6 +2,8 @@
 namespace DubInfo_gestion_immobilier\model;
 
 use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
+use DubInfo_gestion_immobilier\Exception\BadTypeException;
+
 /**
  * Description of Source
  *
@@ -23,7 +25,8 @@ abstract class Source {
     /**
      * @param int $id identifiant dans la base de données de la source
      * @param string $libelle
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $libelle = NULL) {
         $this->setId($id);
@@ -41,7 +44,7 @@ abstract class Source {
     /**
      * 
      * @param int $id
-     * throws BadTypeException
+     * @throws BadTypeException
      */
     public function setId($id) {
         $this->_id = CheckTyper::isInteger($id, 'id', __CLASS__);
@@ -57,7 +60,8 @@ abstract class Source {
     /**
      * 
      * @param string $libelle
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setlibelle($libelle) {
         $_libelle = CheckTyper::isString($libelle, 'libelle', __CLASS__);

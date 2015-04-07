@@ -2,6 +2,8 @@
 namespace DubInfo_gestion_immobilier\model;
 
 use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
+use DubInfo_gestion_immobilier\Exception\BadTypeException;
+
 /**
  * Description of SourceMaison
  *
@@ -19,7 +21,8 @@ class SourceMaison extends Source{
      * @param int $id
      * @param string $libelle
      * @param string $reference référence de la maison chez la source
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $libelle = NULL, $reference = NULL) {
         parent::__construct($id, $libelle);
@@ -37,7 +40,8 @@ class SourceMaison extends Source{
     /**
      * 
      * @param string $reference
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setReference($reference) {
         $_reference = CheckTyper::isString($reference, 'reference', __CLASS__);

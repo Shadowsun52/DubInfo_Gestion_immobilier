@@ -2,6 +2,8 @@
 namespace DubInfo_gestion_immobilier\model;
 
 use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
+use DubInfo_gestion_immobilier\Exception\BadTypeException;
+
 /**
  * Description of Person
  *
@@ -26,7 +28,14 @@ abstract class Person {
      */
     private $_prenom;
     
-    
+    /**
+     * 
+     * @param int $id
+     * @param string $nom
+     * @param string $prenom
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL) {
         $this->setId($id);
         $this->setNom($nom);
@@ -44,7 +53,7 @@ abstract class Person {
     /**
      * 
      * @param int $id
-     * throws BadTypeException
+     * @throws BadTypeException
      */
     public function setId($id) {
         $this->_id = CheckTyper::isInteger($id, 'id', __CLASS__);
@@ -61,7 +70,8 @@ abstract class Person {
     /**
      * 
      * @param string $nom
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setNom($nom) {
         $_nom = CheckTyper::isString($nom, 'nom', __CLASS__);
@@ -84,7 +94,8 @@ abstract class Person {
     /**
      * 
      * @param string $prenom
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setPrenom($prenom) {
         $_prenom = CheckTyper::isString($prenom, 'prenom', __CLASS__);

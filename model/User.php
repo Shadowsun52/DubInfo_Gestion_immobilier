@@ -2,6 +2,8 @@
 namespace DubInfo_gestion_immobilier\model;
 
 use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
+use DubInfo_gestion_immobilier\Exception\BadTypeException;
+
 /**
  * Description of User
  *
@@ -27,7 +29,8 @@ class User extends Person{
      * @param type $prenom
      * @param type $login
      * @param type $password
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
             $login = NULL, $password = NULL) {
@@ -47,7 +50,8 @@ class User extends Person{
     /**
      * 
      * @param string $login
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setLogin($login) {
         $_login = CheckTyper::isString($login, 'login', __CLASS__);
@@ -70,7 +74,8 @@ class User extends Person{
     /**
      * 
      * @param string $password
-     * throws BadTypeException, StringAttributeTooLong
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function setPassword($password) {
         $_password = CheckTyper::isString($password, 'password', __CLASS__);
