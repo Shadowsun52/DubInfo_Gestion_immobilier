@@ -42,11 +42,23 @@ class Locataire extends Contact{
      */
     private $_communes_preferees;
     
+    /**
+     *
+     * @var array[Location] 
+     */
+    private $_locations;
+    
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
             $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL, 
-            $budget = NULL, $date_emmenagement = NULL, $etat = NULL, 
-            $commentaire = NULL, $source = NULL, $communes_preferees = NULL) {
+            $budget = NULL, $date_emmenagement = NULL, $etat = NULL, $commentaire = NULL, 
+            $sources = NULL, $communes_preferees = NULL, $locations = NULL) {
         parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $num_fax, $mail, $etat);
+        $this->setBudget($budget);
+        $this->setDateEmmenagement($date_emmenagement);
+        $this->setCommentaire($commentaire);
+        $this->setSources($sources);
+        $this->setCommunesPreferees($communes_preferees);
+        $this->setLocations($locations);
     }
     
     /**
@@ -160,11 +172,11 @@ class Locataire extends Contact{
     
     /**
      * 
-     * @param array[Commune] $commune_prefere
+     * @param array[Commune] $communes_preferees
      * @throws BadTypeException
      */
-    public function setCommunesPreferees($commune_prefere) {
-        $this->_communes_preferees = CheckTyper::isArrayOfModel($commune_prefere, Commune::class,
+    public function setCommunesPreferees($communes_preferees) {
+        $this->_communes_preferees = CheckTyper::isArrayOfModel($communes_preferees, Commune::class,
                 'Communes preferees', __CLASS__);
     }
     
@@ -190,5 +202,47 @@ class Locataire extends Contact{
     public function addCommunePreferee($commune_preferee) {
         $this->_communes_preferees[] = CheckTyper::isModel($commune_preferee, Commune::class, 
                 'Commune prefere', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return array[Location]
+     */
+    public function getLocations() {
+        return $this->_locations;
+    }
+    
+    /**
+     * 
+     * @param array[Location] $location
+     * @throws BadTypeException
+     */
+    public function setLocations($location) {
+        $this->_locations = CheckTyper::isArrayOfModel($location, Location::class,
+                'locations', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param int $id index de la valeur dans le tableau
+     * @return Location
+     * @throws ReadOusideArrayException
+     */
+    public function getLocation($id) {
+        if($id < count($this->_locations)) {
+            return $this->_locations[$id];
+        }
+        
+        throw new ReadOusideArrayException('locations', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param SourceLocataire $location
+     * @throws BadTypeException
+     */
+    public function addLocation($location) {
+        $this->_locations[] = CheckTyper::isModel($location, Location::class, 
+                'location', __CLASS__);
     }
 }
