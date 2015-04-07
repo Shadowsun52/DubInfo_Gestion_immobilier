@@ -12,7 +12,7 @@ final class CheckTyper {
     const NAMESPACE_MODEL = "DubInfo_gestion_immobilier\model\\";
         
     /**
-     * Verifie que le valeur d'un attribut d'une classe est bien du type integer
+     * Verifie que la valeur d'un attribut d'une classe est bien du type integer
      * si $value vaut null la fonction retourne null
      * @param mixed $value
      * @param string $attribute_name
@@ -34,7 +34,7 @@ final class CheckTyper {
     }
     
     /**
-     * Verifie que le valeur d'un attribut d'une classe est bien du type double
+     * Verifie que la valeur d'un attribut d'une classe est bien du type double
      * si $value vaut null la fonction retourne null
      * @param mixed $value
      * @param string $attribute_name
@@ -56,7 +56,7 @@ final class CheckTyper {
     }
     
     /**
-     * Verifie que le valeur d'un attribut d'une classe est bien du type string
+     * Verifie que la valeur d'un attribut d'une classe est bien du type string
      * si $value vaut null la fonction retourne null
      * @param mixed $value
      * @param string $attribute_name
@@ -77,7 +77,7 @@ final class CheckTyper {
     }
     
     /**
-     * Verifie que le valeur d'un attribut d'une classe est bien du type boolean
+     * Verifie que la valeur d'un attribut d'une classe est bien du type boolean
      * Si la valeur est un integer et vaut 1 ou 0, il est convertie en boolean
      * si $value vaut null la fonction retourne null
      * @param mixed $value
@@ -108,8 +108,8 @@ final class CheckTyper {
     }
     
     /**
-     * Verifie que le valeur d'un attribut d'une classe est bien un object DateTime
-     * si $value vaut null la fonction retourne null
+     * Verifie que la valeur d'un attribut d'une classe est bien un object DateTime
+     * si $value vaut null la fonction retourne un DateTime de la date du jour
      * @param mixed $value
      * @param string $attribute_name
      * @param string $class_name
@@ -129,8 +129,8 @@ final class CheckTyper {
     }
     
     /**
-     * Verifie que le valeur d'un attribut d'une classe est bien un model de la bonne classe
-     * si $value vaut null la fonction retourne null
+     * Verifie que la valeur d'un attribut d'une classe est bien un model de la bonne classe
+     * si $value vaut null la fonction retourne un objet du model vide
      * @param mixed $value
      * @param string $model_name Classe voulu pour la value à tester
      * @param string $attribute_name
@@ -149,6 +149,59 @@ final class CheckTyper {
         
         if($value instanceof $model_name) {
             return $value;
+        }
+        
+        throw new BadTypeException($attribute_name, $class_name);
+    }
+    
+    /**
+     * Verifie que la valeur d'un attribut d'une classe est bien un tableau de string
+     * Si la valeur est null on retourne un tableau vide
+     * @param mixed $value
+     * @param string $attribute_name
+     * @param string $class_name
+     * @return string[]
+     * @throws BadTypeException
+     */
+    public static function isArrayOfString($value, $attribute_name, $class_name) {
+        if($value === NULL) {
+            return [];
+        }
+        
+        if(is_array($value)) {
+            foreach ($value as $line) {
+                $this->isString($line, $attribute_name, $class_name);
+            }
+            return $value;
+        }
+        
+        throw new BadTypeException($attribute_name, $class_name);
+    }
+    
+    /**
+     * Verifie que la valeur d'un attribut d'une classe est bien un tableau 
+     * de model voulu
+     * Si la valeur est null on retourne un tableau vide
+     * @param mixed $value
+     * @param string $model_name Classe voulu pour la valeur à tester
+     * @param string $attribute_name
+     * @param string $class_name
+     * @return string[]
+     * @throws BadTypeException
+     */
+    public static function isArrayOfModel($value, $model_name, $attribute_name, $class_name) {
+        if(strpos($model_name, self::NAMESPACE_MODEL) === FALSE) {
+            $model_name = self::NAMESPACE_MODEL . $model_name;
+        }
+        
+        if($value === NULL) {
+            return [];
+        }
+        
+        if(is_array($value)){
+            foreach ($value as $line) {
+                $this->isModel($line, $model_name, $attribute_name, $class_name);
+            }
         }
         
         throw new BadTypeException($attribute_name, $class_name);
