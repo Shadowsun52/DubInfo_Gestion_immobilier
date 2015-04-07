@@ -53,6 +53,12 @@ class Chambre {
     
     /**
      *
+     * @var Maison 
+     */
+    private $_maison;
+    
+    /**
+     *
      * @var array[Location] 
      */
     private $_locations;
@@ -70,7 +76,8 @@ class Chambre {
      * @throws BadTypeException
      */
     public function __construct($id = NULL, $numero = NULL, $etage = NULL, $prix = NULL, 
-            $charges = NULL, $date_disponible = NULL, $disponible = NULL, $locations = NULL) {
+            $charges = NULL, $date_disponible = NULL, $disponible = NULL, $maison = NULL,
+            $locations = NULL) {
         $this->setId($id);
         $this->setNumero($numero);
         $this->setEtage($etage);
@@ -78,6 +85,7 @@ class Chambre {
         $this->setCharges($charges);
         $this->setDateDisponible($date_disponible);
         $this->setDisponible($disponible);
+        $this->setMaison($maison);
         $this->setLocations($locations);
     }
     
@@ -199,6 +207,22 @@ class Chambre {
      */
     public function setDisponible($disponible) {
         $this->_disponible = CheckTyper::isBoolean($disponible, 'disponible', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return Maison
+     */
+    public function getMaison() {
+        return $this->_maison;
+    }
+    
+    /**
+     * 
+     * @param Maison $maison
+     */
+    public function setMaison($maison) {
+        $this->_maison = CheckTyper::isModel($maison, Maison::class, 'maison', __CLASS__);
     }
     
     /**
