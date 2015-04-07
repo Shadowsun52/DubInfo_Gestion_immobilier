@@ -48,6 +48,12 @@ class Location {
     
     /**
      *
+     * @var Chambre 
+     */
+    private $_chambre;
+
+    /**
+     *
      * @var array[Paiement] 
      */
     private $_Paiements;
@@ -61,9 +67,10 @@ class Location {
      * @param double $charges
      * @param Locataire $locataire
      * @param array[Paiement] $paiement
+     * @throws BadTypeException
      */
     public function __construct($id = NULL, $date_debut = NULL, $date_fin = NULL,
-            $loyer = NULL, $charges = NULL, $locataire = NULL, $paiement = NULL) {
+            $loyer = NULL, $charges = NULL, $locataire = NULL, $chambre = NULL, $paiement = NULL) {
         $this->setId($id);
         $this->setDateDebut($date_debut);
         $this->setDateFin($date_fin);
@@ -71,6 +78,7 @@ class Location {
         $this->setCharges($charges);
         $this->setLocataire($locataire);
         $this->setPaiement($paiement);
+        $this->setChambre($chambre);
     }
     
     /**
@@ -102,7 +110,6 @@ class Location {
      * 
      * @param DateTime $date_debut
      * @throws BadTypeException
-     * @throws StringAttributeTooLong
      */
     public function setDateDebut($date_debut) {
         $this->_date_debut = CheckTyper::isDateTime($date_debut, 'date début', __CLASS__);
@@ -120,7 +127,6 @@ class Location {
      * 
      * @param DateTime $date_fin
      * @throws BadTypeException
-     * @throws StringAttributeTooLong
      */
     public function setDateFin($date_fin) {
         $this->_date_fin = CheckTyper::isDateTime($date_fin, 'date fin', __CLASS__);
@@ -156,7 +162,6 @@ class Location {
      * 
      * @param double $charges
      * @throws BadTypeException
-     * @throws StringAttributeTooLong
      */
     public function setCharges($charges) {
         $this->_charges = CheckTyper::isDouble($charges, 'charges', __CLASS__);
@@ -174,7 +179,6 @@ class Location {
      * 
      * @param Locataire $locataire
      * @throws BadTypeException
-     * @throws StringAttributeTooLong
      */
     public function setLocataire($locataire) {
         $this->_locataire = CheckTyper::isModel($locataire, Locataire::class,
@@ -183,19 +187,37 @@ class Location {
     
     /**
      * 
+     * @return Chambre
+     */
+    public function getChambre() {
+        return $this->_chambre;
+    }
+    
+    /**
+     * 
+     * @param Chambre $chambre
+     * @throws BadTypeException
+     */
+    public function setChambre($chambre) {
+        $this->_chambre = CheckTyper::isModel($chambre, Chambre::class,
+                'chambre', __CLASS__);
+    }
+    
+    /**
+     * 
      * @return array[Paiement]
      */
-    public function getPaiement() {
+    public function getPaiements() {
         return $this->_Paiements;
     }
     
     /**
      * 
-     * @param array[Paiement] $paiement
+     * @param array[Paiement] $paiements
      * @throws BadTypeException
      */
-    public function setPaiement($paiement) {
-        $this->_Paiements = CheckTyper::isArrayOfModel($paiement, Paiement::class,
+    public function setPaiements($paiements) {
+        $this->_Paiements = CheckTyper::isArrayOfModel($paiements, Paiement::class,
                 'paiements', __CLASS__);
     }
     
