@@ -110,7 +110,7 @@ abstract class Visite {
     
     /**
      * 
-     * @return User[]
+     * @return array[User]
      */
     public function getParticipants() {
         return $this->_participants;
@@ -122,7 +122,7 @@ abstract class Visite {
      * @throws BadTypeException
      */
     public function setParticipants($participants) {
-        $this->_participants = CheckTyper::isArrayOfModel($participants, 'User',
+        $this->_participants = CheckTyper::isArrayOfModel($participants, User::class,
                 'Participants', __CLASS__);
     }
     
@@ -146,7 +146,7 @@ abstract class Visite {
      * @throws BadTypeException
      */
     public function addParticipant($participant) {
-        $this->_participants[] = CheckTyper::isModel($participant, 'User', 
+        $this->_participants[] = CheckTyper::isModel($participant, User::class, 
                 'Participant', __CLASS__);
     }
 }

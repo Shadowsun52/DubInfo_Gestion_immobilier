@@ -171,6 +171,6 @@ class Contact extends Person{
      * @throws BadTypeException
      */
     public function setEtat($etat) {
-        $this->_etat = CheckTyper::isModel($etat, 'Etat', 'etat', __CLASS__);
+        $this->_etat = CheckTyper::isModel($etat, Etat::class, 'etat', __CLASS__);
     }
 }

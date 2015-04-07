@@ -80,7 +80,7 @@ class VisiteInvestisseur extends Visite{
      * @throws BadTypeException
      */
     public function setInvestisseur($investisseur) {
-        $this->_investisseur = CheckTyper::isModel($investisseur, 'Investisseur',
+        $this->_investisseur = CheckTyper::isModel($investisseur, Investisseur::class,
                 'investisseur', __CLASS__);
     }
 }
