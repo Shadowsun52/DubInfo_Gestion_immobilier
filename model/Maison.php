@@ -637,7 +637,7 @@ class Maison {
             throw new StringAttributeTooLong('commentaire', __CLASS__);
         }
         
-        $this->_commentaire = $commentaire;
+        $this->_commentaire = $_commentaire;
     }
     
     /**
@@ -661,7 +661,7 @@ class Maison {
             throw new StringAttributeTooLong('raison abandon', __CLASS__);
         }
         
-        $this->_raison_abandon = $raison_abandon;
+        $this->_raison_abandon = $_raison_abandon;
     }
 //</editor-fold>
     

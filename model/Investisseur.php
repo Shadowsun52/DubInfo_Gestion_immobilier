@@ -32,6 +32,12 @@ class Investisseur extends Contact{
     private $_visites;
     
     /**
+     *
+     * @var array[LettreMission] 
+     */
+    private $_lettres_mission;
+    
+    /**
      * 
      * @param int $id
      * @param string $nom
@@ -44,16 +50,20 @@ class Investisseur extends Contact{
      * @param Etat $etat
      * @param string $num_tva
      * @param string $commentaire
+     * @param VisiteMaisonLocataire $visites Liste des maisons visitées par l'investisseur
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL,
             $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL, 
-            $adresse = NULL, $etat = NULL, $num_tva = NULL, $commentaire = NULL) {
+            $adresse = NULL, $etat = NULL, $num_tva = NULL, $commentaire = NULL,
+            $visites = NULL, $lettres_mission = NULL) {
         parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $num_fax,
                 $mail,$commentaire, $etat);
         $this->setAdresse($adresse);
         $this->setNumTva($num_tva);
+        $this->setVisites($visites);
+        $this->setLettresMission($lettres_mission);
     }
     
     /**
@@ -77,7 +87,7 @@ class Investisseur extends Contact{
             throw new StringAttributeTooLong('adresse', __CLASS__);
         }
         
-        $this->_adresse = $adresse;
+        $this->_adresse = $_adresse;
     }
     
     /**
@@ -101,7 +111,7 @@ class Investisseur extends Contact{
             throw new StringAttributeTooLong('num_tva', __CLASS__);
         }
         
-        $this->_num_tva = $num_tva;
+        $this->_num_tva = $_num_tva;
     }
 
 //<editor-fold defaultstate="collapsed" desc="Visites">
@@ -145,6 +155,50 @@ class Investisseur extends Contact{
     public function addVisite($visite) {
         $this->_visites[] = CheckTyper::isModel($visite, 
                 VisiteMaisonInvestisseur::class, 'visites', __CLASS__);
+    }
+//</editor-fold>
+    
+//<editor-fold defaultstate="collapsed" desc="Lettres mission">
+    /**
+     * 
+     * @return array[LettreMission]
+     */
+    public function getLettresMission() {
+        return $this->_lettres_mission;
+    }
+    
+    /**
+     * 
+     * @param array[LettreMission] $lettres_mission
+     * @throws BadTypeException
+     */
+    public function setLettresMission($lettres_mission) {
+        $this->_lettres_mission = CheckTyper::isArrayOfModel($lettres_mission,
+                LettreMission::class, 'lettres mission', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param int $id index de la valeur dans le tableau
+     * @return LettreMission
+     * @throws ReadOusideArrayException
+     */
+    public function getLettreMission($id) {
+        if($id < count($this->_visites)) {
+            return $this->_visites[$id];
+        }
+        
+        throw new ReadOusideArrayException('lettres mission', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param LettreMission $lettre_mission
+     * @throws BadTypeException
+     */
+    public function addLettreMission($lettre_mission) {
+        $this->_lettres_mission[] = CheckTyper::isModel($lettre_mission, 
+                LettreMission::class, 'lettres mission', __CLASS__);
     }
 //</editor-fold>
 }

@@ -60,7 +60,7 @@ class User extends Person{
             throw new StringAttributeTooLong('login', __CLASS__);
         }
         
-        $this->_login = $login;
+        $this->_login = $_login;
     }
     
     /**
@@ -84,6 +84,6 @@ class User extends Person{
             throw new StringAttributeTooLong('password', __CLASS__);
         }
         
-        $this->_password = $password;
+        $this->_password = $_password;
     }
 }

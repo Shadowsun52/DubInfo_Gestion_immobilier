@@ -70,6 +70,6 @@ abstract class Source {
             throw new StringAttributeTooLong('libelle', __CLASS__);
         }
         
-        $this->_libelle = $libelle;
+        $this->_libelle = $_libelle;
     }
 }

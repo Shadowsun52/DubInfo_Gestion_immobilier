@@ -63,7 +63,7 @@ class VisiteInvestisseur extends Visite{
             throw new StringAttributeTooLong('endroit', __CLASS__);
         }
         
-        $this->_endroit = $endroit;
+        $this->_endroit = $_endroit;
     }
     
     /**

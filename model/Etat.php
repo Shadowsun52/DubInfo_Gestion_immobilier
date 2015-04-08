@@ -71,6 +71,6 @@ class Etat {
         {
             throw new StringAttributeTooLong('libelle', __CLASS__);
         }
-        $this->_libelle = CheckTyper::isString($libelle, 'libelle', __CLASS__);
+        $this->_libelle = $_libelle;
     }
 }

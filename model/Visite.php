@@ -105,7 +105,7 @@ abstract class Visite {
             throw new StringAttributeTooLong('rapport', __CLASS__);
         }
         
-        $this->_rapport = $rapport;
+        $this->_rapport = $_rapport;
     }
     
     /**

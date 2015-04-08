@@ -210,7 +210,7 @@ class Locataire extends Contact{
     
     /**
      * 
-     * @param SourceLocataire $location
+     * @param Locataire $location
      * @throws BadTypeException
      */
     public function addLocation($location) {

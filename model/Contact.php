@@ -92,7 +92,7 @@ class Contact extends Person{
             throw new StringAttributeTooLong('num_telephone', __CLASS__);
         }
         
-        $this->_num_telephone = $num_telephone;
+        $this->_num_telephone = $_num_telephone;
     }
     
     /**
@@ -116,7 +116,7 @@ class Contact extends Person{
             throw new StringAttributeTooLong('num_gsm', __CLASS__);
         }
         
-        $this->_num_gsm = $num_gsm;
+        $this->_num_gsm = $_num_gsm;
     }
     
     /**
@@ -140,7 +140,7 @@ class Contact extends Person{
             throw new StringAttributeTooLong('num_fax', __CLASS__);
         }
         
-        $this->_num_fax = $num_fax;
+        $this->_num_fax = $_num_fax;
     }
     
     /**
@@ -164,7 +164,7 @@ class Contact extends Person{
             throw new StringAttributeTooLong('mail', __CLASS__);
         }
         
-        $this->_mail = $mail;
+        $this->_mail = $_mail;
     }
     
     /**
@@ -188,7 +188,7 @@ class Contact extends Person{
             throw new StringAttributeTooLong('commentaire', __CLASS__);
         }
         
-        $this->_commentaire = $commentaire;
+        $this->_commentaire = $_commentaire;
     }
     
     /**

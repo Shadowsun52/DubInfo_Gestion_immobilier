@@ -50,6 +50,6 @@ class SourceMaison extends Source{
             throw new StringAttributeTooLong('reference', __CLASS__);
         }
         
-        $this->_reference = $reference;
+        $this->_reference = $_reference;
     }
 }

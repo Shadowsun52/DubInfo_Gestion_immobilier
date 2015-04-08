@@ -80,7 +80,7 @@ abstract class Person {
             throw new StringAttributeTooLong('nom', __CLASS__);
         }
         
-        $this->_nom = $nom;
+        $this->_nom = $_nom;
     }
     
     /**
@@ -104,6 +104,6 @@ abstract class Person {
             throw new StringAttributeTooLong('prenom', __CLASS__);
         }
         
-        $this->_prenom = $prenom;
+        $this->_prenom = $_prenom;
     }
 }
