@@ -33,6 +33,18 @@ class Investisseur extends Contact{
     private $_lettres_mission;
     
     /**
+     *
+     * @var array[Offre]
+     */
+    private $_offres;
+    
+    /**
+     *
+     * @var array[Projet]
+     */
+    private $_projets;
+    
+    /**
      * 
      * @param int $id
      * @param string $nom
@@ -45,19 +57,24 @@ class Investisseur extends Contact{
      * @param Etat $etat
      * @param string $num_tva
      * @param string $commentaire
-     * @param VisiteMaisonLocataire $visites Liste des maisons visitées par l'investisseur
+     * @param array[VisiteMaisonLocataire] $visites Liste des maisons visitées par l'investisseur
+     * @param array[LettreMission] $lettres_mission 
+     * @param array[Offre] $offres 
+     * @param array[Projet] $projets
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL,
             $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL, 
             $adresse = NULL, $etat = NULL, $num_tva = NULL, $commentaire = NULL,
-            $visites = NULL, $lettres_mission = NULL) {
+            $visites = NULL, $lettres_mission = NULL, $offres = NULL, $projets = NULL) {
         parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $num_fax,
                 $mail,$commentaire, $etat, $adresse);
         $this->setNumTva($num_tva);
         $this->setVisites($visites);
         $this->setLettresMission($lettres_mission);
+        $this->setOffres($offres);
+        $this->setProjets($projets);
     }
     
     /**
@@ -169,6 +186,94 @@ class Investisseur extends Contact{
     public function addLettreMission($lettre_mission) {
         $this->_lettres_mission[] = CheckTyper::isModel($lettre_mission, 
                 LettreMission::class, 'lettres mission', __CLASS__);
+    }
+//</editor-fold>
+    
+//<editor-fold defaultstate="collapsed" desc="Offres">
+    /**
+     * 
+     * @return array[Offre]
+     */
+    public function getOffres() {
+        return $this->_offres;
+    }
+    
+    /**
+     * 
+     * @param array[Offre] $offres
+     * @throws BadTypeException
+     */
+    public function setOffres($offres) {
+        $this->_offres = CheckTyper::isArrayOfModel($offres, Offre::class,
+                'offres', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param int $id index de la valeur dans le tableau
+     * @return Offre
+     * @throws ReadOusideArrayException
+     */
+    public function getOffre($id) {
+        if($id < count($this->_offres)) {
+            return $this->_offres[$id];
+        }
+        
+        throw new ReadOusideArrayException('offres', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param Offre $offre
+     * @throws BadTypeException
+     */
+    public function addOffre($offre) {
+        $this->_offres[] = CheckTyper::isModel($offre, Offre::class, 
+                'offres', __CLASS__);
+    }
+//</editor-fold>
+    
+//<editor-fold defaultstate="collapsed" desc="Projets">
+    /**
+     * 
+     * @return array[Projet]
+     */
+    public function getProjets() {
+        return $this->_projets;
+    }
+    
+    /**
+     * 
+     * @param array[Projet] $projets
+     * @throws BadTypeException
+     */
+    public function setProjets($projets) {
+        $this->_projets = CheckTyper::isArrayOfModel($projets, Projet::class,
+                'projets', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param int $id index de la valeur dans le tableau
+     * @return Projet
+     * @throws ReadOusideArrayException
+     */
+    public function getProjet($id) {
+        if($id < count($this->_projets)) {
+            return $this->_projets[$id];
+        }
+        
+        throw new ReadOusideArrayException('projets', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param Projet $projet
+     * @throws BadTypeException
+     */
+    public function addProjet($projet) {
+        $this->_projets[] = CheckTyper::isModel($projet, Projet::class, 
+                'projets', __CLASS__);
     }
 //</editor-fold>
 }

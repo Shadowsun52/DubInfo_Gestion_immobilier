@@ -136,16 +136,43 @@ class Maison {
     
     /**
      *
-     * @var Offre 
+     * @var array[Offre]
      */
     private $_offres;
     
     /**
      *
-     * @var Projets 
+     * @var array[Projet]
      */
     private $_projets;
     
+    /**
+     * 
+     * @param int $id_proposition
+     * @param int $id_maison
+     * @param DateTime $date_creation
+     * @param DateTime $date_modification
+     * @param Adresse $adresse
+     * @param double $prix
+     * @param int $superficie_habitable
+     * @param int $nb_salle_de_bain
+     * @param double $cout_travaux
+     * @param array[string] $titres
+     * @param array[string] $descriptions
+     * @param array[string] $descriptions_chambres
+     * @param array[string] $descriptions_charges
+     * @param string $commentaire
+     * @param string $raison_abandon
+     * @param Etat $etat
+     * @param array[Chambre] $chambres
+     * @param array[Contact] $contacts
+     * @param array[Source] $sources
+     * @param array[Offre] $offres
+     * @param array[Projet] $projets
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     * @throws KeyDontExistException
+     */
     public function __construct($id_proposition = NULL, $id_maison = NULL, $date_creation = NULL, 
             $date_modification = NULL, $adresse = NULL, $prix = NULL, $superficie_habitable = NULL,
             $nb_salle_de_bain = NULL, $cout_travaux = NULL, $titres = NULL, $descriptions = NULL,
