@@ -26,6 +26,12 @@ class Investisseur extends Contact{
     private $_num_tva;
     
     /**
+     * Liste des visites de maison par l'investisseur
+     * @var array[VisiteMaisonInvestisseur] 
+     */
+    private $_visites;
+    
+    /**
      * 
      * @param int $id
      * @param string $nom
@@ -97,4 +103,48 @@ class Investisseur extends Contact{
         
         $this->_num_tva = $num_tva;
     }
+
+//<editor-fold defaultstate="collapsed" desc="Visites">
+    /**
+     * 
+     * @return array[VisiteMaisonInvestisseur]
+     */
+    public function getVisites() {
+        return $this->_visites;
+    }
+    
+    /**
+     * 
+     * @param array[VisiteMaisonInvestisseur] $visites
+     * @throws BadTypeException
+     */
+    public function setVisites($visites) {
+        $this->_visites = CheckTyper::isArrayOfModel($visites,
+                VisiteMaisonInvestisseur::class, 'visites', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param int $id index de la valeur dans le tableau
+     * @return VisiteMaisonInvestisseur
+     * @throws ReadOusideArrayException
+     */
+    public function getVisite($id) {
+        if($id < count($this->_visites)) {
+            return $this->_visites[$id];
+        }
+        
+        throw new ReadOusideArrayException('visites', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param VisiteMaisonInvestisseur $visite
+     * @throws BadTypeException
+     */
+    public function addVisite($visite) {
+        $this->_visites[] = CheckTyper::isModel($visite, 
+                VisiteMaisonInvestisseur::class, 'visites', __CLASS__);
+    }
+//</editor-fold>
 }
