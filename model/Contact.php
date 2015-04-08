@@ -184,7 +184,7 @@ class Contact extends Person{
     public function setCommentaire($commentaire) {
         $_commentaire = CheckTyper::isString($commentaire, 'commentaire', __CLASS__);
         
-        if(strlen($_commentaire) > self::MAX_SIZE_MAIL) {
+        if(strlen($_commentaire) > self::MAX_SIZE_COMMENTAIRE) {
             throw new StringAttributeTooLong('commentaire', __CLASS__);
         }
         
