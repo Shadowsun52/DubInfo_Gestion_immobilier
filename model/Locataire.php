@@ -1,7 +1,6 @@
 <?php
 namespace DubInfo_gestion_immobilier\model;
 
-use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
 use DubInfo_gestion_immobilier\Exception\BadTypeException;
 use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
 /**
@@ -9,9 +8,7 @@ use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
  *
  * @author Jenicot Alexandre
  */
-class Locataire extends Contact{
-    const MAX_SIZE_COMMENTAIRE = 500;
-    
+class Locataire extends Contact{    
     /**
      *
      * @var double 
@@ -23,12 +20,6 @@ class Locataire extends Contact{
      * @var DateTime 
      */
     private $_date_emmenagement;
-    
-    /**
-     *
-     * @var string 
-     */
-    private $_commentaire;
     
     /**
      *
@@ -50,12 +41,12 @@ class Locataire extends Contact{
     
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
             $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL, 
-            $budget = NULL, $date_emmenagement = NULL, $etat = NULL, $commentaire = NULL, 
-            $sources = NULL, $communes_preferees = NULL, $locations = NULL) {
-        parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $num_fax, $mail, $etat);
+            $budget = NULL, $date_emmenagement = NULL, $commentaire = NULL, 
+            $etat = NULL, $sources = NULL, $communes_preferees = NULL, $locations = NULL) {
+        parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, 
+                $num_fax, $mail, $commentaire, $etat);
         $this->setBudget($budget);
         $this->setDateEmmenagement($date_emmenagement);
-        $this->setCommentaire($commentaire);
         $this->setSources($sources);
         $this->setCommunesPreferees($communes_preferees);
         $this->setLocations($locations);
@@ -82,7 +73,7 @@ class Locataire extends Contact{
      * 
      * @return DateTime
      */
-    public function getDateTime() {
+    public function getDateEmmenagement() {
         return $this->_date_emmenagement;
     }
     
@@ -95,31 +86,8 @@ class Locataire extends Contact{
         $this->_date_emmenagement = CheckTyper::isDateTime($date_emmenagement, 
                 'date_emmenagement', __CLASS__);
     }
-    
-    /**
-     * 
-     * @return string
-     */
-    public function getCommentaire() {
-        return $this->_commentaire;
-    }
-    
-    /**
-     * 
-     * @param string $commentaire
-     * @throws BadTypeException
-     * @throws StringAttributeTooLong
-     */
-    public function setCommentaire($commentaire) {
-        $_commentaire = CheckTyper::isString($commentaire, 'commentaire', __CLASS__);
-        
-        if(strlen($_commentaire) > self::MAX_SIZE_COMMENTAIRE) {
-            throw new StringAttributeTooLong('commentaire', __CLASS__);
-        }
-        
-        $this->_commentaire = $commentaire;
-    }
-    
+
+//<editor-fold defaultstate="collapsed" desc="Sources">
     /**
      * 
      * @return array[SourceLocataire]
@@ -161,7 +129,9 @@ class Locataire extends Contact{
         $this->_sources[] = CheckTyper::isModel($source, SourceLocataire::class, 
                 'Source', __CLASS__);
     }
+//</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="Communes préférées">
     /**
      * 
      * @return array[Commune]
@@ -203,7 +173,9 @@ class Locataire extends Contact{
         $this->_communes_preferees[] = CheckTyper::isModel($commune_preferee, Commune::class, 
                 'Commune prefere', __CLASS__);
     }
+//</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="Locations">
     /**
      * 
      * @return array[Location]
@@ -245,4 +217,5 @@ class Locataire extends Contact{
         $this->_locations[] = CheckTyper::isModel($location, Location::class, 
                 'location', __CLASS__);
     }
+//</editor-fold>
 }

@@ -14,7 +14,6 @@ use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
 class Investisseur extends Contact{
     const MAX_SIZE_ADRESSE = 70;
     const MAX_SIZE_TVA = 45;
-    const MAX_SIZE_COMMENTAIRE = 500;
     
     /**
      * @var string 
@@ -25,11 +24,6 @@ class Investisseur extends Contact{
      * @var string 
      */
     private $_num_tva;
-    
-    /**
-     * @var string 
-     */
-    private $_commentaire;
     
     /**
      * 
@@ -51,10 +45,9 @@ class Investisseur extends Contact{
             $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL, 
             $adresse = NULL, $etat = NULL, $num_tva = NULL, $commentaire = NULL) {
         parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $num_fax,
-                $mail, $etat);
+                $mail,$commentaire, $etat);
         $this->setAdresse($adresse);
         $this->setNumTva($num_tva);
-        $this->setCommentaire($commentaire);
     }
     
     /**
@@ -103,29 +96,5 @@ class Investisseur extends Contact{
         }
         
         $this->_num_tva = $num_tva;
-    }
-    
-    /**
-     * 
-     * @return string
-     */
-    public function getCommentaire() {
-        return $this->_commentaire;
-    }
-    
-    /**
-     * 
-     * @param string $commentaire
-     * @throws BadTypeException
-     * @throws StringAttributeTooLong
-     */
-    public function setCommentaire($commentaire) {
-        $_commentaire = CheckTyper::isString($commentaire, 'commentaire', __CLASS__);
-        
-        if(strlen($_commentaire) > self::MAX_SIZE_COMMENTAIRE) {
-            throw new StringAttributeTooLong('commentaire', __CLASS__);
-        }
-        
-        $this->_commentaire = $commentaire;
     }
 }

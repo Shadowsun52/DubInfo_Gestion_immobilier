@@ -12,6 +12,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
 class Contact extends Person{
     const MAX_SIZE_NUM = 20;
     const MAX_SIZE_MAIL = 70;
+    const MAX_SIZE_COMMENTAIRE = 500;
     
     /**
      * @var string 
@@ -34,6 +35,12 @@ class Contact extends Person{
     private $_mail;
     
     /**
+     *
+     * @var string 
+     */
+    private $_commentaire;
+    
+    /**
      * @var Etat 
      */
     private $_etat;
@@ -47,17 +54,20 @@ class Contact extends Person{
      * @param string $num_gsm
      * @param string $num_fax
      * @param string $mail
+     * @param string $commentaire
+     * @param Etat   $etat
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
             $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, 
-            $mail = NULL, $etat = NULL) {
+            $mail = NULL, $commentaire = NULL, $etat = NULL) {
         parent::__construct($id, $nom, $prenom);
         $this->setNumTelephone($num_telephone);
         $this->setNumGsm($num_gsm);
         $this->setNumFax($num_fax);
         $this->setMail($mail);
+        $this->setCommentaire($commentaire);
         $this->setEtat($etat);
     }
     
@@ -155,6 +165,30 @@ class Contact extends Person{
         }
         
         $this->_mail = $mail;
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getCommentaire() {
+        return $this->_commentaire;
+    }
+    
+    /**
+     * 
+     * @param string $commentaire
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
+    public function setCommentaire($commentaire) {
+        $_commentaire = CheckTyper::isString($commentaire, 'commentaire', __CLASS__);
+        
+        if(strlen($_commentaire) > self::MAX_SIZE_MAIL) {
+            throw new StringAttributeTooLong('commentaire', __CLASS__);
+        }
+        
+        $this->_commentaire = $commentaire;
     }
     
     /**
