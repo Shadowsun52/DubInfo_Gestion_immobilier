@@ -15,6 +15,16 @@ abstract class VisiteMaison extends Visite{
      */
     private $_maison;
     
+    /**
+     * 
+     * @param int $id
+     * @param DateTime $date
+     * @param string $rapport
+     * @param Maison $maison
+     * @param array[User] $participants
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
     public function __construct($id = NULL, $date = NULL, $rapport = NULL, 
             $maison = NULL, $participants = NULL) {
         parent::__construct($id, $date, $rapport, $participants);
