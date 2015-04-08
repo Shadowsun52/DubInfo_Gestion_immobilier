@@ -70,15 +70,9 @@ class Maison {
     
     /**
      *
-     * @var string 
+     * @var Adresse 
      */
     private $_adresse;
-    
-    /**
-     *
-     * @var Commune 
-     */
-    private $_commune;
     
     /**
      *
@@ -140,12 +134,24 @@ class Maison {
      */
     private $_sources;
     
+    /**
+     *
+     * @var Offre 
+     */
+    private $_offres;
+    
+    /**
+     *
+     * @var Projets 
+     */
+    private $_projets;
     
     public function __construct($id_proposition = NULL, $id_maison = NULL, $date_creation = NULL, 
             $date_modification = NULL, $adresse = NULL, $prix = NULL, $superficie_habitable = NULL,
             $nb_salle_de_bain = NULL, $cout_travaux = NULL, $titres = NULL, $descriptions = NULL,
             $descriptions_chambres = NULL, $descriptions_charges = NULL, $commentaire = NULL,
-            $raison_abandon = NULL, $etat = NULL, $chambres = NULL, $contacts = NULL, $sources = NULL) {
+            $raison_abandon = NULL, $etat = NULL, $chambres = NULL, $contacts = NULL, 
+            $sources = NULL, $offres = NULL, $projets = NULL) {
         $this->setIdProposition($id_proposition);
         $this->setIdMaison($id_maison);
         $this->setDateCreation($date_creation);
@@ -165,6 +171,8 @@ class Maison {
         $this->setChambres($chambres);
         $this->setContacts($contacts);
         $this->setSources($sources);
+        $this->setOffres($offres);
+        $this->setProjets($projets);
     }
     
 //<editor-fold defaultstate="collapsed" desc="Id">
@@ -471,7 +479,7 @@ class Maison {
 //<editor-fold defaultstate="collapsed" desc="Coordonnees">
     /**
      * 
-     * @return string
+     * @return Adresse
      */
     public function getAdresse() {
         return $this->_adresse;
@@ -479,36 +487,18 @@ class Maison {
     
     /**
      * 
-     * @param string $adresse
+     * @param Adresse $adresse
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      */
     public function setAdresse($adresse) {
-        $_adresse = CheckTyper::isString($adresse, 'adresse', __CLASS__);
+        $_adresse = CheckTyper::isModel($adresse, Adresse::class, 'adresse', __CLASS__);
         
         if(strlen($_adresse) > self::MAX_SIZE_ADRESSE) {
             throw new StringAttributeTooLong('adresse', __CLASS__);
         }
         
         $this->_adresse = $adresse;
-    }
-    
-    /**
-     * 
-     * @return Commune
-     */
-    public function getCommune() {
-        return $this->_commune;
-    }
-    
-    /**
-     * 
-     * @param Commune $commune
-     * @throws BadTypeException
-     */
-    public function setCommune($commune) {
-        $this->_commune = CheckTyper::isModel($commune, Commune::class, 
-                'commune', __CLASS__);
     }
 //</editor-fold>
 
@@ -795,6 +785,94 @@ class Maison {
     public function addSource($source) {
         $this->_sources[] = CheckTyper::isModel($source, SourceMaison::class, 
                 'Source', __CLASS__);
+    }
+//</editor-fold>
+    
+//<editor-fold defaultstate="collapsed" desc="Offres">
+    /**
+     * 
+     * @return array[Offre]
+     */
+    public function getOffres() {
+        return $this->_offres;
+    }
+    
+    /**
+     * 
+     * @param array[Offre] $offres
+     * @throws BadTypeException
+     */
+    public function setOffres($offres) {
+        $this->_offres = CheckTyper::isArrayOfModel($offres, Offre::class,
+                'offres', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param int $id index de la valeur dans le tableau
+     * @return Offre
+     * @throws ReadOusideArrayException
+     */
+    public function getOffre($id) {
+        if($id < count($this->_offres)) {
+            return $this->_offres[$id];
+        }
+        
+        throw new ReadOusideArrayException('offres', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param Offre $offre
+     * @throws BadTypeException
+     */
+    public function addOffre($offre) {
+        $this->_offres[] = CheckTyper::isModel($offre, Offre::class, 
+                'offre', __CLASS__);
+    }
+//</editor-fold>
+    
+//<editor-fold defaultstate="collapsed" desc="Projets">
+    /**
+     * 
+     * @return array[Projet]
+     */
+    public function getProjets() {
+        return $this->_projets;
+    }
+    
+    /**
+     * 
+     * @param array[Projet] $projets
+     * @throws BadTypeException
+     */
+    public function setProjets($projets) {
+        $this->_projets = CheckTyper::isArrayOfModel($projets, Projet::class,
+                'projets', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param int $id index de la valeur dans le tableau
+     * @return Projet
+     * @throws ReadOusideArrayException
+     */
+    public function getProjet($id) {
+        if($id < count($this->_projets)) {
+            return $this->_projets[$id];
+        }
+        
+        throw new ReadOusideArrayException('projets', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @param Projet $projet
+     * @throws BadTypeException
+     */
+    public function addProjet($projet) {
+        $this->_projets[] = CheckTyper::isModel($projet, Projet::class, 
+                'projets', __CLASS__);
     }
 //</editor-fold>
 }
