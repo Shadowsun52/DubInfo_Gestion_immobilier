@@ -18,11 +18,6 @@ class Investisseur extends Contact{
     /**
      * @var string 
      */
-    private $_adresse;
-    
-    /**
-     * @var string 
-     */
     private $_num_tva;
     
     /**
@@ -46,7 +41,7 @@ class Investisseur extends Contact{
      * @param string $num_gsm
      * @param string $num_fax
      * @param string $mail
-     * @param string $adresse
+     * @param Adresse $adresse
      * @param Etat $etat
      * @param string $num_tva
      * @param string $commentaire
@@ -59,35 +54,10 @@ class Investisseur extends Contact{
             $adresse = NULL, $etat = NULL, $num_tva = NULL, $commentaire = NULL,
             $visites = NULL, $lettres_mission = NULL) {
         parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $num_fax,
-                $mail,$commentaire, $etat);
-        $this->setAdresse($adresse);
+                $mail,$commentaire, $etat, $adresse);
         $this->setNumTva($num_tva);
         $this->setVisites($visites);
         $this->setLettresMission($lettres_mission);
-    }
-    
-    /**
-     * 
-     * @return string
-     */
-    public function getAdresse() {
-        return $this->_adresse;
-    }
-    
-    /**
-     * 
-     * @param string $adresse
-     * @throws BadTypeException
-     * @throws StringAttributeTooLong
-     */
-    public function setAdresse($adresse) {
-        $_adresse = CheckTyper::isString($adresse, 'adresse', __CLASS__);
-        
-        if(strlen($_adresse) > self::MAX_SIZE_ADRESSE) {
-            throw new StringAttributeTooLong('adresse', __CLASS__);
-        }
-        
-        $this->_adresse = $_adresse;
     }
     
     /**

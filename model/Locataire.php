@@ -2,6 +2,7 @@
 namespace DubInfo_gestion_immobilier\model;
 
 use DubInfo_gestion_immobilier\Exception\BadTypeException;
+use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
 use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
 /**
  * Description of Locataire
@@ -39,12 +40,33 @@ class Locataire extends Contact{
      */
     private $_locations;
     
+    /**
+     * 
+     * @param int $id
+     * @param string $nom
+     * @param string $prenom
+     * @param string $num_telephone
+     * @param string $num_gsm
+     * @param string $num_fax
+     * @param string $mail
+     * @param double $budget
+     * @param DateTime $date_emmenagement
+     * @param string $commentaire
+     * @param Etat $etat
+     * @param Adresse $adresse
+     * @param array[Source] $sources
+     * @param array[Commune] $communes_preferees
+     * @param array[Location] $locations
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
             $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL, 
             $budget = NULL, $date_emmenagement = NULL, $commentaire = NULL, 
-            $etat = NULL, $sources = NULL, $communes_preferees = NULL, $locations = NULL) {
+            $etat = NULL, $adresse = NULL, $sources = NULL,
+            $communes_preferees = NULL, $locations = NULL) {
         parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, 
-                $num_fax, $mail, $commentaire, $etat);
+                $num_fax, $mail, $commentaire, $etat, $adresse);
         $this->setBudget($budget);
         $this->setDateEmmenagement($date_emmenagement);
         $this->setSources($sources);
