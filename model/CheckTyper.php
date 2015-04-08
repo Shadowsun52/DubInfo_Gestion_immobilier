@@ -109,7 +109,7 @@ final class CheckTyper {
     
     /**
      * Verifie que la valeur d'un attribut d'une classe est bien un object DateTime
-     * si $value vaut null la fonction retourne un DateTime de la date du jour
+     * si $value vaut null la fonction retourne un NULL
      * @param mixed $value
      * @param string $attribute_name
      * @param string $class_name
@@ -118,7 +118,7 @@ final class CheckTyper {
      */
     public static function isDateTime($value, $attribute_name, $class_name) {
         if($value === NULL) {
-            return new DateTime();
+            return NULL;
         }
         
         if($value instanceof DateTime) {
