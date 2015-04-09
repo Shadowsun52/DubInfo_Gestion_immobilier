@@ -27,6 +27,8 @@ class Metier {
      * 
      * @param int $id
      * @param string $libelle
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $libelle = NULL) {
         $this->setId($id);
