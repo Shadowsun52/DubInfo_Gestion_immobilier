@@ -10,7 +10,6 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  */
 class Commune {
     const MAX_SIZE_LIBELLE = 255;
-    const MAX_SIZE_CODE_POSTAL = 10;
     
     /**
      * @var int 
@@ -21,24 +20,17 @@ class Commune {
      * @var string 
      */
     private $_libelle;
-    
-    /**
-     *
-     * @var string 
-     */
-    private $_code_postal;
+
     /**
      * 
      * @param int $id
      * @param string $libelle
-     * @param string $code_postal
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      */
-    public function __construct($id = NULL, $libelle = NULL, $code_postal = NULL) {
+    public function __construct($id = NULL, $libelle = NULL) {
         $this->setId($id);
         $this->setLibelle($libelle);
-        $this->setCodePostal($code_postal);
     }
     
     /**
@@ -80,29 +72,5 @@ class Commune {
         }
         
         $this->_libelle = $_libelle;
-    }
-    
-    /**
-     * 
-     * @return string
-     */
-    public function getCodePostal() {
-        return $this->_code_postal;
-    }
-    
-    /**
-     * 
-     * @param string $code_postal
-     * @throws BadTypeException
-     * @throws StringAttributeTooLong
-     */
-    public function setCodePostal($code_postal) {
-        $_code_postal = CheckTyper::isString($code_postal, 'code postal', __CLASS__);
-        
-        if(strlen($_code_postal) > self::MAX_SIZE_CODE_POSTAL) {
-            throw new StringAttributeTooLong('code postal', __CLASS__);
-        }
-        
-        $this->_code_postal = $_code_postal;
     }
 }

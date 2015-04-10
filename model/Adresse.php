@@ -27,7 +27,7 @@ class Adresse {
     
     /**
      *
-     * @var string
+     * @var Ville
      */
     private $_ville;
     
@@ -35,7 +35,7 @@ class Adresse {
      * 
      * @param string $rue
      * @param string $numero
-     * @param string $ville
+     * @param Ville $ville
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      */
@@ -95,7 +95,7 @@ class Adresse {
     
     /**
      * 
-     * @return string
+     * @return Ville
      */
     public function getVille() {
         return $this->_ville;
@@ -103,17 +103,11 @@ class Adresse {
     
     /**
      * 
-     * @param string $ville
+     * @param Ville $ville
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      */
     public function setVille($ville) {
-        $_ville = CheckTyper::isString($ville, 'ville', __CLASS__);
-        
-        if(strlen($_ville) > self::MAX_SIZE_VILLE) {
-            throw new StringAttributeTooLong('ville', __CLASS__);
-        }
-        
-        $this->_ville = $_ville;
+        $this->_ville = CheckTyper::isModel($ville, Ville::class, 'ville', __CLASS__);
     }
 }

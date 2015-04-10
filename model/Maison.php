@@ -72,7 +72,13 @@ class Maison {
      *
      * @var Adresse 
      */
-    private $_adresse;
+    private $_commune;
+    
+    /**
+     *
+     * @var Commune 
+     */
+    private $_commune;
     
     /**
      *
@@ -177,8 +183,8 @@ class Maison {
             $date_modification = NULL, $adresse = NULL, $prix = NULL, $superficie_habitable = NULL,
             $nb_salle_de_bain = NULL, $cout_travaux = NULL, $titres = NULL, $descriptions = NULL,
             $descriptions_chambres = NULL, $descriptions_charges = NULL, $commentaire = NULL,
-            $raison_abandon = NULL, $etat = NULL, $chambres = NULL, $contacts = NULL, 
-            $sources = NULL, $offres = NULL, $projets = NULL) {
+            $raison_abandon = NULL, $etat = NULL, $commune = NULL, $chambres = NULL,
+            $contacts = NULL, $sources = NULL, $offres = NULL, $projets = NULL) {
         $this->setIdProposition($id_proposition);
         $this->setIdMaison($id_maison);
         $this->setDateCreation($date_creation);
@@ -509,23 +515,33 @@ class Maison {
      * @return Adresse
      */
     public function getAdresse() {
-        return $this->_adresse;
+        return $this->_commune;
     }
     
     /**
      * 
      * @param Adresse $adresse
      * @throws BadTypeException
-     * @throws StringAttributeTooLong
      */
     public function setAdresse($adresse) {
-        $_adresse = CheckTyper::isModel($adresse, Adresse::class, 'adresse', __CLASS__);
-        
-        if(strlen($_adresse) > self::MAX_SIZE_ADRESSE) {
-            throw new StringAttributeTooLong('adresse', __CLASS__);
-        }
-        
-        $this->_adresse = $adresse;
+        $this->_commune = CheckTyper::isModel($adresse, Adresse::class, 'adresse', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return Commune
+     */
+    public function getCommune() {
+        return $this->_commune;
+    }
+    
+    /**
+     * 
+     * @param Commune $commune
+     * @throws BadTypeException
+     */
+    public function setCommune($commune) {
+        $this->_commune = CheckTyper::isModel($commune, Commune::class, 'commune', __CLASS__);
     }
 //</editor-fold>
 
