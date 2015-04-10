@@ -4,7 +4,22 @@
     require './view/Header.php';
 ?>
     <div id="center">
-        ICI les formulaires et listes
+<?php
+    //on regarde si on a cliqué sur une action
+    if(isset($_GET['action']) && isset($_GET['item']))
+    {
+        //on vérifie que la view existe
+        if(file_exists('./view/' . $_GET['action'] . '_' . $_GET['item'] . '.php')) {
+            include './view/' . $_GET['action'] . '_' . $_GET['item'] . '.php';
+        } else {
+            include './view/error404.php';
+        } 
+    }
+    else
+    {
+        echo '<p>accueil</p>';
+    }
+?>
     </div>
 <?php
     require './view/Footer.php';

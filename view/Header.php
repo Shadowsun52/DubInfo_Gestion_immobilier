@@ -11,6 +11,9 @@
         <header>
             <h1>Intranet</h1>
             <nav>
-                menu ICI
+                <ul>
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href="index.php?action=add&item=investisser">ajout invetisseur</a></li>
+                </ul>
             </nav>
         </header>
