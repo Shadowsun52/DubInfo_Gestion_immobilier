@@ -46,7 +46,10 @@ class Ville {
      */
     public function __construct($id = NULL, $code_postal = NULL, $nom = NULL, 
             $pays = NULL) {
-        ;
+        $this->setId($id);
+        $this->setCodePostal($code_postal);
+        $this->setNom($nom);
+        $this->setPays($pays);
     }
     
     /**
