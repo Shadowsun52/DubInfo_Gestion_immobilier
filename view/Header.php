@@ -8,8 +8,13 @@
         <link rel="stylesheet" href="CSS/styles.css">
         <script src="js/jquery-2.1.3.min.js"></script>
         <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
-        <script src="librairies/Zebra_date_picker/public/javascript/zebra_datepicker.js"></script>
-        
+<?php
+    if(isset($_GET['action'])) {
+?>
+        <script src="js/crud_ajax.js"></script>
+<?php
+    }
+?>
         <title>CRM Bestinvestment</title>
     </head>
     <body>

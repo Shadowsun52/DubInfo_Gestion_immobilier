@@ -17,10 +17,10 @@
     <div class="clear"></div>
 </div>
 
-<div class="row even">
+<div class="row">
 
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $select_pays ?></div>
+    <div class="cell"><?php echo $label_pays . $select_pays ?></div>
     
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
@@ -29,13 +29,13 @@
 <div class="row even">
 
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $select_cp ?></div>
-    <div class="cell"><?php echo $select_villes ?></div>
+    <div class="cell"><?php echo $label_cp . $select_cp ?></div>
+    <div class="cell"><?php echo $label_villes . $select_villes ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
 
-<div class="row even">
+<div class="row">
 
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_num_tel . $num_tel ?></div>
@@ -44,7 +44,7 @@
     <div class="clear"></div>
 </div>
 
-<div class="row">
+<div class="row even">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_mail . $mail ?></div>
     <div class="cell"><?php echo $label_num_tva . $num_tva ?></div>
@@ -53,6 +53,15 @@
 </div>
 
 <div class="row">
+
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $label_etat . $select_etat ?></div>
+    
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row even">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_remarque . $remarque ?></div>
     
@@ -60,7 +69,7 @@
     <div class="clear"></div>
 </div>
 
-<div class="row">
+<div class="row last">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $btnsubmit ?></div>
     
