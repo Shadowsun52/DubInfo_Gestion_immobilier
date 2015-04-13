@@ -1,0 +1,13 @@
+
+/*Je centre horizontalement le formulaire et son titre*/
+#formulaire, h2
+{
+   margin-left: auto;
+   margin-right: auto;
+   width: 50%; /* largeur obligatoire pour être centré */
+}
+
+h2
+{
+  color: grey;
+}

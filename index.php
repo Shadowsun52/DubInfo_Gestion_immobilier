@@ -9,9 +9,12 @@
     if(isset($_GET['action']) && isset($_GET['item']))
     {
         //on vérifie que la view existe
-        if(file_exists('./view/' . $_GET['action'] . '_' . $_GET['item'] . '.php')) {
-            include './view/' . $_GET['action'] . '_' . $_GET['item'] . '.php';
-        } else {
+        if(file_exists('./view/' . $_GET['action'] . '_' . $_GET['item'] . '.php'))
+        {
+            require './view/' . $_GET['action'] . '_' . $_GET['item'] . '.php';
+        }
+        else
+        {
             include './view/error404.php';
         } 
     }
