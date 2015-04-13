@@ -14,42 +14,21 @@ function addAjaxListener(btn_name, form_name) {
                 'url': 'ajax/' + url_param['action'] + '_' + url_param['item'] + '.php',
                 'type': 'post',
                 'data': $form.serialize(),
+                'dataType': 'json',
                 'success': function(data) {
-                    alert(data);
-                    $('#' + form_name)[0].reset();
+                    if(data.success) {
+                       alert(data.message); 
+                       $('#' + form_name)[0].reset();
+                    }
+                    else
+                    {
+                        alert(data.message);
+                    }
                 }
             });
         }
     });
 }
-
-$('#btnsubmit').bind('click', function(e) {
-    
-    e.preventDefault();
-    alert("pierre");
-    //on récupere le formulaire
-    var $form = $('form'),
-    //on lis les data du formulaire que l'on stocke dans une variable
-    $zf = $form.data('Zebra_Form');
-    //on vérifie que tout les champs sont bons
-    if ($zf.validate()) {
-
-        $.ajax({
-            //$form.attr('action') -> retourne l'action du form, avec son utilisation on pourrait generaliser la fonction d'appel ajax
-            'url': 'partAjax.php',
-            'type': 'post',
-            //contenu seiralize du formulaire
-            'data': $form.serialize(),
-            'success': function(data) {
-                alert(data);
-
-                //ici on simule le click sur le bouton reset pour nettoyer le
-                //formulaire
-                $("form")[0].reset();
-            }
-        });
-    }
-});
 
 // read a current page's GET URL variables and return them as an associative array.
 function getParamsUrl() {

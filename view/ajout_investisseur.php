@@ -1,6 +1,9 @@
 <h2>Gestion des investisseurs</h2>
 <div id="formulaire">
     <?php
+    use DubInfo_gestion_immobilier\model\Investisseur;
+    use DubInfo_gestion_immobilier\model\Adresse;
+    
     //formulaire qui permet d'ajouter un investisseur
     
     $form_investisseur = new Zebra_Form('form_investisseur');
@@ -13,7 +16,7 @@
     
     $form_investisseur->add('label','label_nom', 'nom', 'Nom');
     $nom = $form_investisseur->add('text', 'nom', null, array(
-                                    'maxlength' => 45
+                                    'maxlength' => Investisseur::MAX_SIZE_NOM
                                 ));
     $nom->set_rule(array(
                'required' => array('error', 'Nom requis!'), 
@@ -21,23 +24,23 @@
     
     $form_investisseur->add('label','label_prenom', 'prenom', 'Prénom');
     $prenom = $form_investisseur->add('text', 'prenom', null, array(
-                                    'maxlength' => 45
+                                    'maxlength' => Investisseur::MAX_SIZE_PRENOM
                                 ));
 
     
     $form_investisseur->add('label','label_num_tel', 'num_tel', 'Numéro de téléphone');
     $num_tel = $form_investisseur->add('text', 'num_tel', null, array(
-                                    'maxlength' => 20
+                                    'maxlength' => Investisseur::MAX_SIZE_NUM
                                 ));
     
     $form_investisseur->add('label','label_num_gsm', 'num_gsm', 'Numéro de GSM');
     $num_gsm = $form_investisseur->add('text', 'num_gsm', null, array(
-                                    'maxlength' => 20
+                                    'maxlength' => Investisseur::MAX_SIZE_NUM
                                 ));
     
     $form_investisseur->add('label','label_mail', 'mail', 'Adresse email');
     $mail = $form_investisseur->add('text', 'mail', null, array(
-                                    'maxlength' => 20
+                                    'maxlength' => Investisseur::MAX_SIZE_MAIL
                                 ));
     $mail->set_rule(array(
                 'email'    => array('error', 'L\'adresse email est incorrecte!'),
@@ -45,16 +48,16 @@
     
     $form_investisseur->add('label','label_num_tva', 'num_tva', 'Numéro de TVA');
     $tva = $form_investisseur->add('text', 'num_tva', null, array(
-                                    'maxlength' => 20
+                                    'maxlength' => Investisseur::MAX_SIZE_TVA
                                 ));
     
     $form_investisseur->add('label','label_rue', 'rue', 'Rue');
     $rue = $form_investisseur->add('text', 'rue', null, array(
-                                    'maxlength' => 70
+                                    'maxlength' => Adresse::MAX_SIZE_RUE
                                 ));
     $form_investisseur->add('label','label_numero', 'numero', 'N°');
     $numero = $form_investisseur->add('text', 'numero', null, array(
-                                    'maxlength' => 10
+                                    'maxlength' => Adresse::MAX_SIZE_NUMERO
                                 ));
     
     $form_investisseur->add('label','label_boite', 'boite', 'Boîte');
@@ -68,9 +71,9 @@
     $pays->add_options(array(
     //ceci ne fonctionne pas (choisissez un pays)    
     ''  => '- Choisissez un pays -',
-    '1' => 'Belgique',
-    '2 '=> 'France',
-    '3' => 'Luxembourg',
+    'Belgique' => 'Belgique',
+    'France '=> 'France',
+    'Luxembourg' => 'Luxembourg',
     'Autre' => 'Autre'
     ), true);
     
@@ -94,7 +97,7 @@
     //remarque
     $form_investisseur->add('label','label_remarque', 'remarque', 'Remarque');
     $remarque = $form_investisseur->add('textarea', 'remarque', null, array(
-                                    'maxlength' => 500
+                                    'maxlength' => Investisseur::MAX_SIZE_COMMENTAIRE
                                 ));
     
     //Il ne faut pas oublier d'ajouter le bouton submit
