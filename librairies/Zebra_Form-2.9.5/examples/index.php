@@ -80,7 +80,7 @@ function dump()
 
                             echo '<table class="results"><thead><tr><td colspan="2">Submitted values</td></tr></thead>';
 
-                            foreach ($_POST as $key => $value) {
+                            foreach ($_data as $key => $value) {
 
                                 if (strpos($key, 'name_') !== 0 && strpos($key, 'timer_') !== 0 && strpos($key, 'response_') !== 0)
 

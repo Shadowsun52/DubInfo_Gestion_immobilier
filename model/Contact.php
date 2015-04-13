@@ -70,6 +70,7 @@ class Contact extends Person{
         $this->setMail($mail);
         $this->setCommentaire($commentaire);
         $this->setEtat($etat);
+        $this->setAdresse($adresse);
     }
     
     /**

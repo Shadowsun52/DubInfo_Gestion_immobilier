@@ -200,7 +200,7 @@ if (isset($_GET['captcha']) && ($_GET['captcha'] == 1 || $_GET['captcha'] == 2))
             $file['size'] = $_FILES[$control]['size'];
 
         // if there were problems uploading the file
-        } elseif (empty($_POST) && empty($_FILES) && isset($_SERVER['CONTENT_LENGTH']) && isset($_SERVER['CONTENT_TYPE']) && (strpos($_SERVER['CONTENT_TYPE'], 'multipart/form-data') !== false || strpos($_SERVER['CONTENT_TYPE'], 'application/x-www-form-urlencoded') !== false)) {
+        } elseif (empty($_data) && empty($_FILES) && isset($_SERVER['CONTENT_LENGTH']) && isset($_SERVER['CONTENT_TYPE']) && (strpos($_SERVER['CONTENT_TYPE'], 'multipart/form-data') !== false || strpos($_SERVER['CONTENT_TYPE'], 'application/x-www-form-urlencoded') !== false)) {
 
             // send these values
             $file['name'] = '';

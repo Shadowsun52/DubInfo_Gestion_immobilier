@@ -11,14 +11,15 @@ function addAjaxListener(btn_name, form_name) {
         //on vérifie que tout les champs sont bons
         if ($zf.validate()) {
             $.ajax({
-                'url': 'ajax/' + url_param['action'] + '_' + url_param['item'] + '.php',
+                'url': 'controller/add_ajax.php',   //appel de l'ajax d'ajout
                 'type': 'post',
-                'data': $form.serialize(),
+                //on retour le type de l'item et le contenu du form
+                'data': 'item=' + url_param['item'] +'&' + $form.serialize(),
                 'dataType': 'json',
                 'success': function(data) {
                     if(data.success) {
-                       alert(data.message); 
-                       $('#' + form_name)[0].reset();
+                        alert(data.message); 
+                        $('#' + form_name)[0].reset();
                     }
                     else
                     {
