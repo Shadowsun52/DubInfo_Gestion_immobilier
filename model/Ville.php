@@ -23,7 +23,7 @@ class Ville {
      *
      * @var string
      */
-    private $_pays;
+    private $_code_postal;
     
     /**
      *
@@ -74,7 +74,7 @@ class Ville {
      * @return string
      */
     public function getCodePostal() {
-        return $this->_pays;
+        return $this->_code_postal;
     }
     
     /**
@@ -90,7 +90,7 @@ class Ville {
             throw new StringAttributeTooLong('code postal', __CLASS__);
         }
         
-        $this->_pays = $_code_postal;
+        $this->_code_postal = $_code_postal;
     }
     
     /**

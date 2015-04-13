@@ -27,11 +27,6 @@ class Contact extends Person{
     /**
      * @var string 
      */
-    private $_num_fax;
-    
-    /**
-     * @var string 
-     */
     private $_mail;
     
     /**
@@ -67,12 +62,11 @@ class Contact extends Person{
      * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
-            $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, 
-            $mail = NULL, $commentaire = NULL, $etat = NULL, $adresse = NULL) {
+            $num_telephone = NULL, $num_gsm = NULL, $mail = NULL, 
+            $commentaire = NULL, $etat = NULL, $adresse = NULL) {
         parent::__construct($id, $nom, $prenom);
         $this->setNumTelephone($num_telephone);
         $this->setNumGsm($num_gsm);
-        $this->setNumFax($num_fax);
         $this->setMail($mail);
         $this->setCommentaire($commentaire);
         $this->setEtat($etat);
@@ -124,30 +118,6 @@ class Contact extends Person{
         }
         
         $this->_num_gsm = $_num_gsm;
-    }
-    
-    /**
-     * 
-     * @return string
-     */
-    public function getNumFax() {
-        return $this->_num_fax;
-    }
-    
-    /**
-     * 
-     * @param string $num_fax
-     * @throws BadTypeException
-     * @throws StringAttributeTooLong
-     */
-    public function setNumFax($num_fax) {
-        $_num_fax = CheckTyper::isString($num_fax, 'num_fax', __CLASS__);
-        
-        if(strlen($_num_fax) > self::MAX_SIZE_NUM) {
-            throw new StringAttributeTooLong('num_fax', __CLASS__);
-        }
-        
-        $this->_num_fax = $_num_fax;
     }
     
     /**

@@ -65,11 +65,11 @@ class Investisseur extends Contact{
      * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL,
-            $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL, 
-            $adresse = NULL, $etat = NULL, $num_tva = NULL, $commentaire = NULL,
-            $visites = NULL, $lettres_mission = NULL, $offres = NULL, $projets = NULL) {
-        parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $num_fax,
-                $mail,$commentaire, $etat, $adresse);
+            $num_telephone = NULL, $num_gsm = NULL, $mail = NULL, $adresse = NULL, 
+            $etat = NULL, $num_tva = NULL, $commentaire = NULL, $visites = NULL, 
+            $lettres_mission = NULL, $offres = NULL, $projets = NULL) {
+        parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $mail,
+                $commentaire, $etat, $adresse);
         $this->setNumTva($num_tva);
         $this->setVisites($visites);
         $this->setLettresMission($lettres_mission);

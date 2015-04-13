@@ -61,12 +61,11 @@ class Locataire extends Contact{
      * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
-            $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, $mail = NULL, 
-            $budget = NULL, $date_emmenagement = NULL, $commentaire = NULL, 
-            $etat = NULL, $adresse = NULL, $sources = NULL,
-            $communes_preferees = NULL, $locations = NULL) {
-        parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, 
-                $num_fax, $mail, $commentaire, $etat, $adresse);
+            $num_telephone = NULL, $num_gsm = NULL, $mail = NULL, $budget = NULL, 
+            $date_emmenagement = NULL, $commentaire = NULL, $etat = NULL, 
+            $adresse = NULL, $sources = NULL, $communes_preferees = NULL, $locations = NULL) {
+        parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $mail,
+                $commentaire, $etat, $adresse);
         $this->setBudget($budget);
         $this->setDateEmmenagement($date_emmenagement);
         $this->setSources($sources);

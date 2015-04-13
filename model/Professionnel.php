@@ -41,11 +41,11 @@ class Professionnel extends Contact {
      * @throws StringAttributeTooLong
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL, 
-            $num_telephone = NULL, $num_gsm = NULL, $num_fax = NULL, 
-            $mail = NULL, $commentaire = NULL, $num_tva = NULL, $etat = NULL, 
-            $adresse = NULL, $metier = NULL) {
-        parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, 
-                $num_fax, $mail, $commentaire, $etat, $adresse);
+            $num_telephone = NULL, $num_gsm = NULL, $mail = NULL, 
+            $commentaire = NULL, $num_tva = NULL, $etat = NULL, $adresse = NULL, 
+            $metier = NULL) {
+        parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $mail, 
+                $commentaire, $etat, $adresse);
         $this->setNumTva($num_tva);
         $this->setMetier($metier);
     }
