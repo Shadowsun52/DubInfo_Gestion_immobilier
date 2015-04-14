@@ -10,7 +10,6 @@ function addAjaxListener(btn_name, form_name) {
         $zf = $form.data('Zebra_Form');
         //on vérifie que tout les champs sont bons
         if ($zf.validate()) {
-            console.log($('#select_id').val());
             /* On regarde si c'est un ajout ou une édition
              * pour déterminer quel fichier php appeler
              */
@@ -29,7 +28,11 @@ function addAjaxListener(btn_name, form_name) {
                 'dataType': 'json',
                 'success': function(data) {
                     if(data.success) {
-                        alert(data.message); 
+                        alert(data.message);
+                        //si c'est un ajout on met à jour la liste
+                        if(action === 'add') {
+                            refreshList(url_param['item']);
+                        }
                         $('#' + form_name)[0].reset();
                     }
                     else
@@ -75,6 +78,30 @@ function addAjaxForced($form, url_param) {
                 alert(data.erreur);
             }
         }
+    });
+}
+
+//fonction ajax qui met à jour la liste d'item du formulaire
+function refreshList(item) {
+    $.ajax({
+        type: 'post',
+        url: 'controller/refresh_list_ajax.php',
+        data: "item=" + item,
+        dataType: 'json',
+        success: function(retour_php)
+        {
+            console.log(retour_php);
+            $("#select_id").empty();  //on vide la liste
+            $("#select_id").append($('<option/>').val('').html('- Nouveau -')); //première valeur de la liste déroulante
+            $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
+            {
+                $("#select_id").append($('<option/>').val(cont.id).html(cont.nom + ' ' + cont.prenom ));    
+            });
+        },
+        error: function(retour_php)
+        {
+            alert("Erreur avec la communication serveur.");
+        } 
     });
 }
 

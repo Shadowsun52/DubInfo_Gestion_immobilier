@@ -6,6 +6,7 @@ use DubInfo_gestion_immobilier\model\Investisseur;
 use DubInfo_gestion_immobilier\model\Adresse;
 use DubInfo_gestion_immobilier\model\Ville;
 use DubInfo_gestion_immobilier\model\Etat;
+use DubInfo_gestion_immobilier\Exception\PDOException;
 /**
  * Description of BusinessCRUD
  *
@@ -23,11 +24,22 @@ class BusinessCRUD {
     }
     
     /**
+     * Fonction qui retourne la liste des investisseurs ne comprenant que l'id
+     * le nom et le prénom
+     * @return array[Investisseur]
+     * @throws PDOException
+     */
+    public function readListInvestisseur() {
+        return $this->_getDaoInvestisseur()->readListInvestisseur();
+    }
+    
+    /**
      * Méthode qui recois les données d'un formulaire et le convertir en objet 
      * Investisseur et qui l'envoie à la couche data
      * dans la DB
      * @param array[mixed] $data
      * @return array[mixed] données a retouner à l'utilisateur
+     * @throws PDOException
      */
     public function addInvestisseur($data) {
         $ville = new Ville(null, $data['select_cp'], $data['select_villes'], $data['select_pays']);

@@ -11,7 +11,7 @@ use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
  *
  * @author Jenicot Alexandre
  */
-class Investisseur extends Contact{
+class Investisseur extends Contact implements \JsonSerializable{
     const MAX_SIZE_ADRESSE = 70;
     const MAX_SIZE_TVA = 45;
     
@@ -276,4 +276,12 @@ class Investisseur extends Contact{
                 'projets', __CLASS__);
     }
 //</editor-fold>
+    
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'nom' => $this->getNom(),
+            'prenom' => $this->getPrenom(),
+        ];
+    }
 }

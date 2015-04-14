@@ -17,6 +17,31 @@ class DAOInvestisseur {
     }
     
     /**
+     * Fonction qui lit tous les investisseurs pour les mettres dans une listes
+     * Donc pas toute les informations sont lu pour l'investisseur, uniquement
+     * l'id, le nom et le prénom
+     * @return array[Investisseur]
+     * @throws PDOException
+     */
+    public function readListInvestisseur() {
+        try{
+            $sql = "SELECT id, nom, prenom FROM investisseur ORDER BY nom, prenom";
+            $request = $this->_getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                $investisseurs[] = new Investisseur($result['id'], 
+                        $result['nom'], $result['prenom']);
+            }
+            return isset( $investisseurs) ?  $investisseurs : NULL;
+            
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
+    }
+    
+    /**
      * Méthode permettant d'ajouter un investisseur dans la DB
      * @param Investisseur $investisseur
      * @throws PDOException
