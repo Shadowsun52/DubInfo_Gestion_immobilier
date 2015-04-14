@@ -9,7 +9,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-class Contact extends Person{
+class Contact extends Person implements \JsonSerializable{
     const MAX_SIZE_NUM = 20;
     const MAX_SIZE_MAIL = 70;
     const MAX_SIZE_COMMENTAIRE = 500;
@@ -202,5 +202,17 @@ class Contact extends Person{
     public function setAdresse($adresse) {
         $this->_adresse = CheckTyper::isModel($adresse, Adresse::class, 
                 'adresse', __CLASS__);
+    }
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(), 
+                array(
+                    'num_tel' =>  $this->getNumTelephone(),
+                    'num_gsm' => $this->getNumGsm(),
+                    'mail' => $this->getMail(),
+                    'commentaire' => $this->getCommentaire(),
+                    'etat' => $this->getEtat(),
+                    'adresse' => $this->getAdresse()
+                ));
     }
 }

@@ -7,6 +7,7 @@
 ?>
     <script type="text/javascript">
         addAjaxListener("btnsubmit");
+        changeAjaxListener("select_id");
     </script>
 <?php
     }

@@ -278,10 +278,9 @@ class Investisseur extends Contact implements \JsonSerializable{
 //</editor-fold>
     
     public function jsonSerialize() {
-        return [
-            'id' => $this->getId(),
-            'nom' => $this->getNom(),
-            'prenom' => $this->getPrenom(),
-        ];
+        return array_merge(parent::jsonSerialize(),
+                array(
+                    'num_tva' => $this->getNumTva(),
+                ));
     }
 }

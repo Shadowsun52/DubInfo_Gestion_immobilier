@@ -34,6 +34,20 @@ class BusinessCRUD {
     }
     
     /**
+     * Méthode qui interroge la couche data pour récuperer un Investisseur 
+     * via son id
+     * @param array[mixed] $data
+     * @return mixed
+     */
+    public function readInvestisseur($data) {
+        if(isset($data['id'])) {
+            return $this->_getDaoInvestisseur()->readInvestisseur($data['id']);    
+        }
+        
+        return array('success' => false, 'error' => "Aucun identifiant n'a été reçu."); 
+    }
+    
+    /**
      * Méthode qui recois les données d'un formulaire et le convertir en objet 
      * Investisseur et qui l'envoie à la couche data
      * dans la DB

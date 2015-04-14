@@ -13,13 +13,13 @@ function addAjaxListener(btn_name, form_name) {
             /* On regarde si c'est un ajout ou une édition
              * pour déterminer quel fichier php appeler
              */
-            if($('select_id').val() === undefined) {
+            if($('#select_id').val() === '') {
                 var action = 'add';
             }
             else {
                 var action = 'edit';
             }
-           
+            
             $.ajax({
                 'url': 'controller/gestion_ajax.php',
                 'type': 'post',
@@ -37,25 +37,56 @@ function addAjaxListener(btn_name, form_name) {
                     }
                     else
                     {
-                        /* On regarde si on a rencontré un problème de doublon 
-                         * ou si on a rencontré une erreur
-                         */
-                        if(data.cause) {
-                            /* Si c'est un problème de doublon on demande si 
-                             * l'utilisateur veut quand même ajouter l'utilisateur
-                             */
-                            if(confirm(data.message)) {
-                                alert('NOPE');  
-                            }
-                        }
-                        else
-                        {
+//                        /* On regarde si on a rencontré un problème de doublon 
+//                         * ou si on a rencontré une erreur
+//                         */
+//                        if(data.cause) {
+//                            /* Si c'est un problème de doublon on demande si 
+//                             * l'utilisateur veut quand même ajouter l'utilisateur
+//                             */
+//                            if(confirm(data.message)) {
+//                                alert('NOPE');  
+//                            }
+//                        }
+//                        else
+//                        {
                             alert(data.erreur);  
-                        }
-                        
+//                        }
                     }
                 }
             });
+        }
+    });
+}
+
+/* fonction qui lie un listener 'change' sur une liste pour savoir quand 
+ * actualiser le formulaire
+ */
+function changeAjaxListener(select_name) {
+    $('#' + select_name).bind('change', function(e) {
+        //on regarde si on a choisi un élement ou l'option d'ajout
+        console.log($('#select_id').val());
+        if($('#select_id').val() === '') {
+            //on change le text du bouton submit
+            $("#btnsubmit").val("Ajouter");
+            
+            //On retire le bouton de suppression
+            $("#deleting").remove();
+            
+            //on vide le formulaire
+            url_param = getParamsUrl();
+            $('#form_' + url_param['item'])[0].reset();
+        }
+        else {
+            //on change le text du bouton submit
+            $("#btnsubmit").val("Editer");
+            
+            //ajout du bouton de suppression
+            $("#btnsubmit").parent().after('<div id="deleting" class="cell"/>');
+            $("#deleting").append('<button id="btn_delete" class="submit">Supprimer</button>');
+            
+            //on remplie le formulaire avec les informations de l'élement
+            feedForm();
         }
     });
 }
@@ -85,12 +116,11 @@ function addAjaxForced($form, url_param) {
 function refreshList(item) {
     $.ajax({
         type: 'post',
-        url: 'controller/refresh_list_ajax.php',
-        data: "item=" + item,
+        url: 'controller/gestion_ajax.php',
+        data: "action=readList&item=" + item,
         dataType: 'json',
         success: function(retour_php)
         {
-            console.log(retour_php);
             $("#select_id").empty();  //on vide la liste
             $("#select_id").append($('<option/>').val('').html('- Nouveau -')); //première valeur de la liste déroulante
             $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
@@ -118,3 +148,74 @@ function getParamsUrl() {
     }
     return vars;
 };
+
+//Fonctions pour remplir des formulaires lors du choix de l'édition
+/*
+ * Fonction générique pour remplir les formulaires lors de l'édition
+ */
+function feedForm() {
+    url_param = getParamsUrl();
+    //on récupere l'id de l'élément
+    id = $("#select_id").val();
+    
+    //on récupere l'object en format json
+    $.ajax({
+        type: 'post',
+        url: 'controller/gestion_ajax.php',
+        data: "action=read&item=" + url_param['item'] + '&id=' + id ,
+        dataType: 'json',
+        success: function(retour_php)
+        {
+            if(retour_php.success === false)
+            {
+                alert(retour_php.error);
+            }
+            else
+            {
+                //pour mettre la premier lettre en majuscule
+                item = url_param['item'].replace(/^\w/, 
+                    function($0) { return $0.toUpperCase(); });
+
+                //on appel la bonne fonction pour remplir le formulaire 
+                window['feed' + item + 'Form'](retour_php);
+            }
+        },
+        error: function(retour_php)
+        {
+            alert("Erreur avec la communication serveur.");
+        } 
+    });
+}
+
+
+/* 
+ * Fonctions pour remplir les champs lié au personne 
+ * c'est à dire les parties commune à Investisseur, Locataire et Professionnel
+ * - data : les valeurs en json
+ */
+function feedPersonForm(data) {
+    $("#nom").val(data.nom);
+    $("#prenom").val(data.prenom);
+    $("#rue").val(data.adresse.rue);
+    $("#numero").val(data.adresse.numero);
+    $("#boite").val(data.adresse.boite);
+    ///////////////////////////////TODO gestion liste///////////////////////////////
+    $("#select_pays").val(data.adresse.ville.pays);
+    
+    $("#num_tel").val(data.num_tel);
+    $("#num_gsm").val(data.num_gsm);
+    $("#mail").val(data.mail);
+    $("#remarque").val(data.commentaire);
+}
+
+/*
+ * Fonction pour remplir les champs du formulaire d'un investisseur selectionner
+ */
+function feedInvestisseurForm(data) {
+    //on remplie les parties commune au Personne
+    feedPersonForm(data);
+    
+    //partie ne consernant que l'investisseur
+    $("#num_tva").val(data.num_tva);
+    $("#select_etat").val(data.etat.id);
+}

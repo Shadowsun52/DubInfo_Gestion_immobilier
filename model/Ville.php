@@ -8,7 +8,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-class Ville {
+class Ville implements \JsonSerializable{
     const MAX_SIZE_CODE_POSTAL = 10;
     const MAX_SIZE_NOM = 70;
     const MAX_SIZE_PAYS = 70;
@@ -140,4 +140,14 @@ class Ville {
         
         $this->_pays = $_pays;
     }
+
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'code_postal' => $this->getCodePostal(),
+            'nom' => $this->getNom(),
+            'pays' => $this->getPays()
+        ];
+    }
+
 }

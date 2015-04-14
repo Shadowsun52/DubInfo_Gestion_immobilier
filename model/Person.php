@@ -9,7 +9,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-abstract class Person {
+abstract class Person implements \JsonSerializable{
     const MAX_SIZE_NOM = 45;
     const MAX_SIZE_PRENOM = 45;
     
@@ -105,5 +105,13 @@ abstract class Person {
         }
         
         $this->_prenom = $_prenom;
+    }
+    
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'nom' => $this->getNom(),
+            'prenom' => $this->getPrenom()
+        ];
     }
 }

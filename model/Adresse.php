@@ -8,7 +8,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-class Adresse {
+class Adresse implements \JsonSerializable{
     const MAX_SIZE_RUE = 70;
     const MAX_SIZE_NUMERO = 6;
     const MAX_SIZE_BOITE = 10;
@@ -144,4 +144,14 @@ class Adresse {
     public function setVille($ville) {
         $this->_ville = CheckTyper::isModel($ville, Ville::class, 'ville', __CLASS__);
     }
+
+    public function jsonSerialize() {
+        return [
+            'rue' => $this->getRue(),
+            'numero' => $this->getNumero(),
+            'boite' => $this->getBoite(),
+            'ville' => $this->getVille()
+        ];
+    }
+
 }

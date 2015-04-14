@@ -2,6 +2,9 @@
 namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\Investisseur;
+use DubInfo_gestion_immobilier\model\Adresse;
+use DubInfo_gestion_immobilier\model\Ville;
+use DubInfo_gestion_immobilier\model\Etat;
 use DubInfo_gestion_immobilier\Exception\PDOException;
 /**
  * Classe permettant des interactions avec la base de données pour les objets
@@ -40,6 +43,41 @@ class DAOInvestisseur {
             throw new PDOException($ex->getMessage());
         }
     }
+    
+    /**
+     * Fonction qui retourne un investisseur par rapport à un id donné
+     * @param int $id
+     * @return Investisseur L'investisseur lut dans la base de donnée
+     * @throws PDOException
+     */
+    public function readInvestisseur($id) {
+        try {
+            $sql = "SELECT i.*, e.libelle FROM investisseur i 
+                    JOIN etat e ON i.etat_id = e.id WHERE i.id = :id";
+            $request = $this->_getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            //création de l'objet adresse
+            $ville = new Ville(null, $result['adresse_code_postal'], 
+                    $result['adresse_ville'], $result['adresse_pays']);
+            $adresse = new Adresse($result['adresse_rue'], 
+                    $result['adresse_numero'], $result['adresse_boite'], $ville);
+            
+            //création de l'objet etat
+            $etat = new Etat($result['etat_id'], $result['libelle']);
+            
+            //création de l'objet investisseur
+            $investisseur = new Investisseur($id, $result['nom'], 
+                    $result['prenom'], $result['num_telephone'], 
+                    $result['num_gsm'], $result['mail'], $adresse, $etat, 
+                    $result['num_tva'], $result['commentaire']);
+            
+            return $investisseur;
+        } catch (Exception $exc) {
+            throw new PDOException($ex->getMessage());
+        }
+        }
     
     /**
      * Méthode permettant d'ajouter un investisseur dans la DB
