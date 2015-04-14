@@ -9,10 +9,12 @@
     $form_investisseur = new Zebra_Form('form_investisseur');
     $form_investisseur->language("francais");
     
-    //champ cacher qui contient l'id de l'investisseur
-    $id = $form_investisseur->add('hidden', 'id', null, array(
-                                    'maxlength' => 5
-                                ));
+    //liste déroulante avec les investisseur déjà existant
+    $form_investisseur->add('label','label_id', 'select_id', 'Liste des investisseurs');
+    $id = $form_investisseur->add('select', 'select_id');
+    $id->add_options(array(
+        '' => '- Nouveau -',
+    ),TRUE);
     
     $form_investisseur->add('label','label_nom', 'nom', 'Nom');
     $nom = $form_investisseur->add('text', 'nom', null, array(

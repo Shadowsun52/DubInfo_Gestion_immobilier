@@ -23,7 +23,7 @@
             <nav>
                 <ul>
                     <li><a href="index.php">Accueil</a></li>
-                    <li><a href="index.php?action=ajout&item=investisseur">Gestion des invetisseurs</a></li>
+                    <li><a href="index.php?action=gestion&item=investisseur">Gestion des invetisseurs</a></li>
                     <li><a href="index.php?action=ajout&item=locataire">Gestion des locataires</a></li>
                     <li><a href="index.php?action=ajout&item=etatLocataire">Gestion des états des locataires</a></li>
                     <li><a href="index.php?action=ajout&item=sourceLocataire">Gestion des source des locataires</a></li>

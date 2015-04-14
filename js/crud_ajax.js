@@ -10,11 +10,22 @@ function addAjaxListener(btn_name, form_name) {
         $zf = $form.data('Zebra_Form');
         //on vérifie que tout les champs sont bons
         if ($zf.validate()) {
+            console.log($('#select_id').val());
+            /* On regarde si c'est un ajout ou une édition
+             * pour déterminer quel fichier php appeler
+             */
+            if($('select_id').val() === undefined) {
+                var action = 'add';
+            }
+            else {
+                var action = 'edit';
+            }
+           
             $.ajax({
-                'url': 'controller/add_ajax.php',   //appel de l'ajax d'ajout
+                'url': 'controller/gestion_ajax.php',
                 'type': 'post',
                 //on retour le type de l'item et le contenu du form
-                'data': 'item=' + url_param['item'] +'&' + $form.serialize(),
+                'data': 'action=' +  action +'&item=' + url_param['item'] +'&' + $form.serialize(),
                 'dataType': 'json',
                 'success': function(data) {
                     if(data.success) {
@@ -23,10 +34,46 @@ function addAjaxListener(btn_name, form_name) {
                     }
                     else
                     {
-                        alert(data.message);
+                        /* On regarde si on a rencontré un problème de doublon 
+                         * ou si on a rencontré une erreur
+                         */
+                        if(data.cause) {
+                            /* Si c'est un problème de doublon on demande si 
+                             * l'utilisateur veut quand même ajouter l'utilisateur
+                             */
+                            if(confirm(data.message)) {
+                                alert('NOPE');  
+                            }
+                        }
+                        else
+                        {
+                            alert(data.erreur);  
+                        }
+                        
                     }
                 }
             });
+        }
+    });
+}
+
+//appel en ajax de l'ajout de manière forcé, c-a-d sans vérification de doublons
+function addAjaxForced($form, url_param) {
+    $.ajax({
+        'url': 'controller/add_ajax_forced.php',
+        'type': 'post',
+        //on retour le type de l'item et le contenu du form
+        'data': 'item=' + url_param['item'] +'&' + $form.serialize(),
+        'dataType': 'json',
+        'success': function(data) {
+            if(data.success) {
+                alert(data.message); 
+                $('#' + form_name)[0].reset();
+            }
+            else
+            {
+                alert(data.erreur);
+            }
         }
     });
 }

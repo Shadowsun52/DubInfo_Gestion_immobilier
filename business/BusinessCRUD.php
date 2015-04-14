@@ -27,7 +27,7 @@ class BusinessCRUD {
      * Investisseur et qui l'envoie à la couche data
      * dans la DB
      * @param array[mixed] $data
-     * @return string Message a retouner à l'utilisateur
+     * @return array[mixed] données a retouner à l'utilisateur
      */
     public function addInvestisseur($data) {
         $ville = new Ville(null, $data['select_cp'], $data['select_villes'], $data['select_pays']);
@@ -37,8 +37,17 @@ class BusinessCRUD {
         $investisseur = new Investisseur(null, $data['nom'], $data['prenom'], 
             $data['num_tel'], $data['num_gsm'], $data['mail'], 
             $adresse, $etat, $data['num_tva'], $data['remarque']);
+        
+        if($this->_getDaoInvestisseur()->checkDuplicateInvestisseur($investisseur))
+        {
+            return array('success' => false, 
+                         'cause' => 'duplicate', 
+                         'message' => "Un investisseur avec le même nom et prénom "
+                . "existe déjà, Voulez-vous quand même rajouter celui-ci ?");
+        }
+        
         $this->_getDaoInvestisseur()->addInvestisseur($investisseur);
-        return "L'investisseur a été ajouté avec succès";
+        return array('success' => true, 'message' => "L'investisseur a été ajouté avec succès");
     }
     
     /**
