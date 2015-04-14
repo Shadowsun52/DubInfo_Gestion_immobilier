@@ -23,14 +23,15 @@ class BusinessCRUD {
     }
     
     /**
-     * Méthode qui recois les données d'un formulaire et qui sauvegarde l'investisseur
+     * Méthode qui recois les données d'un formulaire et le convertir en objet 
+     * Investisseur et qui l'envoie à la couche data
      * dans la DB
      * @param array[mixed] $data
-     * @return string
+     * @return string Message a retouner à l'utilisateur
      */
     public function addInvestisseur($data) {
         $ville = new Ville(null, $data['select_cp'], $data['select_villes'], $data['select_pays']);
-        $adresse = new Adresse($data['rue'], $data['numero'], $ville);
+        $adresse = new Adresse($data['rue'], $data['numero'], $data['boite'], $ville);
         $etat = new Etat(1); //temporaire pour tester
 //        $etat = new Etat($_POST['select_etat'])// la vrai ligne à mettre quand la DB et le reste sera opérationnel     
         $investisseur = new Investisseur(null, $data['nom'], $data['prenom'], 

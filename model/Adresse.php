@@ -11,6 +11,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
 class Adresse {
     const MAX_SIZE_RUE = 70;
     const MAX_SIZE_NUMERO = 6;
+    const MAX_SIZE_BOITE = 10;
     const MAX_SIZE_VILLE = 70;
     
     /**
@@ -27,6 +28,12 @@ class Adresse {
     
     /**
      *
+     * @var string 
+     */
+    private $_boite;
+    
+    /**
+     *
      * @var Ville
      */
     private $_ville;
@@ -35,13 +42,16 @@ class Adresse {
      * 
      * @param string $rue
      * @param string $numero
+     * @param string $boite 
      * @param Ville $ville
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      */
-    public function __construct($rue = NULL, $numero = NULL, $ville = NULL) {
+    public function __construct($rue = NULL, $numero = NULL, $boite = NULL, 
+            $ville = NULL) {
         $this->setRue($rue);
         $this->setNumero($numero);
+        $this->setBoite($boite);
         $this->setVille($ville);
     }
     
@@ -91,6 +101,30 @@ class Adresse {
         }
         
         $this->_numero = $_numero;
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getBoite() {
+        return $this->_boite;
+    }
+    
+    /**
+     * 
+     * @param string $boite
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
+    public function setBoite($boite) {
+        $_boite = CheckTyper::isString($boite, 'boite', __CLASS__);
+        
+        if(strlen($_boite) > self::MAX_SIZE_BOITE) {
+            throw new StringAttributeTooLong('boite', __CLASS__);
+        }
+        
+        $this->_boite = $_boite;
     }
     
     /**

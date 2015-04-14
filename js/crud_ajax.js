@@ -1,4 +1,4 @@
-//ici on ajout un script qui réagir au clique du bouton submit
+//ici on ajout un script qui réagit au clique du bouton submit
 function addAjaxListener(btn_name, form_name) {
     url_param = getParamsUrl();
     var form_name = form_name || "form_" + url_param['item'];
