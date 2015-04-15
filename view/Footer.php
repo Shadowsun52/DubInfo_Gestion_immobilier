@@ -8,7 +8,7 @@
     <script type="text/javascript">
         addAjaxListener("btnsubmit");
         changeAjaxListener("select_id");
-        addAdresseListListener();
+        addListCountryListener();
     </script>
 <?php
     }

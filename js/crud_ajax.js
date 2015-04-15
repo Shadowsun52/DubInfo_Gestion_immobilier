@@ -36,6 +36,7 @@ function addAjaxListener(btn_name, form_name) {
                         $("#select_id").val(id);
                         if(action === 'add') {
                             $('#' + form_name)[0].reset();
+                            putFormListAddress();
                         }
                     }
                     else

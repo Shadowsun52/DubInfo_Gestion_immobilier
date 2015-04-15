@@ -1,29 +1,15 @@
-//Fonction permettant d'ajout les écouteurs d'événement au liste des adresses
-function addAdresseListListener() {
+//Fonction permettant d'ajout l'écouteurs d'événement pour la liste des pays
+function addListCountryListener() {
     //écouteur d'événement sur la liste pays pour générer la liste des codes postaux
     $('#select_pays').bind('change', function(e) {
         if($("#select_pays").val() === 'Autre') {
-            //TODO le choix autre 
-            console.log("autre");
+            putFormOtherAddress();
         } 
         else {
-            $("#select_cp").empty();
-            $("#select_cp").append($("<option/>").val("").html("- choisissez un code postal -"));
-            
-            //on vide la liste des pays
-            $("#select_villes").empty();
-            $("#select_villes").append($("<option/>").val("").html("- choisissez une ville -"));
-            $("#select_villes").attr("disabled",true);
-            $("#label_villes").addClass("disabled");
+            putFormListAddress();
             
             //on regarde si on a sélectionner un pays ou non
-            if($("#select_pays").val() === '') {
-                $("#select_cp").attr("disabled",true);
-                $("#label_cp").addClass("disabled");
-            }
-            else {
-                $("#select_cp").removeAttr("disabled");
-                $("#label_cp").removeClass("disabled");
+            if($("#select_pays").val() !== '') {
                 pays_id = $("#select_pays option:selected").index();
                 
                 $.ajax({
@@ -47,20 +33,20 @@ function addAdresseListListener() {
             }
         }
     });
-    
+}
+
+//Fonction permettant d'ajout l'écouteurs d'événement pour la liste des codes postaux
+function addListPostalCodeListener() { 
     $('#select_cp').bind('change', function(e) {
+        //on vide la liste des villes 
         $("#select_villes").empty();
+        //on ajout la valeur par défault
         $("#select_villes").append($("<option/>").val("").html("- choisissez une ville -"));
+        
         //on regarde si on a sélectionner un code postal ou non
-        if($("#select_cp").val() === '') {
-            $("#select_villes").attr("disabled",true);
-            $("#label_villes").addClass("disabled");
-        }
-        else {
-            $("#select_villes").removeAttr("disabled");
-            $("#label_villes").removeClass("disabled");
+        if($("#select_cp").val() !== '')
             cp_id = $("#select_cp").val();
-            
+        
             $.ajax({
                 type: 'post',
                 url: 'controller/gestion_ajax.php',
@@ -79,6 +65,44 @@ function addAdresseListListener() {
                     alert("Erreur avec la communication serveur.");
                 } 
             });
-        }
     });
+}
+
+/*
+ * Cette fonction permet de modifier le formulaire pour le cas ou l'option
+ * autre pays a été sélectionner
+ */
+function putFormOtherAddress() {
+    $("#select_pays").parent().after('<div id="other_country" class="cell"/>');
+    $("#select_pays").attr("name","_pays");
+    $("#other_country").append('<label style="font-size:0;">autre pays</label>');
+    $("#other_country").append(
+            '<input name="select_pays" type="text" class="control text"/>');
+    $("#select_cp").replaceWith(
+            '<input id="select_cp" name="select_cp" type="text" class="control text"/>');
+    $("#select_villes").replaceWith(
+            '<input id="select_villes" name="select_villes" type="text" class="control text"/>');
+}
+
+/**
+ * Cette fonction permet de modifier le formulaire pour l'utilisation normale 
+ * de l'adresse avec des listes
+ */
+function putFormListAddress() {
+    //on remet le bonne id à la liste 
+    $('#other_country').remove();
+    $("#select_pays").attr("name","select_pays");
+    
+    //on transforme en liste
+    $("#select_cp").replaceWith('<select id="select_cp" class="control" name="select_cp"/>');
+    
+    //On ajout la valeur par défault
+    $("#select_cp").append($("<option/>").val("").html("- choisissez un code postal -"));
+    
+    //On ajout l'écouteur d'événement de la liste code postal
+    addListPostalCodeListener();
+    
+    //Creation de l'élément liste pays
+    $("#select_villes").replaceWith('<select id="select_villes" class="control" name="select_villes"/>');
+    $("#select_villes").append($("<option/>").val("").html("- choisissez une ville -"));
 }
