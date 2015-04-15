@@ -45,20 +45,20 @@ function addListPostalCodeListener() {
         
         //on regarde si on a sélectionner un code postal ou non
         if($("#select_cp").val() !== '')
-            cp_id = $("#select_cp").val();
-        
             $.ajax({
                 type: 'post',
                 url: 'controller/gestion_ajax.php',
-                data: "action=read&item=villes&cp_id=" + cp_id,
+                data: "action=read&item=villes&cp_id=" + $("#select_cp").val(),
                 async: false,
                 dataType: 'json',
                 success: function(retour_php)
                 {
-                    $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
-                    {
-                        $("#select_villes").append($('<option/>').val(cont).html(cont));    
-                    });
+                    if(retour_php !== null) {
+                        $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
+                        {
+                            $("#select_villes").append($('<option/>').val(cont).html(cont));    
+                        });
+                    }
                 },
                 error: function(retour_php)
                 {

@@ -91,10 +91,51 @@ function changeAjaxListener(select_name) {
             if(!$("#deleting").length) {
                 $("#btnsubmit").parent().after('<div id="deleting" class="cell"/>');
                 $("#deleting").append('<button id="btn_delete" class="submit">Supprimer</button>');
+                addDeleteListener();
             }
             
             //on remplie le formulaire avec les informations de l'élement
             feedForm();
+        }
+    });
+}
+
+/*
+ * Fonction qui lie un listener sur le click du bouton supprimer
+ */
+function addDeleteListener() {
+    $("#btn_delete").bind('click', function(e) {
+        e.preventDefault();
+        
+        url_param = getParamsUrl();
+        
+        if(confirm("Etez-vous sur de vouloir supprimer le/la/l' " +
+                url_param['item'] + " " + $("#select_id option:selected").text() + "?")) {
+            
+            $.ajax({
+                'url': 'controller/gestion_ajax.php',
+                'type': 'post',
+                //on retour le type de l'item et le contenu du form
+                'data': 'action=delete&item=' + url_param['item'] + '&id=' 
+                        + $("#select_id").val(),
+                'dataType': 'json',
+                'success': function(data) {
+                    if(data.success) {
+                        alert(data.message); 
+
+                        //on refresh la liste des investisseurs
+                        refreshList(url_param['item']);
+
+                        //on revient sur la formulaire en mode ajout
+                        $("#select_id").val('');
+                        $("#select_id").change();
+                    }
+                    else
+                    {
+                        alert(data.erreur);
+                    }
+                }
+            });
         }
     });
 }
@@ -166,7 +207,6 @@ function feedForm() {
     url_param = getParamsUrl();
     //on récupere l'id de l'élément
     id = $("#select_id").val();
-    
     //on récupere l'object en format json
     $.ajax({
         type: 'post',
@@ -220,7 +260,7 @@ function feedPersonForm(data) {
     
     $("#select_cp").val(data.adresse.ville.code_postal);
     $("#select_cp").change();
-    
+
     $("#select_villes").val(data.adresse.ville.nom);
     $("#num_tel").val(data.num_tel);
     $("#num_gsm").val(data.num_gsm);
@@ -234,7 +274,7 @@ function feedPersonForm(data) {
 function feedInvestisseurForm(data) {
     //on remplie les parties commune au Personne
     feedPersonForm(data);
-    
+
     //partie ne consernant que l'investisseur
     $("#num_tva").val(data.num_tva);
     $("#select_etat").val(data.etat.id);

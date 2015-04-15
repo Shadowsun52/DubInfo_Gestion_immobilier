@@ -94,6 +94,15 @@ class BusinessCRUD {
         return array('success' => true, 'message' => "L'investisseur a été modifié avec succès.");
     }
     
+    public function deleteInvestisseur($data) {
+        if(isset($data['id'])) {
+            $this->_getDaoInvestisseur()->deleteInvestisseur($data['id']);
+            return array('success' => true, 'message' => "L'investisseur a été supprimé avec succès.");
+        }
+        
+        return array('success' => false, 'error' => "Aucun identifiant n'a été reçu.");
+    }
+    
     /**
      * Méthode créant un objet Investisseur à l'aide de données provenant d'un
      * formulaire

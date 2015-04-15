@@ -151,6 +151,21 @@ class DAOInvestisseur {
     }
     
     /**
+     *  Méthode qui permet la suppression d'un investisseur grâce à sont identifiant
+     * @param int $id Identifiant de l'investisseur à supprimer
+     * @throws PDOException
+     */
+    public function deleteInvestisseur($id) {
+        try {
+            $sql = "DELETE FROM investisseur WHERE id = :id";
+            $request = $this->_getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
+    }
+    
+    /**
      * Permet de savoir si un investisseur est déjà dans la DB,
      * retour true s'il trouve un doublon
      * @param Investisseur $investisseur
