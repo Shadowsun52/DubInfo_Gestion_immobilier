@@ -48,7 +48,8 @@ function addListPostalCodeListener() {
             $.ajax({
                 type: 'post',
                 url: 'controller/gestion_ajax.php',
-                data: "action=read&item=villes&cp_id=" + $("#select_cp").val(),
+                data: "action=read&item=villes&cp_id=" + $("#select_cp").val()
+                        + "&pays=" + $("#select_pays").val(),
                 async: false,
                 dataType: 'json',
                 success: function(retour_php)

@@ -40,15 +40,22 @@ class DAOAdresse {
     
     /**
      * Retourne toute les villes lié à un code postal
-     * @param int $code_postal
+     * @param int $code_postal Le code postal des villes recherchées
+     * @param string $libelle_pays Le pays dans lequel se situé les villes recherchées
      * @return array[string]
      * @throws PDOException
      */
-    public function getVilles($code_postal) {
+    public function getVilles($code_postal, $libelle_pays) {
         try{
-            $sql = "SELECT nom FROM ville WHERE code_postal = :cp ORDER BY nom";
+            $sql = "SELECT distinct(v.nom) FROM ville v 
+                    JOIN pays p ON v.pays_id = p.id 
+                    WHERE v.code_postal = :cp AND p.libelle = :pays 
+                    ORDER BY nom";
             $request = $this->_getConnection()->prepare($sql);
-            $request->execute(array(':cp' => $code_postal));
+            $request->execute(array(
+                ':cp' => $code_postal,
+                ':pays' => $libelle_pays
+                ));
             
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
             {

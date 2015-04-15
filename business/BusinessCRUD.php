@@ -144,8 +144,8 @@ class BusinessCRUD {
      * @throws PDOException
      */
     public function readVilles($data) {
-        if(isset($data['cp_id'])) {
-            return $this->_getDaoAdresse()->getVilles($data['cp_id']);    
+        if(isset($data['cp_id']) && isset($data['pays'])) {
+            return $this->_getDaoAdresse()->getVilles($data['cp_id'], $data['pays']);    
         }
         
         return array('success' => false, 'error' => "Aucun code postal n'a été reçu.");
