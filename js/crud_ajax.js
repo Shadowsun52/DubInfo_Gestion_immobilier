@@ -207,9 +207,15 @@ function feedPersonForm(data) {
     $("#rue").val(data.adresse.rue);
     $("#numero").val(data.adresse.numero);
     $("#boite").val(data.adresse.boite);
-    ///////////////////////////////TODO gestion liste///////////////////////////////
-    $("#select_pays").val(data.adresse.ville.pays);
     
+    $("#select_pays").val(data.adresse.ville.pays);
+    $("#select_pays").change();
+    
+    $("#select_cp").val(data.adresse.ville.code_postal);
+    $("#select_cp").change();
+    
+    $("#select_villes").val(data.adresse.ville.nom);
+    console.log(data.adresse.ville);
     $("#num_tel").val(data.num_tel);
     $("#num_gsm").val(data.num_gsm);
     $("#mail").val(data.mail);

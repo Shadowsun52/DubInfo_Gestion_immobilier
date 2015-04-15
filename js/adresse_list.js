@@ -30,6 +30,7 @@ function addAdresseListListener() {
                     type: 'post',
                     url: 'controller/gestion_ajax.php',
                     data: "action=read&item=CodesPostaux&pays_id=" + pays_id,
+                    async: false,
                     dataType: 'json',
                     success: function(retour_php)
                     {
@@ -64,10 +65,10 @@ function addAdresseListListener() {
                 type: 'post',
                 url: 'controller/gestion_ajax.php',
                 data: "action=read&item=villes&cp_id=" + cp_id,
+                async: false,
                 dataType: 'json',
                 success: function(retour_php)
                 {
-                    console.log(retour_php);
                     $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
                     {
                         $("#select_villes").append($('<option/>').val(cont).html(cont));    
