@@ -115,6 +115,59 @@ class DAOInvestisseur {
     }
     
     /**
+     * Méthode permettant d'update un investisseur dans la DB
+     * @param Investisseur $investisseur
+     * @throws PDOException
+     */
+    public function updateInvestisseur($investisseur) {
+        try {
+            $sql = "UPDATE investisseur SET nom = :nom, prenom = :prenom, 
+                    num_telephone = :num_telephone, num_gsm = :num_gsm,
+                    mail = :mail, num_tva = :num_tva, commentaire = :commentaire,
+                    adresse_rue = :adresse_rue, adresse_numero = :adresse_numero,
+                    adresse_boite = :adresse_boite, adresse_ville = :adresse_ville,
+                    adresse_code_postal = :adresse_code_postal, 
+                    adresse_pays = :adresse_pays, etat_id = :etat WHERE id = :id";
+            $request = $this->_getConnection()->prepare($sql);
+//            $data = array(
+//                ':nom' => $investisseur->getNom(),
+//                ':prenom' => $investisseur->getPrenom(),
+//                ':num_telephone' => $investisseur->getNumTelephone(),
+//                ':num_gsm' => $investisseur->getNumGsm(),
+//                ':mail' => $investisseur->getMail(),
+//                ':num_tva' => $investisseur->getNumTva(),
+//                ':commentaire' => $investisseur->getCommentaire(),
+//                ':adresse_rue' => $investisseur->getAdresse()->getRue(),
+//                ':adresse_numero' => $investisseur->getAdresse()->getNumero(),
+//                ':adresse_boite' => $investisseur->getAdresse()->getBoite(),
+//                ':adresse_ville' => $investisseur->getAdresse()->getVille()->getNom(),
+//                ':adresse_code_postal' => $investisseur->getAdresse()->getVille()->getCodePostal(),
+//                ':adresse_pays' => $investisseur->getAdresse()->getVille()->getPays(),
+//                ':etat' => $investisseur->getEtat()->getId(),
+//                ':id' => $investisseur->getId());
+//            echo str_replace(array_keys($data), array_values($data), $request->queryString);
+            $request->execute(array(
+                ':nom' => $investisseur->getNom(),
+                ':prenom' => $investisseur->getPrenom(),
+                ':num_telephone' => $investisseur->getNumTelephone(),
+                ':num_gsm' => $investisseur->getNumGsm(),
+                ':mail' => $investisseur->getMail(),
+                ':num_tva' => $investisseur->getNumTva(),
+                ':commentaire' => $investisseur->getCommentaire(),
+                ':adresse_rue' => $investisseur->getAdresse()->getRue(),
+                ':adresse_numero' => $investisseur->getAdresse()->getNumero(),
+                ':adresse_boite' => $investisseur->getAdresse()->getBoite(),
+                ':adresse_ville' => $investisseur->getAdresse()->getVille()->getNom(),
+                ':adresse_code_postal' => $investisseur->getAdresse()->getVille()->getCodePostal(),
+                ':adresse_pays' => $investisseur->getAdresse()->getVille()->getPays(),
+                ':etat' => $investisseur->getEtat()->getId(),
+                ':id' => $investisseur->getId()));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
+    }
+    
+    /**
      * Permet de savoir si un investisseur est déjà dans la DB,
      * retour true s'il trouve un doublon
      * @param Investisseur $investisseur

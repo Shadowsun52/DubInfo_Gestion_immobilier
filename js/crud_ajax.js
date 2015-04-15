@@ -30,10 +30,13 @@ function addAjaxListener(btn_name, form_name) {
                     if(data.success) {
                         alert(data.message);
                         //si c'est un ajout on met à jour la liste
+                        id = $("#select_id").val();
+                        console.log(id);
+                        refreshList(url_param['item'], false);
+                        $("#select_id").val(id);
                         if(action === 'add') {
-                            refreshList(url_param['item']);
+                            $('#' + form_name)[0].reset();
                         }
-                        $('#' + form_name)[0].reset();
                     }
                     else
                     {
@@ -65,7 +68,6 @@ function addAjaxListener(btn_name, form_name) {
 function changeAjaxListener(select_name) {
     $('#' + select_name).bind('change', function(e) {
         //on regarde si on a choisi un élement ou l'option d'ajout
-        console.log($('#select_id').val());
         if($('#select_id').val() === '') {
             //on change le text du bouton submit
             $("#btnsubmit").val("Ajouter");
@@ -118,6 +120,7 @@ function refreshList(item) {
         type: 'post',
         url: 'controller/gestion_ajax.php',
         data: "action=readList&item=" + item,
+        async: false,
         dataType: 'json',
         success: function(retour_php)
         {
