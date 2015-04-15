@@ -80,7 +80,7 @@
     //ceci ne fonctionne pas (choisissez un pays)    
     ''  => '- Choisissez un pays -',
     'Belgique' => 'Belgique',
-    'France '=> 'France',
+    'France'=> 'France',
     'Luxembourg' => 'Luxembourg',
     'Autre' => 'Autre'
     ), true);

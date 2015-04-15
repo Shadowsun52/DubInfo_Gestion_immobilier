@@ -77,7 +77,7 @@ function putFormOtherAddress() {
     $("#select_pays").attr("name","_pays");
     $("#other_country").append('<label style="font-size:0;">autre pays</label>');
     $("#other_country").append(
-            '<input name="select_pays" type="text" class="control text"/>');
+            '<input id="pays" name="select_pays" type="text" class="control text"/>');
     $("#select_cp").replaceWith(
             '<input id="select_cp" name="select_cp" type="text" class="control text"/>');
     $("#select_villes").replaceWith(
