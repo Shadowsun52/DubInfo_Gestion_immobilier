@@ -112,8 +112,7 @@ class BusinessCRUD {
     private function _createInvestisseur($data) {
         $ville = new Ville(null, $data['select_cp'], $data['select_villes'], $data['select_pays']);
         $adresse = new Adresse($data['rue'], $data['numero'], $data['boite'], $ville);
-        $etat = new Etat(1); //temporaire pour tester
-//        $etat = new Etat($_POST['select_etat'])// la vrai ligne à mettre quand la DB et le reste sera opérationnel     
+        $etat = new Etat($_POST['select_etat']);    
         $investisseur = new Investisseur($data['select_id'], $data['nom'],
                 $data['prenom'], $data['num_tel'], $data['num_gsm'],
                 $data['mail'], $adresse, $etat, $data['num_tva'], $data['remarque']);
