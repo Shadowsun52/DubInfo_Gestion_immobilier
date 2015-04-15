@@ -84,8 +84,10 @@ function changeAjaxListener(select_name) {
             $("#btnsubmit").val("Editer");
             
             //ajout du bouton de suppression
-            $("#btnsubmit").parent().after('<div id="deleting" class="cell"/>');
-            $("#deleting").append('<button id="btn_delete" class="submit">Supprimer</button>');
+            if(!$("#deleting").length) {
+                $("#btnsubmit").parent().after('<div id="deleting" class="cell"/>');
+                $("#deleting").append('<button id="btn_delete" class="submit">Supprimer</button>');
+            }
             
             //on remplie le formulaire avec les informations de l'élement
             feedForm();

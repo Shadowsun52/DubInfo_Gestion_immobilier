@@ -21,7 +21,7 @@ final class CheckTyper {
      * @throws BadTypeException
      */
     public static function isInteger($value, $attribute_name, $class_name) {
-        if($value === NULL) {
+        if($value === NULL || $value == '') {
             return NULL;
         }
         
