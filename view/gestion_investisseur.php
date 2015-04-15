@@ -88,10 +88,22 @@
     //ld avec les CP
     $form_investisseur->add('label','label_cp', 'select_cp', 'Code postal');
     $cp = $form_investisseur->add('select', 'select_cp');
-    
+    $cp->add_options(array(
+        '' => '- choisissez un code postal -'
+    ),true);
+    $cp->set_attributes(array(
+        'disabled' => 'true'
+    ));
+            
     //ld avec les villes
     $form_investisseur->add('label','label_villes', 'select_villes', 'Ville');
     $villes = $form_investisseur->add('select', 'select_villes');
+    $villes->add_options(array(
+        '' => '- choisissez une ville -'
+    ),true);
+    $villes->set_attributes(array(
+        'disabled' => 'true'
+    ));
     
     //liste déroulante avec les 3 pays possibles ou autre, si c'est un pays différent des trois proposés
     $form_investisseur->add('label','label_etat', 'select_etat', 'Etat');

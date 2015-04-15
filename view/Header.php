@@ -12,6 +12,7 @@
     if(isset($_GET['action'])) {
 ?>
         <script src="js/crud_ajax.js"></script>
+        <script src="js/adresse_list.js"></script>
 <?php
     }
 ?>

@@ -78,6 +78,9 @@ function changeAjaxListener(select_name) {
             //on vide le formulaire
             url_param = getParamsUrl();
             $('#form_' + url_param['item'])[0].reset();
+            
+            //et on vide les listes adresses
+            $("#select_pays").change();
         }
         else {
             //on change le text du bouton submit

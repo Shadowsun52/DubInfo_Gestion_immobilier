@@ -129,23 +129,6 @@ class DAOInvestisseur {
                     adresse_code_postal = :adresse_code_postal, 
                     adresse_pays = :adresse_pays, etat_id = :etat WHERE id = :id";
             $request = $this->_getConnection()->prepare($sql);
-//            $data = array(
-//                ':nom' => $investisseur->getNom(),
-//                ':prenom' => $investisseur->getPrenom(),
-//                ':num_telephone' => $investisseur->getNumTelephone(),
-//                ':num_gsm' => $investisseur->getNumGsm(),
-//                ':mail' => $investisseur->getMail(),
-//                ':num_tva' => $investisseur->getNumTva(),
-//                ':commentaire' => $investisseur->getCommentaire(),
-//                ':adresse_rue' => $investisseur->getAdresse()->getRue(),
-//                ':adresse_numero' => $investisseur->getAdresse()->getNumero(),
-//                ':adresse_boite' => $investisseur->getAdresse()->getBoite(),
-//                ':adresse_ville' => $investisseur->getAdresse()->getVille()->getNom(),
-//                ':adresse_code_postal' => $investisseur->getAdresse()->getVille()->getCodePostal(),
-//                ':adresse_pays' => $investisseur->getAdresse()->getVille()->getPays(),
-//                ':etat' => $investisseur->getEtat()->getId(),
-//                ':id' => $investisseur->getId());
-//            echo str_replace(array_keys($data), array_values($data), $request->queryString);
             $request->execute(array(
                 ':nom' => $investisseur->getNom(),
                 ':prenom' => $investisseur->getPrenom(),
