@@ -12,7 +12,7 @@
     $business = new MetierCRUD();
     $list_metiers[''] = '- Nouveau -';
     foreach ($business->readList() as $metier) {
-        $list_metiers[$metier->getId()] = $metier->getLibelle();
+        $list_metiers[$metier->getId()] = $metier->toString();
     }
     
     //liste déroulante avec les investisseurs déjà existant

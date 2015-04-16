@@ -29,7 +29,7 @@ class DAOMetier extends AbstractDAO{
             {
                 $metiers[] = new Metier($result['id'], $result['libelle']);
             }
-            return isset( $metiers) ?  $metiers : NULL;
+            return isset( $metiers) ?  $metiers : [];
             
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());

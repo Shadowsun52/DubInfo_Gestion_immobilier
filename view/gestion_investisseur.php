@@ -13,8 +13,7 @@
     $business = new InvestisseurCRUD();
     $list_invest[''] = '- Nouveau -';
     foreach ($business->readList() as $investisseur) {
-        $list_invest[$investisseur->getId()] = $investisseur->getNom() . ' ' .
-                $investisseur->getPrenom();
+        $list_invest[$investisseur->getId()] = $investisseur->toString();
     }
     
     //liste déroulante avec les investisseurs déjà existant

@@ -13,8 +13,7 @@ use DubInfo_gestion_immobilier\model\Etat;
  */
 class InvestisseurCRUD extends AbstractBusiness{
     public function __construct() {
-        parent::__construct(new DAOInvestisseur(), 'investisseur', 
-                parent::GENRE_MASCULIN);
+        parent::__construct(new DAOInvestisseur(), 'investisseur');
     }
     
     /**

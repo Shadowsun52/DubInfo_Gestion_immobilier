@@ -4,18 +4,19 @@
     use DubInfo_gestion_immobilier\model\Professionnel;
     use DubInfo_gestion_immobilier\model\Adresse;
     use DubInfo_gestion_immobilier\business\MetierCRUD;
+    use DubInfo_gestion_immobilier\business\ProfessionnelCRUD;
     //formulaire qui permet de gérer les professionnels
     
     $form_professionnel = new Zebra_Form('form_professionnel');
     $form_professionnel->language("francais");
     
     //création de la liste des professionnels
-//    $business = new InvestisseurCRUD();
+    $business = new ProfessionnelCRUD();
     $list_pro[''] = '- Nouveau -';
-//    foreach ($business->readList() as $investisseur) {
-//        $list_invest[$investisseur->getId()] = $investisseur->getNom() . ' ' .
-//                $investisseur->getPrenom();
-//    }
+    foreach ($business->readList() as $professionnel) {
+        $list_invest[$investisseur->getId()] = $investisseur->getNom() . ' ' .
+                $investisseur->getPrenom();
+    }
     
     //liste déroulante avec les investisseurs déjà existant
     $form_professionnel->add('label','label_id', 'select_id', 'Liste des professionnels');

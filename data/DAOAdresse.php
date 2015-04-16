@@ -31,7 +31,7 @@ class DAOAdresse {
             {
                 $codes_postaux[] =$result['code_postal'];;
             }
-            return isset( $codes_postaux) ?  $codes_postaux : NULL;
+            return isset( $codes_postaux) ?  $codes_postaux : [];
             
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
@@ -61,7 +61,7 @@ class DAOAdresse {
             {
                 $villes[] =$result['nom'];;
             }
-            return isset( $villes) ?  $villes : NULL;
+            return isset( $villes) ?  $villes : [];
             
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
