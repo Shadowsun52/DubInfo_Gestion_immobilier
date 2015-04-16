@@ -8,7 +8,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-class Professionnel extends Contact {
+class Professionnel extends Contact implements \JsonSerializable{
     const MAX_SIZE_TVA = 45;
     
     /**
@@ -89,5 +89,13 @@ class Professionnel extends Contact {
      */
     public function setMetier($metier) {
         $this->_metier = CheckTyper::isModel($metier, Metier::class, 'metier', __CLASS__);
+    }
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(),
+                array(
+                    'num_tva' => $this->getNumTva(),
+                    'metier' => $this->getMetier()
+                ));
     }
 }

@@ -8,7 +8,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-class Metier {
+class Metier implements \JsonSerializable{
     const MAX_SIZE_LIBELLE = 70;
     
     /**
@@ -74,4 +74,12 @@ class Metier {
         }
         $this->_libelle = $_libelle;
     }
+
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'libelle' => $this->getLibelle()
+        ];
+    }
+
 }

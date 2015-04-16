@@ -9,7 +9,7 @@ use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
  *
  * @author Jenicot Alexandre
  */
-class Locataire extends Contact{    
+class Locataire extends Contact implements \JsonSerializable{    
     /**
      *
      * @var double 
@@ -239,4 +239,15 @@ class Locataire extends Contact{
                 'location', __CLASS__);
     }
 //</editor-fold>
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(),
+                array(
+                    'budget' => $this->getBudget(),
+                    'date_emmenagement' => $this->getDateEmmenagement(),
+                    'sources' => $this->getSources(),
+                    'communes_preferees' => $this->getCommunesPreferees(),
+                    'locations' => $this->getLocations()
+                ));
+    }
 }
