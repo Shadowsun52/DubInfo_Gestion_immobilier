@@ -30,7 +30,6 @@ class Professionnel extends Contact implements \JsonSerializable{
      * @param string $prenom
      * @param string $num_telephone
      * @param string $num_gsm
-     * @param string $num_fax
      * @param string $mail
      * @param string $commentaire
      * @param string $num_tva

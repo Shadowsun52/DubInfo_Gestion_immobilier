@@ -33,7 +33,7 @@
                     <li><a href="index.php?action=ajout&item=lettreMission">Gestion des lettres de mission</a></li>
                     <li><a href="index.php?action=ajout&item=payementLoyer">Gestion des payments des loyers</a></li>
                     <li><a href="index.php?action=ajout&item=rencontreInvestisseur">Gestion des rencontres avec les investisseurs</a></li>
-                    <li><a href="index.php?action=ajout&item=professionnel">Gestion des professionnels</a></li>
+                    <li><a href="index.php?action=gestion&item=professionnel">Gestion des professionnels</a></li>
                     <li><a href="index.php?action=gestion&item=metier">Gestion des métiers</a></li>
                     
                 </ul>

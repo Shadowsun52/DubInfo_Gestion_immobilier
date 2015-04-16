@@ -26,6 +26,9 @@
                                     'maxlength' => Metier::MAX_SIZE_LIBELLE
                                 ));
     
+    $libelle->set_rule(array(
+               'required' => array('error', 'Libelle requis!'), 
+            ));
     
     //Il ne faut pas oublier d'ajouter le bouton submit
     $form_metier->add('submit', 'btnsubmit', 'Ajouter');
