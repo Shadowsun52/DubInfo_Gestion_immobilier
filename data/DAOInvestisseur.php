@@ -12,12 +12,7 @@ use DubInfo_gestion_immobilier\Exception\PDOException;
  *
  * @author Jenicot Alexandre
  */
-class DAOInvestisseur {
-    private $_connection;
-    
-    public function __construct() {
-        $this->_setConnection();
-    }
+class DAOInvestisseur extends AbstractDAO{
     
     /**
      * Fonction qui lit tous les investisseurs pour les mettres dans une listes
@@ -29,7 +24,7 @@ class DAOInvestisseur {
     public function readListInvestisseur() {
         try{
             $sql = "SELECT id, nom, prenom FROM investisseur ORDER BY nom, prenom";
-            $request = $this->_getConnection()->prepare($sql);
+            $request = $this->getConnection()->prepare($sql);
             $request->execute();
             
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
@@ -54,7 +49,7 @@ class DAOInvestisseur {
         try {
             $sql = "SELECT i.*, e.libelle FROM investisseur i 
                     JOIN etat e ON i.etat_id = e.id WHERE i.id = :id";
-            $request = $this->_getConnection()->prepare($sql);
+            $request = $this->getConnection()->prepare($sql);
             $request->execute(array(':id' => $id));
             $result = $request->fetch();
             
@@ -93,7 +88,7 @@ class DAOInvestisseur {
                     VALUES (:nom, :prenom, :num_telephone, :num_gsm, :mail, :num_tva,
                     :commentaire, :adresse_rue, :adresse_numero, :adresse_boite, 
                     :adresse_ville, :adresse_code_postal, :adresse_pays, :etat)";
-            $request = $this->_getConnection()->prepare($sql);
+            $request = $this->getConnection()->prepare($sql);
             $request->execute(array(
                 ':nom' => $investisseur->getNom(),
                 ':prenom' => $investisseur->getPrenom(),
@@ -128,7 +123,7 @@ class DAOInvestisseur {
                     adresse_boite = :adresse_boite, adresse_ville = :adresse_ville,
                     adresse_code_postal = :adresse_code_postal, 
                     adresse_pays = :adresse_pays, etat_id = :etat WHERE id = :id";
-            $request = $this->_getConnection()->prepare($sql);
+            $request = $this->getConnection()->prepare($sql);
             $request->execute(array(
                 ':nom' => $investisseur->getNom(),
                 ':prenom' => $investisseur->getPrenom(),
@@ -158,7 +153,7 @@ class DAOInvestisseur {
     public function deleteInvestisseur($id) {
         try {
             $sql = "DELETE FROM investisseur WHERE id = :id";
-            $request = $this->_getConnection()->prepare($sql);
+            $request = $this->getConnection()->prepare($sql);
             $request->execute(array(':id' => $id));
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
@@ -176,7 +171,7 @@ class DAOInvestisseur {
         try {
             $sql = "SELECT id FROM investisseur WHERE UPPER(nom) = :nom AND
                     UPPER(prenom) = :prenom";
-            $request = $this->_getConnection()->prepare($sql);
+            $request = $this->getConnection()->prepare($sql);
             $request->execute(array(
                 ':nom' => strtoupper($investisseur->getNom()),
                 ':prenom' => strtoupper($investisseur->getPrenom())
@@ -192,21 +187,4 @@ class DAOInvestisseur {
             throw new PDOException($ex->getMessage());
         }
     }
-    
-    /**
-     * Retourne la connexion à la DB
-     * @return PDO2
-     */
-    private function _getConnection() {
-        return $this->_connection;
-    }
-
-    /**
-     * récuperer la connexion à la DB
-     */
-    private function _setConnection() {
-        $this->_connection = PDO2::getInstance()->db;
-    }
-
-
 }
