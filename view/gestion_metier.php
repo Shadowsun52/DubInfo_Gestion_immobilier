@@ -11,9 +11,9 @@
     //création de la liste des métiers
     $business = new BusinessCRUD();
     $list_metiers[''] = '- Nouveau -';
-//    foreach ($business->readListMetier() as $metier) {
-//        $list_metiers[$metier->getId()] = $metier->getLibelle();
-//    }
+    foreach ($business->readListMetier() as $metier) {
+        $list_metiers[$metier->getId()] = $metier->getLibelle();
+    }
     
     //liste déroulante avec les investisseurs déjà existant
     $form_metier->add('label','label_id', 'select_id', 'Liste des Métiers');

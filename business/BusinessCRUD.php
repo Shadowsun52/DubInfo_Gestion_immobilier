@@ -3,6 +3,7 @@ namespace DubInfo_gestion_immobilier\business;
 
 use DubInfo_gestion_immobilier\data\DAOInvestisseur;
 use DubInfo_gestion_immobilier\data\DAOAdresse;
+use DubInfo_gestion_immobilier\data\DAOMetier;
 use DubInfo_gestion_immobilier\model\Investisseur;
 use DubInfo_gestion_immobilier\model\Adresse;
 use DubInfo_gestion_immobilier\model\Ville;
@@ -26,9 +27,16 @@ class BusinessCRUD {
      */
     private $_dao_adresse;
     
+    /**
+     *
+     * @var DAOMetier 
+     */
+    private $_dao_metier;
+    
     public function __construct() {
         $this->_setDaoInvestisseur();
         $this->_setDaoAdresse();
+        $this->_setDaoMetier();
     }
     
 //<editor-fold defaultstate="collapsed" desc="Investisseur">
@@ -94,6 +102,13 @@ class BusinessCRUD {
         return array('success' => true, 'message' => "L'investisseur a été modifié avec succès.");
     }
     
+    /**
+     * Méthode qui reçois les données d'un formulaire pour en extraire l'id et 
+     * appeler la méthode de suppression d'un investisseur
+     * @param array[mixed] $data
+     * @return array[mixed]
+     * @throws PDOException
+     */
     public function deleteInvestisseur($data) {
         if(isset($data['id'])) {
             $this->_getDaoInvestisseur()->deleteInvestisseur($data['id']);
@@ -152,6 +167,80 @@ class BusinessCRUD {
     }
 //</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="Metier">
+    /**
+     * Fonction qui retourne la liste des métiers
+     * @return array[Metier]
+     * @throws PDOException
+     */
+    public function readListMetier() {
+        return $this->_getDaoMetier()->readList();
+    }
+    
+    /**
+     * Méthode qui interroge la couche data pour récuperer un metier 
+     * via son id
+     * @param array[mixed] $data
+     * @return mixed
+     */
+    public function readMetier($data) {
+        if(isset($data['id'])) {
+//            return $this->_getDaoInvestisseur()->readInvestisseur($data['id']);
+            return null;
+        }
+        
+        return array('success' => false, 'error' => "Aucun identifiant n'a été reçu."); 
+    }
+    
+    /**
+     * Méthode qui reçois les données d'un formulaire et envoie le libelle du 
+     * Metier pour l'envoyer à la couche data pour une insert
+     * dans la DB
+     * @param array[mixed] $data
+     * @return array[mixed] données a retouner à l'utilisateur
+     * @throws PDOException
+     */
+    public function addMetier($data) {
+        if(isset($data['libelle'])) {
+            $this->_getDaoMetier()->addMetier($data['libelle']);
+            return array('success' => true, 'message' => "Le métier a été ajouté avec succès.");
+        }
+        return array('success' => false, 'error' => "Aucun libelle n'a été reçu.");
+    }
+    
+    /**
+     * Méthode qui reçois les données d'un formulaire et le convertir en objet 
+     * Metier pour l'envoyer à la couche data pour une update
+     * @param array[mixed] $data
+     * @return array[mixed] données a retouner à l'utilisateur
+     * @throws PDOException
+     */
+    public function editMetier($data) {
+//        $investisseur = $this->_createInvestisseur($data);
+        
+//        $this->_getDaoInvestisseur()->updateInvestisseur($investisseur);
+        
+        return array('success' => true, 'message' => "Le metier a été modifié avec succès.");
+    }
+    
+    /**
+     * Méthode qui reçois les données d'un formulaire pour en extraire l'id et 
+     * appeler la méthode de suppression d'un metier
+     * @param array[mixed] $data
+     * @return array[mixed]
+     * @throws PDOException
+     */
+    public function deleteMetier($data) {
+        if(isset($data['id'])) {
+//            $this->_getDaoInvestisseur()->deleteInvestisseur($data['id']);
+            return array('success' => true, 'message' => "Le metier a été supprimé avec succès.");
+        }
+        
+        return array('success' => false, 'error' => "Aucun identifiant n'a été reçu.");
+    }
+//</editor-fold>
+    
+//<editor-fold defaultstate="collapsed" desc="Getter & setter">
     /**
      * 
      * @return DAOInvestisseur
@@ -176,5 +265,16 @@ class BusinessCRUD {
         $this->_dao_adresse = new DAOAdresse();
     }
 
+    /**
+     * 
+     * @return DAOMetier
+     */
+    private function _getDaoMetier() {
+        return $this->_dao_metier;
+    }
 
+    private function _setDaoMetier() {
+        $this->_dao_metier = new DAOMetier();
+    }
+//</editor-fold>
 }
