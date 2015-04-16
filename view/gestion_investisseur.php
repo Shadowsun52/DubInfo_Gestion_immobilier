@@ -106,7 +106,7 @@
         '1' => 'Potentiel',
         '2'=> 'Actif',
         '3' => 'Abandonné'
-    ));
+    ),true);
     
     //remarque
     $form_investisseur->add('label','label_remarque', 'remarque', 'Remarque');
