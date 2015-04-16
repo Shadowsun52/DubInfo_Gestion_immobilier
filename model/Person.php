@@ -111,7 +111,8 @@ abstract class Person implements \JsonSerializable{
         return [
             'id' => $this->getId(),
             'nom' => $this->getNom(),
-            'prenom' => $this->getPrenom()
+            'prenom' => $this->getPrenom(),
+            'toString' => $this->getNom() . ' ' . $this->getPrenom()
         ];
     }
 }

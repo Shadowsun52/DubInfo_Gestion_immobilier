@@ -68,10 +68,10 @@ abstract class AbstractBusiness {
         }
         
         if($this->getGenre() == self::GENRE_MASCULIN) {
-            $error = "Aucun " . $this->getNameItem() . "n'a été reçu";
+            $error = "Aucun " . $this->getNameItem() . " n'a été reçu";
         } 
         else {
-            $error = "Aucune " . $this->getNameItem() . "n'a été reçue";
+            $error = "Aucune " . $this->getNameItem() . " n'a été reçue";
         }
         return array('success' => false, 'error' => $error); 
     }
@@ -88,15 +88,9 @@ abstract class AbstractBusiness {
             $object = $this->createObject($data);
        
             $this->getDao()->add($object);
-            
-            if($this->getGenre() == self::GENRE_MASCULIN) {
-                $message = "Le/l' " . $this->getNameItem() . "a été ajouté avec succès.";
-            } 
-            else {
-                $message = "La " . $this->getNameItem() . "a été ajoutèe avec succès.";
-            }
-            
-            return array('success' => true, 'message' => $message);
+
+            return array('success' => true, 
+                'message' => $this->getMessage('ajouté'));
         } catch (Exception $ex) {
             $error = "Une erreur a été rencontrée lors de l'ajout dans la base de données" ;
             return array('success' => false, 'error' => $error); 
@@ -116,14 +110,8 @@ abstract class AbstractBusiness {
        
             $this->getDao()->update($object);
             
-            if($this->getGenre() == self::GENRE_MASCULIN) {
-                $message = "Le/l' " . $this->getNameItem() . "a été modifié avec succès.";
-            } 
-            else {
-                $message = "La " . $this->getNameItem() . "a été modifiée avec succès.";
-            }
-            
-            return array('success' => true, 'message' => $message);
+            return array('success' => true, 
+                'message' => $this->getMessage('modifié'));
         } catch (Exception $ex) {
             $error = "Une erreur a été rencontrée lors de la modification dans la base de données" ;
             return array('success' => false, 'error' => $error); 
@@ -140,7 +128,9 @@ abstract class AbstractBusiness {
     public function delete($data) {
         if(isset($data['id'])) {
             try {
-                return $this->getDao()->delete($data['id']);  
+                $this->getDao()->delete($data['id']);  
+                return array('success' => true, 
+                    'message' => $this->getMessage('supprimé'));
             } catch (Exception $ex) {
                 $error = "Une erreur a été rencontrée lors de la suppression dans la base de données" ;
                 return array('success' => false, 'error' => $error);
@@ -158,6 +148,22 @@ abstract class AbstractBusiness {
      */
     public abstract function createObject($data);
 
+    /**
+     * Retourne le message à envoyer au view pour l'utilisateur
+     * @param string $verbe le verbe de la phrase
+     * @return string
+     */
+    protected function getMessage($verbe) {
+        if($this->getGenre() === self::GENRE_MASCULIN) {
+            return "Le/l' " . $this->getNameItem() . " a été ". $verbe .
+                    " avec succès.";
+        } 
+        else {
+            return "La " . $this->getNameItem() . " a été ". $verbe . 
+                    "e avec succès.";
+        }
+    }
+    
     /**
      * 
      * @return AbstractDAO

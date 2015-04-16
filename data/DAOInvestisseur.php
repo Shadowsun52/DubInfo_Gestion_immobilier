@@ -21,7 +21,7 @@ class DAOInvestisseur extends AbstractDAO{
      * @return array[Investisseur]
      * @throws PDOException
      */
-    public function readListInvestisseur() {
+    public function readList() {
         try{
             $sql = "SELECT id, nom, prenom FROM investisseur ORDER BY nom, prenom";
             $request = $this->getConnection()->prepare($sql);
@@ -45,7 +45,7 @@ class DAOInvestisseur extends AbstractDAO{
      * @return Investisseur L'investisseur lut dans la base de donnée
      * @throws PDOException
      */
-    public function readInvestisseur($id) {
+    public function read($id) {
         try {
             $sql = "SELECT i.*, e.libelle FROM investisseur i 
                     JOIN etat e ON i.etat_id = e.id WHERE i.id = :id";
@@ -79,7 +79,7 @@ class DAOInvestisseur extends AbstractDAO{
      * @param Investisseur $investisseur
      * @throws PDOException
      */
-    public function addInvestisseur($investisseur) {
+    public function add($investisseur) {
         try {
             $sql = "INSERT INTO Investisseur (nom, prenom, num_telephone, 
                     num_gsm, mail, num_tva, commentaire, adresse_rue, adresse_numero, 
@@ -114,7 +114,7 @@ class DAOInvestisseur extends AbstractDAO{
      * @param Investisseur $investisseur
      * @throws PDOException
      */
-    public function updateInvestisseur($investisseur) {
+    public function update($investisseur) {
         try {
             $sql = "UPDATE investisseur SET nom = :nom, prenom = :prenom, 
                     num_telephone = :num_telephone, num_gsm = :num_gsm,
@@ -150,7 +150,7 @@ class DAOInvestisseur extends AbstractDAO{
      * @param int $id Identifiant de l'investisseur à supprimer
      * @throws PDOException
      */
-    public function deleteInvestisseur($id) {
+    public function delete($id) {
         try {
             $sql = "DELETE FROM investisseur WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);

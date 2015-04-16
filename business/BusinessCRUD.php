@@ -13,6 +13,7 @@ use DubInfo_gestion_immobilier\Exception\PDOException;
  * Description of BusinessCRUD
  *
  * @author Jenicot Alexandre
+ * @deprecated
  */
 class BusinessCRUD {
     /**

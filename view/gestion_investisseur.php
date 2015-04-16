@@ -3,16 +3,16 @@
     <?php
     use DubInfo_gestion_immobilier\model\Investisseur;
     use DubInfo_gestion_immobilier\model\Adresse;
-    use DubInfo_gestion_immobilier\business\BusinessCRUD;
+    use DubInfo_gestion_immobilier\business\InvestisseurCRUD;
     //formulaire qui permet d'ajouter un investisseur
     
     $form_investisseur = new Zebra_Form('form_investisseur');
     $form_investisseur->language("francais");
     
     //création de la liste des investisseurs
-    $business = new BusinessCRUD();
+    $business = new InvestisseurCRUD();
     $list_invest[''] = '- Nouveau -';
-    foreach ($business->readListInvestisseur() as $investisseur) {
+    foreach ($business->readList() as $investisseur) {
         $list_invest[$investisseur->getId()] = $investisseur->getNom() . ' ' .
                 $investisseur->getPrenom();
     }

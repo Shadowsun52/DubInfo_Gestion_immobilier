@@ -174,7 +174,7 @@ function refreshList(item) {
             $("#select_id").append($('<option/>').val('').html('- Nouveau -')); //première valeur de la liste déroulante
             $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
             {
-                $("#select_id").append($('<option/>').val(cont.id).html(cont.nom + ' ' + cont.prenom ));    
+                $("#select_id").append($('<option/>').val(cont.id).html(cont.toString ));    
             });
         },
         error: function(retour_php)
@@ -216,7 +216,7 @@ function feedForm() {
         {
             if(retour_php.success === false)
             {
-                alert(retour_php.error);
+                alert(retour_php.erreur);
             }
             else
             {
