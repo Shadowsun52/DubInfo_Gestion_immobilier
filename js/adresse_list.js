@@ -15,7 +15,7 @@ function addListCountryListener() {
                 $.ajax({
                     type: 'post',
                     url: 'controller/gestion_ajax.php',
-                    data: "action=read&item=CodesPostaux&pays_id=" + pays_id,
+                    data: "action=readCodesPostaux&item=adresse&pays_id=" + pays_id,
                     async: false,
                     dataType: 'json',
                     success: function(retour_php)
@@ -48,7 +48,7 @@ function addListPostalCodeListener() {
             $.ajax({
                 type: 'post',
                 url: 'controller/gestion_ajax.php',
-                data: "action=read&item=villes&cp_id=" + $("#select_cp").val()
+                data: "action=readVilles&item=adresse&cp_id=" + $("#select_cp").val()
                         + "&pays=" + $("#select_pays").val(),
                 async: false,
                 dataType: 'json',

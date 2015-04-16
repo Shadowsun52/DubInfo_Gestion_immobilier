@@ -13,7 +13,7 @@ if(isset($_POST['action']) && isset($_POST['item'])) {
     try {
         $name_business = DEFAULT_NAMESPACE. ucfirst(strtolower($_POST['item'])) . "CRUD";
         $business = new $name_business();
-        $name_function =strtolower($_POST['action']);
+        $name_function =$_POST['action'];
         if(method_exists($business, $name_function)) {
             $return = $business->$name_function($_POST);
             echo json_encode($return);
