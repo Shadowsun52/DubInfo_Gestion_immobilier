@@ -72,7 +72,7 @@ class DAOInvestisseur extends AbstractDAO{
         } catch (Exception $exc) {
             throw new PDOException($ex->getMessage());
         }
-        }
+    }
     
     /**
      * Méthode permettant d'ajouter un investisseur dans la DB

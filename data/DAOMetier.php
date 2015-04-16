@@ -37,17 +37,73 @@ class DAOMetier extends AbstractDAO{
     }
     
     /**
-     * Methode qui permet l'insertion d'un nouveau métier
-     * @param string $libelle le libelle du métier
+     * Méthode qui permet de lire un métier de la DB en fonction de son 
+     * identifiant
+     * @param int $id
+     * @return Metier
      * @throws PDOException
      */
-    public function addMetier($libelle) {
+    public function read($id) {
+        try {
+            $sql = "SELECT libelle FROM metier WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            //création de l'objet metier
+            $metier = new Metier($id, $result['libelle']);
+            
+            return $metier;
+        } catch (Exception $exc) {
+            throw new PDOException($ex->getMessage());
+        }
+    }
+    
+    /**
+     * Methode qui permet l'insertion d'un nouveau métier
+     * @param Metier $metier
+     * @throws PDOException
+     */
+    public function add($metier) {
         try {
             $sql = "INSERT INTO metier (libelle) VALUES (:libelle)";
             $request = $this->getConnection()->prepare($sql);
-            $request->execute(array(':libelle' => $libelle));
+            $request->execute(array(':libelle' => $metier->getLibelle()));
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
         }
     }
+    
+    /**
+     * Méthode qui permet de supprimer un métier en fonction de son id
+     * @param type $id
+     * @throws PDOException
+     */
+    public function delete($id) {
+        try {
+            $sql = "DELETE FROM metier WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
+    }
+    
+    /**
+     * Méthode qui met à jour un métier dans la base de donnée
+     * @param Metier $metier
+     * @throws PDOException
+     */
+    public function update($metier) {
+        try {
+            $sql = "UPDATE metier SET libelle = :libelle WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(
+                ':libelle' => $metier->getLibelle(),
+                ':id' => $metier->getId()));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
+    }
+
 }

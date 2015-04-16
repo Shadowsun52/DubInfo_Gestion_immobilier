@@ -78,8 +78,9 @@ class Metier implements \JsonSerializable{
     public function jsonSerialize() {
         return [
             'id' => $this->getId(),
-            'libelle' => $this->getLibelle()
+            'libelle' => $this->getLibelle(),
+            'toString' => $this->getLibelle()
         ];
     }
-
+    
 }

@@ -223,7 +223,7 @@ function feedForm() {
                 //pour mettre la premier lettre en majuscule
                 item = url_param['item'].replace(/^\w/, 
                     function($0) { return $0.toUpperCase(); });
-
+                
                 //on appel la bonne fonction pour remplir le formulaire 
                 window['feed' + item + 'Form'](retour_php);
             }
@@ -277,4 +277,8 @@ function feedInvestisseurForm(data) {
     //partie ne consernant que l'investisseur
     $("#num_tva").val(data.num_tva);
     $("#select_etat").val(data.etat.id);
+}
+
+function feedMetierForm(data) {
+    $("#libelle").val(data.libelle);
 }

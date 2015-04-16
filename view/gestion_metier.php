@@ -2,16 +2,16 @@
 <div id="formulaire">
 <?php
     use DubInfo_gestion_immobilier\model\Metier;
-    use DubInfo_gestion_immobilier\business\BusinessCRUD;
+    use DubInfo_gestion_immobilier\business\MetierCRUD;
     //formulaire qui gère les différents métiers (professionnels)
     
     $form_metier = new Zebra_Form('form_metier');
     $form_metier->language("francais");
     
     //création de la liste des métiers
-    $business = new BusinessCRUD();
+    $business = new MetierCRUD();
     $list_metiers[''] = '- Nouveau -';
-    foreach ($business->readListMetier() as $metier) {
+    foreach ($business->readList() as $metier) {
         $list_metiers[$metier->getId()] = $metier->getLibelle();
     }
     

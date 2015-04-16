@@ -13,6 +13,16 @@ abstract class AbstractDAO {
         $this->setConnection();
     }
     
+    public abstract function readList();
+
+    public abstract function read($id);
+    
+    public abstract function add($object);
+    
+    public abstract function update($object);
+    
+    public abstract function delete($id);
+    
     /**
      * Retourne la connexion à la DB
      * @return PDO2
