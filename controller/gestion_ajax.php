@@ -8,7 +8,8 @@ require './init.php';
  */
 if(isset($_POST['action']) && isset($_POST['item'])) {
     try {
-        $business = new BusinessCRUD();
+        $name_business = "BusinessCRUD";
+        $business = new $name_business();
         //appel de la méthode d'ajout de manière dynamique
         $name_function = $_POST['action'] . ucfirst(strtolower($_POST['item']));
         $return = $business->$name_function($_POST);
