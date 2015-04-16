@@ -74,15 +74,18 @@ function addListPostalCodeListener() {
  * autre pays a été sélectionner
  */
 function putFormOtherAddress() {
-    $("#select_pays").parent().after('<div id="other_country" class="cell"/>');
-    $("#select_pays").attr("name","_pays");
-    $("#other_country").append('<label style="font-size:0;">autre pays</label>');
-    $("#other_country").append(
-            '<input id="pays" name="select_pays" type="text" class="control text"/>');
-    $("#select_cp").replaceWith(
-            '<input id="select_cp" name="select_cp" type="text" class="control text"/>');
-    $("#select_villes").replaceWith(
-            '<input id="select_villes" name="select_villes" type="text" class="control text"/>');
+    //on regarde que le champs text pays n'existe pas déjà
+    if(!$("#pays").length) {
+        $("#select_pays").parent().after('<div id="other_country" class="cell"/>');
+        $("#select_pays").attr("name","_pays");
+        $("#other_country").append('<label style="font-size:0;">autre pays</label>');
+        $("#other_country").append(
+                '<input id="pays" name="select_pays" type="text" class="control text"/>');
+        $("#select_cp").replaceWith(
+                '<input id="select_cp" name="select_cp" type="text" class="control text"/>');
+        $("#select_villes").replaceWith(
+                '<input id="select_villes" name="select_villes" type="text" class="control text"/>');
+    }
 }
 
 /**
