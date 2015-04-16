@@ -31,7 +31,6 @@ function addAjaxListener(btn_name, form_name) {
                         alert(data.message);
                         //si c'est un ajout on met à jour la liste
                         id = $("#select_id").val();
-                        console.log(id);
                         refreshList(url_param['item'], false);
                         $("#select_id").val(id);
                         if(action === 'add') {
