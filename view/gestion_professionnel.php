@@ -9,13 +9,12 @@
     
     $form_professionnel = new Zebra_Form('form_professionnel');
     $form_professionnel->language("francais");
-    
+
     //création de la liste des professionnels
     $business = new ProfessionnelCRUD();
-    $list_pro[''] = '- Nouveau -';
+    $list_pro[''] = '- Nouveau -'; 
     foreach ($business->readList() as $professionnel) {
-        $list_invest[$investisseur->getId()] = $investisseur->getNom() . ' ' .
-                $investisseur->getPrenom();
+        $list_pro[$professionnel->getId()] = $professionnel->toString();
     }
     
     //liste déroulante avec les investisseurs déjà existant

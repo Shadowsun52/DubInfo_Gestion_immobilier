@@ -268,7 +268,7 @@ function feedPersonForm(data) {
 }
 
 /*
- * Fonction pour remplir les champs du formulaire d'un investisseur selectionner
+ * Fonction pour remplir les champs du formulaire d'un investisseur selectionné
  */
 function feedInvestisseurForm(data) {
     //on remplie les parties commune au Personne
@@ -279,6 +279,19 @@ function feedInvestisseurForm(data) {
     $("#select_etat").val(data.etat.id);
 }
 
+/*
+ *  Fonction pour remplir les champs du formulaire d'un professionnel selectionné
+ */
+function feedProfessionnelForm(data) {
+    //on remplie les parties commune au Personne
+    feedPersonForm(data);
+    $("#num_tva").val(data.num_tva);
+    $("#select_metier").val(data.metier.id);
+}
+
+/*
+ * Fonction pour remplir les champs du formulaire d'un metier selectionné
+ */
 function feedMetierForm(data) {
     $("#libelle").val(data.libelle);
 }

@@ -3,7 +3,7 @@ namespace DubInfo_gestion_immobilier\controller;
 use Exception;
 use DubInfo_gestion_immobilier\Exception\ClassNotFoundException;
 require './init.php';
-
+use DubInfo_gestion_immobilier\business\ProfessionnelCRUD;
 define('DEFAULT_NAMESPACE', 'DubInfo_gestion_immobilier\business\\');
 /**
  * action représente l'action désirer c'est à dire soit 'add' ou 'edit'
@@ -13,7 +13,7 @@ if(isset($_POST['action']) && isset($_POST['item'])) {
     try {
         $name_business = DEFAULT_NAMESPACE. ucfirst(strtolower($_POST['item'])) . "CRUD";
         $business = new $name_business();
-        $name_function =$_POST['action'];
+        $name_function = $_POST['action'];
         if(method_exists($business, $name_function)) {
             $return = $business->$name_function($_POST);
             echo json_encode($return);
