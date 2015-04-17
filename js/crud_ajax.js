@@ -295,3 +295,11 @@ function feedProfessionnelForm(data) {
 function feedMetierForm(data) {
     $("#libelle").val(data.libelle);
 }
+
+/*
+ * Fonction pour remplir les champs du formulaire d'un metier selectionné
+ */
+function feedSourceLocataireForm(data) {
+    console.log(data);
+    $("#libelle").val(data.libelle);
+}

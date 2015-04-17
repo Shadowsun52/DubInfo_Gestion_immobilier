@@ -77,7 +77,7 @@ class DAOMetier extends AbstractDAO{
     
     /**
      * Méthode qui permet de supprimer un métier en fonction de son id
-     * @param type $id
+     * @param int $id
      * @throws PDOException
      * @throws ForeignKeyConstraintException
      */
@@ -98,7 +98,7 @@ class DAOMetier extends AbstractDAO{
     }
     
     /**
-     * Méthode qui met à jour un métier dans la base de donnée
+     * Méthode qui met à jour un métier dans la base de données
      * @param Metier $metier
      * @throws PDOException
      */

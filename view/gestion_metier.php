@@ -21,7 +21,7 @@
     $id->add_options($list_metiers ,TRUE);
     
     //on devra afficher les différentes sources de la table "source_formulaire", les éditer, supprimer, ajouter...
-    $form_metier->add('label','label_libelle', 'libelle', 'Libelle');
+    $form_metier->add('label','label_libelle', 'libelle', 'Libellé');
     $libelle = $form_metier->add('text', 'libelle', null, array(
                                     'maxlength' => Metier::MAX_SIZE_LIBELLE
                                 ));

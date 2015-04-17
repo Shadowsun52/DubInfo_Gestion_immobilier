@@ -32,7 +32,7 @@ class DAOInvestisseur extends AbstractDAO{
                 $investisseurs[] = new Investisseur($result['id'], 
                         $result['nom'], $result['prenom']);
             }
-            return isset( $investisseurs) ?  $investisseurs : NULL;
+            return isset( $investisseurs) ?  $investisseurs : [];
             
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
@@ -42,7 +42,7 @@ class DAOInvestisseur extends AbstractDAO{
     /**
      * Fonction qui retourne un investisseur par rapport à un id donné
      * @param int $id
-     * @return Investisseur L'investisseur lut dans la base de donnée
+     * @return Investisseur L'investisseur lut dans la base de données
      * @throws PDOException
      */
     public function read($id) {
@@ -69,7 +69,7 @@ class DAOInvestisseur extends AbstractDAO{
                     $result['num_tva'], $result['commentaire']);
             
             return $investisseur;
-        } catch (Exception $exc) {
+        } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
         }
     }

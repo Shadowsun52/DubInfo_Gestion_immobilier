@@ -26,8 +26,7 @@
                     <li><a href="index.php">Accueil</a></li>
                     <li><a href="index.php?action=gestion&item=investisseur">Gestion des invetisseurs</a></li>
                     <li><a href="index.php?action=gestion&item=locataire">Gestion des locataires</a></li>
-                    <li><a href="index.php?action=ajout&item=etatLocataire">Gestion des états des locataires</a></li>
-                    <li><a href="index.php?action=ajout&item=sourceLocataire">Gestion des source des locataires</a></li>
+                    <li><a href="index.php?action=gestion&item=sourceLocataire">Gestion des source des locataires</a></li>
                     <li><a href="index.php?action=ajout&item=projet">Gestion des projets</a></li>
                     <li><a href="index.php?action=ajout&item=location">Gestion des Locations</a></li>
                     <li><a href="index.php?action=ajout&item=lettreMission">Gestion des lettres de mission</a></li>
