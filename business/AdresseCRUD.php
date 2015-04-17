@@ -48,6 +48,15 @@ class AdresseCRUD {
         return array('success' => false, 'error' => "Aucun code postal n'a été reçu.");
     }
     
+    /**
+     * Méthode qui récuperer dans la couche data la liste des communes de Bruxelles
+     * et les retournes
+     * @return array[string]
+     */
+    public function readCommunesBruxelles() {
+        return $this->_getDaoAdresse()->getCommunesBruxelles();
+    }
+    
     private function _getDaoAdresse() {
         return $this->_daoAdresse;
     }

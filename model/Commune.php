@@ -77,8 +77,16 @@ class Commune implements \JsonSerializable{
     public function jsonSerialize() {
         return [
             'id' => $this->getId(),
-            'libelle' => $this->getLibelle()
+            'libelle' => $this->getLibelle(),
+            'toString' => $this->toString()
         ];
     }
 
+    /**
+     *
+     * @return string
+     */
+    public function toString() {
+        return $this->getLibelle();
+    }
 }

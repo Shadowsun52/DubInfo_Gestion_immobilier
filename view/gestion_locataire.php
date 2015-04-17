@@ -3,6 +3,12 @@
 <?php
     use DubInfo_gestion_immobilier\model\Locataire;
     use DubInfo_gestion_immobilier\model\Adresse;
+    use DubInfo_gestion_immobilier\business\AdresseCRUD;
+    
+    /*
+     * constante pour déterminé la taille de la liste des communes de bruxelles,
+     */
+    define('SIZE_LIST_COMMUNE', 10);
 //    use DubInfo_gestion_immobilier\business\InvestisseurCRUD;
     //formulaire qui permet de gérer les locataires
     
@@ -132,17 +138,15 @@
     ));
     
     //communes préférées
+    $business_adresse = new AdresseCRUD();
     $form_locataire->add('label','label_communes', 'select_communes',
             'Communes préferées');
     $communes = $form_locataire->add('select', 'select_communes', null, array(
                                     'name' => 'select_communes[]',
                                     'multiple' => 'multiple',
-                                    'size' => 5
+                                    'size' => SIZE_LIST_COMMUNE
                                 ));
-    $communes->add_options(array(
-        '1' =>'test',
-        '2' => 'test2'//TODO genere liste Commune bruxelles 
-   ),true);
+    $communes->add_options($business_adresse->readCommunesBruxelles() ,true);
     
     //remarque
     $form_locataire->add('label','label_remarque', 'remarque', 'Remarque');
