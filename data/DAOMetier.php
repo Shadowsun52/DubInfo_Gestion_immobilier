@@ -3,6 +3,7 @@ namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\Metier;
 use DubInfo_gestion_immobilier\Exception\PDOException;
+use DubInfo_gestion_immobilier\Exception\ForeignKeyConstraintException;
 /**
  * Description of DAOMetier
  *
@@ -78,15 +79,22 @@ class DAOMetier extends AbstractDAO{
      * Méthode qui permet de supprimer un métier en fonction de son id
      * @param type $id
      * @throws PDOException
+     * @throws ForeignKeyConstraintException
      */
     public function delete($id) {
-        try {
-            $sql = "DELETE FROM metier WHERE id = :id";
-            $request = $this->getConnection()->prepare($sql);
-            $request->execute(array(':id' => $id));
-        } catch (Exception $ex) {
-            throw new PDOException($ex->getMessage());
+        if($this->checkForeignKeyContraint($id)) {
+            try {
+                $sql = "DELETE FROM metier WHERE id = :id";
+                $request = $this->getConnection()->prepare($sql);
+                $request->execute(array(':id' => $id));
+            } catch (Exception $ex) {
+                throw new PDOException($ex->getMessage());
+            }
         }
+        else {
+            throw new ForeignKeyConstraintException("Le métier a des liens avec des professionnels.");
+        }
+        
     }
     
     /**
@@ -106,4 +114,27 @@ class DAOMetier extends AbstractDAO{
         }
     }
 
+    /**
+     * Permet de vérifier si un metier n'est pas lié par une Foreign key avant 
+     * sa suppression. 
+     * Retourn True si aucune clé étrangère ne pose problème sinon retour False
+     * @param int $id
+     * @return boolean
+     */
+    protected function checkForeignKeyContraint($id) {
+        try {
+            $sql = "SELECT id FROM professionnel WHERE Metier_id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                return FALSE;
+            }
+            return TRUE;
+            
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
+    }
 }
