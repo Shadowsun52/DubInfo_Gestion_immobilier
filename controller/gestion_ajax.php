@@ -3,7 +3,7 @@ namespace DubInfo_gestion_immobilier\controller;
 use Exception;
 use DubInfo_gestion_immobilier\Exception\ClassNotFoundException;
 require './init.php';
-use DubInfo_gestion_immobilier\business\ProfessionnelCRUD;
+
 define('DEFAULT_NAMESPACE', 'DubInfo_gestion_immobilier\business\\');
 /**
  * action représente l'action désirer c'est à dire soit 'add' ou 'edit'
