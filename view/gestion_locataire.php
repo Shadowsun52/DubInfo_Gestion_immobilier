@@ -3,7 +3,9 @@
 <?php
     use DubInfo_gestion_immobilier\model\Locataire;
     use DubInfo_gestion_immobilier\model\Adresse;
+    use DubInfo_gestion_immobilier\model\SourceLocataire;
     use DubInfo_gestion_immobilier\business\AdresseCRUD;
+    use DubInfo_gestion_immobilier\business\SourceLocataireCRUD;
     
     /*
      * constante pour déterminé la taille de la liste des communes de bruxelles,
@@ -58,15 +60,16 @@
                 'email'    => array('error', 'L\'adresse email est incorrecte!'),
             ));
     
-    //il va falloir ajouter les sources se trouvant dans la table sources_locataires
+    $business_source = new SourceLocataireCRUD();
+    $list_sources[''] = '- Choisissez une source -';
+    foreach ($business_source->readList() as $source) {
+        $list_sources[$source->getId()] = $source->toString();
+    }
+    $list_sources['@Autre'] = '- Autres -';
+    
     $form_locataire->add('label', 'label_source', 'select_source', 'Source');
     $source_locataire = $form_locataire->add('select', 'select_source');
-    $source_locataire->add_options(array(
-        //ceci ne fonctionne pas (choisissez un pays)    
-        ''  => '- Choisissez une source -',
-        //TODO generer liste sources
-        'Autre' => 'Autres'
-    ), true);
+    $source_locataire->add_options($list_sources, true);
     
     $form_locataire->add('label','label_budget', 'budget', 'Budget');
     $budget = $form_locataire->add('text', 'budget', null, array(
