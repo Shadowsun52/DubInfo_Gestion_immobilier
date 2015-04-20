@@ -19,12 +19,13 @@ class DAOProfessionnel extends AbstractDAO{
     public function add($professionnel) {
         try {
             $sql = "INSERT INTO professionnel (nom, prenom, num_telephone, 
-                    num_gsm, mail, num_tva, commentaire, adresse_rue, adresse_numero, 
-                    adresse_boite, adresse_ville, adresse_code_postal, 
-                    adresse_pays, metier_id) 
-                    VALUES (:nom, :prenom, :num_telephone, :num_gsm, :mail, :num_tva,
-                    :commentaire, :adresse_rue, :adresse_numero, :adresse_boite, 
-                    :adresse_ville, :adresse_code_postal, :adresse_pays, :metier)";
+                    num_gsm, mail, num_tva, nom_entreprise, num_compte, swift,
+                    commentaire, adresse_rue, adresse_numero, adresse_boite, 
+                    adresse_ville, adresse_code_postal, adresse_pays, metier_id) 
+                    VALUES (:nom, :prenom, :num_telephone, :num_gsm, :mail, 
+                    :num_tva, :nom_entreprise, :num_compte, :swift,:commentaire, 
+                    :adresse_rue, :adresse_numero, :adresse_boite, :adresse_ville,
+                    :adresse_code_postal, :adresse_pays, :metier)";
             $request = $this->getConnection()->prepare($sql);
             $request->execute(array(
                 ':nom' => $professionnel->getNom(),
@@ -33,6 +34,9 @@ class DAOProfessionnel extends AbstractDAO{
                 ':num_gsm' => $professionnel->getNumGsm(),
                 ':mail' => $professionnel->getMail(),
                 ':num_tva' => $professionnel->getNumTva(),
+                ':nom_entreprise' => $professionnel->getNomEntreprise(),
+                ':num_compte' => $professionnel->getNumCompte(),
+                ':swift' => $professionnel->getSwift(),
                 ':commentaire' => $professionnel->getCommentaire(),
                 ':adresse_rue' => $professionnel->getAdresse()->getRue(),
                 ':adresse_numero' => $professionnel->getAdresse()->getNumero(),
@@ -88,7 +92,8 @@ class DAOProfessionnel extends AbstractDAO{
             $professionnel = new Professionnel($result['id'], $result['nom'], 
                     $result['prenom'], $result['num_telephone'], 
                     $result['num_gsm'], $result['mail'], $result['commentaire'], 
-                    $result['num_tva'], null, $adresse, $metier);
+                    $result['num_tva'], $result['nom_entreprise'],
+                    $result['num_compte'], $result['swift'], null, $adresse, $metier);
             return $professionnel;
         } catch (Exception $exc) {
             throw new PDOException($ex->getMessage());
@@ -127,11 +132,12 @@ class DAOProfessionnel extends AbstractDAO{
     public function update($professionnel) {
         try {
             $sql = "UPDATE professionnel SET nom = :nom, prenom = :prenom, 
-                    num_telephone = :num_telephone, num_gsm = :num_gsm,
-                    mail = :mail, num_tva = :num_tva, commentaire = :commentaire,
-                    adresse_rue = :adresse_rue, adresse_numero = :adresse_numero,
-                    adresse_boite = :adresse_boite, adresse_ville = :adresse_ville,
-                    adresse_code_postal = :adresse_code_postal, 
+                    num_telephone = :num_telephone, num_gsm = :num_gsm, 
+                    mail = :mail, num_tva = :num_tva, num_compte = :num_compte, 
+                    nom_entreprise = :nom_entreprise,  swift = :swift, 
+                    commentaire = :commentaire, adresse_rue = :adresse_rue, 
+                    adresse_numero = :adresse_numero, adresse_boite = :adresse_boite, 
+                    adresse_ville = :adresse_ville, adresse_code_postal = :adresse_code_postal, 
                     adresse_pays = :adresse_pays, Metier_id = :metier WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);
             $request->execute(array(
@@ -141,6 +147,9 @@ class DAOProfessionnel extends AbstractDAO{
                 ':num_gsm' => $professionnel->getNumGsm(),
                 ':mail' => $professionnel->getMail(),
                 ':num_tva' => $professionnel->getNumTva(),
+                ':nom_entreprise' => $professionnel->getNomEntreprise(),
+                ':num_compte' => $professionnel->getNumCompte(),
+                ':swift' => $professionnel->getSwift(),
                 ':commentaire' => $professionnel->getCommentaire(),
                 ':adresse_rue' => $professionnel->getAdresse()->getRue(),
                 ':adresse_numero' => $professionnel->getAdresse()->getNumero(),

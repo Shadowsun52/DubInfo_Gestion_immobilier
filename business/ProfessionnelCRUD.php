@@ -28,7 +28,8 @@ class ProfessionnelCRUD extends AbstractBusiness{
         $metier = new Metier($data['select_metier']);
         $professionnel = new Professionnel($data['select_id'], $data['nom'], 
                 $data['prenom'], $data['num_tel'], $data['num_gsm'], $data['mail'], 
-                $data['remarque'], $data['num_tva'], null, $adresse, $metier);
+                $data['remarque'], $data['num_tva'],$data['nom_entreprise'], 
+                $data['num_compte'], $data['swift'], null, $adresse, $metier);
         return $professionnel;
     }
 

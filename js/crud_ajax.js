@@ -285,7 +285,10 @@ function feedInvestisseurForm(data) {
 function feedProfessionnelForm(data) {
     //on remplie les parties commune au Personne
     feedPersonForm(data);
+    $("#nom_entreprise").val(data.nom_entreprise);
     $("#num_tva").val(data.num_tva);
+    $("#num_compte").val(data.num_compte);
+    $("#swift").val(data.swift);
     $("#select_metier").val(data.metier.id);
 }
 
