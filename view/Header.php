@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="CSS/styles.css">
         <script src="js/jquery-2.1.3.min.js"></script>
         <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
+        <script src="librairies/multiple_select/jquery.multiple.select.js"></script>
+        <link rel="stylesheet" href="librairies/multiple_select/multiple-select.css">
 <?php
     if(isset($_GET['action'])) {
 ?>

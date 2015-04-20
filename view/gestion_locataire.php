@@ -83,7 +83,7 @@
     ));
     
     //date d'enménagement
-    $form_locataire->add('label','label_date_rentree', 'date_rentree', 'Date d\'enménagement');
+    $form_locataire->add('label','label_date_rentree', 'date_rentree', 'Date d\'emménagement');
     $date_rentree = $form_locataire->add('date', 'date_rentree');
     $date_rentree->set_rule(array(
         'date'          =>  array('error', 'Date invalide!'),
@@ -149,7 +149,7 @@
                                     'size' => SIZE_LIST_COMMUNE
                                 ));
     $communes->add_options($business_adresse->readCommunesBruxelles() ,true);
-    
+
     //remarque
     $form_locataire->add('label','label_remarque', 'remarque', 'Remarque');
     $remarque = $form_locataire->add('textarea', 'remarque', null, array(
@@ -162,3 +162,6 @@
     $form_locataire->render('view/templates/tpl_locataire.php');
 ?>
 </div>
+<script type="text/javascript">
+    $('#select_communes').multipleSelect();
+</script>
