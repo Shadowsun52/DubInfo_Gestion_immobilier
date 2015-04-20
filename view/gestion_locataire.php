@@ -3,7 +3,6 @@
 <?php
     use DubInfo_gestion_immobilier\model\Locataire;
     use DubInfo_gestion_immobilier\model\Adresse;
-    use DubInfo_gestion_immobilier\model\SourceLocataire;
     use DubInfo_gestion_immobilier\business\AdresseCRUD;
     use DubInfo_gestion_immobilier\business\SourceLocataireCRUD;
     
