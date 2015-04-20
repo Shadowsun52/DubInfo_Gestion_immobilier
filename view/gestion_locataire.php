@@ -4,21 +4,22 @@
     use DubInfo_gestion_immobilier\model\Locataire;
     use DubInfo_gestion_immobilier\model\Adresse;
     use DubInfo_gestion_immobilier\business\AdresseCRUD;
+    use DubInfo_gestion_immobilier\business\LocataireCRUD;
     use DubInfo_gestion_immobilier\business\SourceLocataireCRUD;
     
     /*
      * constante pour déterminé la taille de la liste des communes de bruxelles,
      */
     define('SIZE_LIST_COMMUNE', 10);
-//    use DubInfo_gestion_immobilier\business\InvestisseurCRUD;
+    
     //formulaire qui permet de gérer les locataires
     
-    //création de la liste des investisseurs
-//    $business = new InvestisseurCRUD();
+    //création de la liste des locataire
+    $business = new LocataireCRUD();
     $list_locataire[''] = '- Nouveau -';
-//    foreach ($business->readList() as $locataire) {
-//        $list_locataire[$locataire->getId()] = $locataire->toString();
-//    }
+    foreach ($business->readList() as $locataire) {
+        $list_locataire[$locataire->getId()] = $locataire->toString();
+    }
     
     $form_locataire = new Zebra_Form('form_locataire');
     $form_locataire->language("francais");
@@ -88,7 +89,7 @@
     $date_rentree->set_rule(array(
         'date'          =>  array('error', 'Date invalide!'),
     ));
-    $date_rentree->format('d M, Y');
+    $date_rentree->format('d-m-Y');
     
     $form_locataire->add('label','label_rue', 'rue', 'Rue');
     $rue = $form_locataire->add('text', 'rue', null, array(
@@ -130,14 +131,14 @@
         '' => '- choisissez une ville -'
     ),true);
     
+    $form_locataire->add('label','label_etat', 'select_etat', 'Etat');
     $etat = $form_locataire->add('select', 'select_etat');
-    $etat->add_options(array( 
-    ''  => '- Choisissez un etat -',
-    '1' => 'Potentiel',
-    '2' => 'Actif',
-    '4' => 'Locataire',
-    '3' => 'Abandonné'
-    ));
+    $etat->add_options(array(
+        '1' => 'Potentiel',
+        '2'=> 'Actif',
+        '4' => 'Locataire',
+        '3' => 'Abandonné'
+    ),true);
     
     //communes préférées
     $business_adresse = new AdresseCRUD();
@@ -149,7 +150,7 @@
                                     'size' => SIZE_LIST_COMMUNE
                                 ));
     $communes->add_options($business_adresse->readCommunesBruxelles() ,true);
-
+    
     //remarque
     $form_locataire->add('label','label_remarque', 'remarque', 'Remarque');
     $remarque = $form_locataire->add('textarea', 'remarque', null, array(

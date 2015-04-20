@@ -75,12 +75,19 @@
 
 <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_communes . $select_communes ?></div>
+    <div class="cell"><?php echo $label_etat . $select_etat ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
 
 <div class="row even">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $label_communes . $select_communes ?></div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_remarque . $remarque ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->

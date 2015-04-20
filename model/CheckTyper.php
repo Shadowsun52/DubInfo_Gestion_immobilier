@@ -46,7 +46,7 @@ final class CheckTyper {
         if($value === NULL || $value == '') {
             return NULL;
         }
-        
+        $value = str_replace(",",".", $value);
         if(is_numeric($value)) {
             settype($value, 'double');
             return $value;
@@ -199,9 +199,11 @@ final class CheckTyper {
         }
         
         if(is_array($value)){
+            $result = [];
             foreach ($value as $line) {
-                $this->isModel($line, $model_name, $attribute_name, $class_name);
+                $result[] = self::isModel($line, $model_name, $attribute_name, $class_name);
             }
+            return $result;
         }
         
         throw new BadTypeException($attribute_name, $class_name);

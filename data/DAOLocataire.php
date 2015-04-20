@@ -21,23 +21,29 @@ class DAOLocataire extends AbstractDAO{
      */
     public function add($locataire) {
         try {
-            //TODO gérer le cas d'une nouvelle source
             $sql = "INSERT INTO locataire (nom, prenom, num_telephone, 
-                    num_gsm, mail, budget, commentaire, adresse_rue, adresse_numero, 
+                    num_gsm, mail, commentaire, adresse_rue, adresse_numero, 
                     adresse_boite, adresse_ville, adresse_code_postal, 
-                    adresse_pays, date_emmenagement, etat_id, source_locataire_id) 
-                    VALUES (:nom, :prenom, :num_telephone, :num_gsm, :mail, :budget,
+                    adresse_pays, budget, date_emmenagement, source_locataire_id, etat_id)
+                    VALUES (:nom, :prenom, :num_telephone, :num_gsm, :mail,
                     :commentaire, :adresse_rue, :adresse_numero, :adresse_boite, 
-                    :adresse_ville, :adresse_code_postal, :adresse_pays, :etat, 
-                    :source)";
+                    :adresse_ville, :adresse_code_postal, :adresse_pays, :budget, 
+                    :date, :source, :etat)";
             $request = $this->getConnection()->prepare($sql);
+            
+            if($locataire->getDateEmmenagement() === NULL) {
+                $date = null;
+            }
+            else {
+                $date = $locataire->getDateEmmenagement()->format('Y-m-d H:i:s');
+            }
+            
             $request->execute(array(
                 ':nom' => $locataire->getNom(),
                 ':prenom' => $locataire->getPrenom(),
                 ':num_telephone' => $locataire->getNumTelephone(),
                 ':num_gsm' => $locataire->getNumGsm(),
                 ':mail' => $locataire->getMail(),
-                ':budget' => $locataire->getBudget(),
                 ':commentaire' => $locataire->getCommentaire(),
                 ':adresse_rue' => $locataire->getAdresse()->getRue(),
                 ':adresse_numero' => $locataire->getAdresse()->getNumero(),
@@ -45,9 +51,10 @@ class DAOLocataire extends AbstractDAO{
                 ':adresse_ville' => $locataire->getAdresse()->getVille()->getNom(),
                 ':adresse_code_postal' => $locataire->getAdresse()->getVille()->getCodePostal(),
                 ':adresse_pays' => $locataire->getAdresse()->getVille()->getPays(),
-                ':etat' => $locataire->getEtat()->getId(),
-                ':source' => $locataire->getSource(0)));
-            
+                ':budget' => $locataire->getBudget(),
+                ':date' => $date,
+                ':source' => $locataire->getSource(0)->getId(),
+                ':etat' => $locataire->getEtat()->getId()));
             //ajout des communes préférées
             $locataire->setId($this->getConnection()->lastInsertId());
             $this->addCommunesPreferees($locataire);
