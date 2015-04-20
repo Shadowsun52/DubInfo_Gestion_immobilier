@@ -22,6 +22,15 @@
     $id = $form_professionnel->add('select', 'select_id');
     $id->add_options($list_pro ,TRUE);
     
+    //nom de l'entreprise (ajouté par David le dimanche 19 avril 2015 pas encore dans la BD)
+    $form_professionnel->add('label','label_nom_entreprise', 'nom_entreprise', 'Nom de l\'entreprise');
+    $nom_entreprise = $form_professionnel->add('text', 'nom_entreprise', null, array(
+                                    'maxlength' => 50
+                                ));
+    $nom_entreprise->set_rule(array(
+               'required' => array('error', "Nom d'entreprise requis!"), 
+            ));
+    
     $form_professionnel->add('label','label_nom', 'nom', 'Nom');
     $nom = $form_professionnel->add('text', 'nom', null, array(
                                     'maxlength' => Professionnel::MAX_SIZE_NOM
@@ -66,6 +75,18 @@
     $form_professionnel->add('label','label_num_tva', 'num_tva', 'Numéro de TVA');
     $tva = $form_professionnel->add('text', 'num_tva', null, array(
                                     'maxlength' => Professionnel::MAX_SIZE_TVA
+                                ));
+
+    //numéro de compte du professionnel (ajouté par DD dimanche 19 avril, pas encore dans la BD)    
+    $form_professionnel->add('label','label_num_compte', 'num_compte', 'Numéro de compte');
+    $num_compte = $form_professionnel->add('text', 'num_compte', null, array(
+                                    'maxlength' => 30
+                                ));
+    
+    //Code SWIFT du professionnel (ajouté par DD dimanche 19 avril, pas encore dans la BD)    
+    $form_professionnel->add('label','label_swift', 'swift', 'SWIFT');
+    $swift = $form_professionnel->add('text', 'swift', null, array(
+                                    'maxlength' => 30
                                 ));
     
     $form_professionnel->add('label','label_rue', 'rue', 'Rue');

@@ -1,28 +1,13 @@
-<!-- elements are grouped in "rows" -->
-<div class="row">
+<h2>Gestion des maisons</h2>
+<div id="form_maison">
+ <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_id . $select_id ?></div>
+    <div class="cell"><?php echo $label_titre . $titre ?></div>
+    
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
-
 <div class="row">
-    <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_nom_entreprise . $nom_entreprise ?></div>
-    <!-- once we're done with "cells" we *must* place a "clear" div -->
-    <div class="clear"></div>
-</div>
-
-<div class="row">
-    <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_nom . $nom ?></div>
-    <div class="cell"><?php echo $label_prenom . $prenom ?></div>
-    <!-- once we're done with "cells" we *must* place a "clear" div -->
-    <div class="clear"></div>
-</div>
-
-<div class="row even">
-
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_rue . $rue ?></div>
     <div class="cell"><?php echo $label_numero . $numero ?></div>
@@ -32,59 +17,69 @@
 </div>
 
 <div class="row">
-
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_pays.$select_pays ?></div>
+    <div class="cell"><?php echo $select_pays . $pays ?></div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $select_cp . $cp ?></div>
+    <div class="cell"><?php echo $select_villes . $villes ?></div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $label_etat . $etat ?></div>
+    <div class="cell"><?php echo $select_etat . $cp ?></div>
     
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
 
-<div class="row even">
-
-    <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_cp.$select_cp ?></div>
-    <div class="cell"><?php echo $label_villes.$select_villes ?></div>
-    <!-- once we're done with "cells" we *must* place a "clear" div -->
-    <div class="clear"></div>
-</div>
-
 <div class="row">
-
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_num_tel . $num_tel ?></div>
-    <div class="cell"><?php echo $label_num_gsm . $num_gsm ?></div>
-    <!-- once we're done with "cells" we *must* place a "clear" div -->
-    <div class="clear"></div>
-</div>
-
-<div class="row even">
-    <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_mail . $mail ?></div>
-    <div class="cell"><?php echo $label_num_tva . $num_tva ?></div>
-    <!-- once we're done with "cells" we *must* place a "clear" div -->
-    <div class="clear"></div>
-</div>
-
-<div class="row even">
-    <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_num_compte . $num_compte ?></div>
-    <div class="cell"><?php echo $label_swift . $swift ?></div>
+    <div class="cell"><?php echo $label_source . $source ?></div>
+    <div class="cell"><?php echo $select_source . $source ?></div>
+    
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
 
 <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_metier . $select_metier ?></div>
+    <div class="cell"><?php echo $label_prix . $prix ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
 
-<div class="row even">
+<div class="row">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $label_superficie_habitalble . $superficie_habitalble ?></div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $select_sdb . $sdb ?></div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $label_cout_travaux . $cout_travaux ?></div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_remarque . $remarque ?></div>
-    
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
@@ -95,4 +90,6 @@
     
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
+</div>
+
 </div>
