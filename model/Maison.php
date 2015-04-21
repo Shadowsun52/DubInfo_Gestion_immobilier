@@ -264,10 +264,12 @@ class Maison implements \JsonSerializable{
      * @throws StringAttributeTooLong
      */
     public function setTitres($titres) {
-        foreach ($titres as $language => $titre) {
-            if($this->languageExist($language) 
-                    && strlen($titre) > self::MAX_SIZE_TITRE) {
-                throw new StringAttributeTooLong('titres', __CLASS__);
+        if($titres != NULL) {
+            foreach ($titres as $language => $titre) {
+                if($this->languageExist($language) 
+                        && strlen($titre) > self::MAX_SIZE_TITRE) {
+                    throw new StringAttributeTooLong('titres', __CLASS__);
+                }
             }
         }
         $this->_titres = CheckTyper::isArrayOfString($titres, 'titres', __CLASS__);    
@@ -296,7 +298,7 @@ class Maison implements \JsonSerializable{
         if($this->languageExist($language) && strlen($titre) > self::MAX_SIZE_TITRE) {
             throw new StringAttributeTooLong('titre', __CLASS__);
         }
-        $this->_titres[] = CheckTyper::isString($titre, 'titre', __CLASS__);
+        $this->_titres[$language] = CheckTyper::isString($titre, 'titre', __CLASS__);
     }
     
     /**
@@ -315,10 +317,12 @@ class Maison implements \JsonSerializable{
      * @throws StringAttributeTooLong
      */
     public function setDescriptions($descriptions) {
-        foreach ($descriptions as $language => $description) {
-            if($this->languageExist($language) 
-                    && strlen($description) > self::MAX_SIZE_DESCR) {
-                throw new StringAttributeTooLong('descriptions', __CLASS__);
+        if($descriptions != NULL) {
+            foreach ($descriptions as $language => $description) {
+                if($this->languageExist($language) 
+                        && strlen($description) > self::MAX_SIZE_DESCR) {
+                    throw new StringAttributeTooLong('descriptions', __CLASS__);
+                }
             }
         }
         $this->_descriptions = CheckTyper::isArrayOfString($descriptions, 
@@ -348,7 +352,8 @@ class Maison implements \JsonSerializable{
         if($this->languageExist($language) && strlen($description) > self::MAX_SIZE_DESCR) {
             throw new StringAttributeTooLong('description', __CLASS__);
         }
-        $this->_descriptions[] = CheckTyper::isString($description, 'description', __CLASS__);
+        $this->_descriptions[$language] = CheckTyper::isString($description, 
+                'description', __CLASS__);
     }
     
     /**
@@ -367,14 +372,17 @@ class Maison implements \JsonSerializable{
      * @throws StringAttributeTooLong
      */
     public function setDescriptionsChambres($descriptions_chambres) {
-        foreach ($descriptions_chambres as $language => $titre) {
-            if($this->languageExist($language) 
-                    && strlen($titre) > self::MAX_SIZE_DESCR) {
-                throw new StringAttributeTooLong('descriptions chambres', __CLASS__);
+        if($descriptions_chambres != NULL) {
+            foreach ($descriptions_chambres as $language => $titre) {
+                if($this->languageExist($language) 
+                        && strlen($titre) > self::MAX_SIZE_DESCR) {
+                    throw new StringAttributeTooLong('descriptions chambres', __CLASS__);
+                }
             }
         }
-        $this->_descriptions_chambres = CheckTyper::isArrayOfString($descriptions_chambres,
-                'descriptions chambres', __CLASS__);    
+        
+        $this->_descriptions_chambres = CheckTyper::isArrayOfString(
+                $descriptions_chambres, 'descriptions chambres', __CLASS__);    
     }
     
     /**
@@ -400,8 +408,8 @@ class Maison implements \JsonSerializable{
         if($this->languageExist($language) && strlen($description_chambres) > self::MAX_SIZE_DESCR) {
             throw new StringAttributeTooLong('description chambres', __CLASS__);
         }
-        $this->_descriptions_chambres[] = CheckTyper::isString($description_chambres, 
-                'description chambres', __CLASS__);
+        $this->_descriptions_chambres[$language] = CheckTyper::isString(
+                $description_chambres, 'description chambres', __CLASS__);
     }
     
     /**
@@ -420,14 +428,17 @@ class Maison implements \JsonSerializable{
      * @throws StringAttributeTooLong
      */
     public function setDescriptionsCharges($descriptions_charges) {
-        foreach ($descriptions_charges as $language => $titre) {
-            if($this->languageExist($language) 
-                    && strlen($titre) > self::MAX_SIZE_DESCR) {
-                throw new StringAttributeTooLong('descriptions charges', __CLASS__);
+        if($descriptions_charges != NULL) {
+            foreach ($descriptions_charges as $language => $titre) {
+                if($this->languageExist($language) 
+                        && strlen($titre) > self::MAX_SIZE_DESCR) {
+                    throw new StringAttributeTooLong('descriptions charges', __CLASS__);
+                }
             }
         }
-        $this->_description_charges = CheckTyper::isArrayOfString($descriptions_charges,
-                'descriptions charges', __CLASS__);    
+        
+        $this->_description_charges = CheckTyper::isArrayOfString(
+                $descriptions_charges,'descriptions charges', __CLASS__);    
     }
     
     /**
@@ -453,8 +464,8 @@ class Maison implements \JsonSerializable{
         if($this->languageExist($language) && strlen($description_charges) > self::MAX_SIZE_DESCR) {
             throw new StringAttributeTooLong('description charges', __CLASS__);
         }
-        $this->_description_charges[] = CheckTyper::isString($description_charges, 
-                'description charges', __CLASS__);
+        $this->_description_charges[$language] = CheckTyper::isString(
+                $description_charges, 'description charges', __CLASS__);
     }
     
     /**
