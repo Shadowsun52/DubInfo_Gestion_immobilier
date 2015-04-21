@@ -2,6 +2,7 @@
 namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\SourceMaison;
+use DubInfo_gestion_immobilier\Exception\PDOException;
 /**
  * Description of DAOSourceMaison
  *
@@ -41,8 +42,7 @@ class DAOSourceMaison extends AbstractDAO{
         }
         else {
             throw new ForeignKeyConstraintException("La source a des liens avec des maisons.");
-        }
-        
+        } 
     }
 
     /**

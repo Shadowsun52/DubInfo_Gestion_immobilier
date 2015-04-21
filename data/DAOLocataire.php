@@ -128,7 +128,7 @@ class DAOLocataire extends AbstractDAO{
             $locataire->setCommunesPreferees($this->readCommunesPreferees($id));
 
             return $locataire;
-        } catch (Exception $exc) {
+        } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
         }
     }
