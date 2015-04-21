@@ -26,10 +26,10 @@
             <nav>
                 <ul>
                     <li><a href="index.php">Accueil</a></li>
-                    <li><a href="index.php?action=gestion&item=investisseur">Gestion des invetisseurs</a></li>
+                    <li><a href="index.php?action=gestion&item=investisseur">Gestion des investisseurs</a></li>
                     <li><a href="index.php?action=gestion&item=locataire">Gestion des locataires</a></li>
                     <li><a href="index.php?action=gestion&item=sourceLocataire">Gestion des source des locataires</a></li>
-                    <li><a href="index.php?action=ajout&item=maison">Gestion des maison</a></li>
+                    <li><a href="index.php?action=gestion&item=maison">Gestion des maison</a></li>
                     <li><a href="index.php?action=gestion&item=sourceMaisons">Gestion des source des maisons</a></li>
                     <li><a href="index.php?action=ajout&item=projet">Gestion des projets</a></li>                  
                     <li><a href="index.php?action=ajout&item=location">Gestion des Locations</a></li>

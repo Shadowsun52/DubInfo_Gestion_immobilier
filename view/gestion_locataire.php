@@ -65,7 +65,7 @@
     foreach ($business_source->readList() as $source) {
         $list_sources[$source->getId()] = $source->toString();
     }
-    $list_sources['@Autre'] = '- Autres -';
+//    $list_sources['@Autre'] = '- Autres -';
     
     $form_locataire->add('label', 'label_source', 'select_source', 'Source');
     $source_locataire = $form_locataire->add('select', 'select_source');
