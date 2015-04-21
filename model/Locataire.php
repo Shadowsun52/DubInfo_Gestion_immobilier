@@ -244,7 +244,8 @@ class Locataire extends Contact implements \JsonSerializable{
         return array_merge(parent::jsonSerialize(),
                 array(
                     'budget' => $this->getBudget(),
-                    'date_emmenagement' => $this->getDateEmmenagement(),
+                    'date_emmenagement' => ($this->getDateEmmenagement() == NULL)? NULL :
+                                    $this->getDateEmmenagement()->format('d-m-Y'),
                     'sources' => $this->getSources(),
                     'communes_preferees' => $this->getCommunesPreferees(),
                     'locations' => $this->getLocations()

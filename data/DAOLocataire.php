@@ -8,6 +8,7 @@ use DubInfo_gestion_immobilier\model\Etat;
 use DubInfo_gestion_immobilier\model\Commune;
 use DubInfo_gestion_immobilier\model\SourceLocataire;
 use DubInfo_gestion_immobilier\Exception\PDOException;
+use DateTime;
 /**
  * Description of DAOLocataire
  *
@@ -110,10 +111,18 @@ class DAOLocataire extends AbstractDAO{
             $source = new SourceLocataire(
                     $result['source_locataire_id'], $result['source']);
             
+            //creation date emmenagement
+            if($result['date_emmenagement'] == '') {
+                $date = null;
+            }
+            else {
+                $date = new DateTime($result['date_emmenagement']);
+            }
+            
             //création de l'objet Locataire
             $locataire = new Locataire($result['id'], $result['nom'], 
                     $result['prenom'], $result['num_telephone'], $result['num_gsm'], 
-                    $result['mail'], $result['budget'], $result['date_emmenagement'], 
+                    $result['mail'], $result['budget'], $date, 
                     $result['commentaire'], $etat, $adresse);
             $locataire->addSource($source);
             $locataire->setCommunesPreferees($this->readCommunesPreferees($id));
@@ -157,22 +166,31 @@ class DAOLocataire extends AbstractDAO{
     public function update($locataire) {
         try {
             $sql = "UPDATE locataire SET nom = :nom, prenom = :prenom, 
-                    num_telephone = :num_telephone, num_gsm = :num_gsm,
-                    mail = :mail, budget = :budget, commentaire = :commentaire,
-                    date_emmenagement = :date_emmenagement, 
-                    adresse_rue = :adresse_rue, adresse_numero = :adresse_numero,
-                    adresse_boite = :adresse_boite, adresse_ville = :adresse_ville,
+                    num_telephone = :num_tel, num_gsm = :num_gsm,  mail = :mail,
+                    budget = :budget, commentaire = :commentaire,
+                    date_emmenagement = :date, adresse_rue = :adresse_rue, 
+                    adresse_numero = :adresse_numero, 
+                    adresse_boite = :adresse_boite, adresse_ville = :adresse_ville, 
                     adresse_code_postal = :adresse_code_postal, 
-                    adresse_pays = :adresse_pays, etat_id = :etat WHERE id = :id";
+                    adresse_pays = :adresse_pays, source_locataire_id = :source, 
+                    etat_id = :etat WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);
-            $request->execute(array(
+            
+            if($locataire->getDateEmmenagement() === NULL) {
+                $date = null;
+            }
+            else {
+                $date = $locataire->getDateEmmenagement()->format('Y-m-d H:i:s');
+            }
+            
+            $result = $request->execute(array(
                 ':nom' => $locataire->getNom(),
                 ':prenom' => $locataire->getPrenom(),
-                ':num_telephone' => $locataire->getNumTelephone(),
+                ':num_tel' => $locataire->getNumTelephone(),
                 ':num_gsm' => $locataire->getNumGsm(),
                 ':mail' => $locataire->getMail(),
                 ':budget' => $locataire->getBudget(),
-                ':date_emmenagement' => $locataire->getDateEmmenagement(),
+                ':date' => $date,
                 ':commentaire' => $locataire->getCommentaire(),
                 ':adresse_rue' => $locataire->getAdresse()->getRue(),
                 ':adresse_numero' => $locataire->getAdresse()->getNumero(),
@@ -180,14 +198,20 @@ class DAOLocataire extends AbstractDAO{
                 ':adresse_ville' => $locataire->getAdresse()->getVille()->getNom(),
                 ':adresse_code_postal' => $locataire->getAdresse()->getVille()->getCodePostal(),
                 ':adresse_pays' => $locataire->getAdresse()->getVille()->getPays(),
+                ':source' => $locataire->getSource(0)->getId(),
                 ':etat' => $locataire->getEtat()->getId(),
                 ':id' => $locataire->getId()));
             
-            //suppression des anciennes communes préférées
-            $this->deleteCommunesPreferees($locataire->getId());
+            if($result) {
+                //suppression des anciennes communes préférées
+                $this->deleteCommunesPreferees($locataire->getId());
             
-            //ajout des nouvelles communes préférées
-            $this->addCommunesPreferees($locataire);
+                //ajout des nouvelles communes préférées
+                $this->addCommunesPreferees($locataire);
+            }
+            else {
+                throw new PDOException('Erreur durant l\'update');
+            }
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
         }

@@ -82,6 +82,9 @@ function changeAjaxListener(select_name) {
             
             //et on vide les listes adresses
             $("#select_pays").change();
+            
+            //on vide la liste des communes préférées
+             $("#select_communes").multipleSelect("refresh");
         }
         else {
             //on change le text du bouton submit
@@ -306,4 +309,20 @@ function feedMetierForm(data) {
 function feedSourceLocataireForm(data) {
     console.log(data);
     $("#libelle").val(data.libelle);
+}
+
+/*
+ *  Fonction pour remplir les champs du formulaire d'un locataire selectionné
+ */
+function feedLocataireForm(data) {
+    //on remplie les parties commune au Personne
+    feedPersonForm(data);
+    $("#select_source").val(data.sources[0].id);
+    $("#budget").val(data.budget);
+    $("#date_rentree").val(data.date_emmenagement);
+    communes_preferees = new Array();
+    data.communes_preferees.forEach(function(entry) {
+        communes_preferees.push(entry.id);
+    });
+    $("#select_communes").multipleSelect("setSelects", communes_preferees);
 }
