@@ -938,6 +938,7 @@ class Maison implements \JsonSerializable{
             'etat' => $this->getEtat(),
             'contacts' => $this->getContacts(),
             'sources' => $this->getSources(),
+            'toString' => $this->toString()
         ];
     }
     

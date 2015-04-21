@@ -3,6 +3,8 @@
     use DubInfo_gestion_immobilier\model\Maison;
     use DubInfo_gestion_immobilier\model\Adresse;
     use DubInfo_gestion_immobilier\model\SourceMaison;
+    use DubInfo_gestion_immobilier\business\MaisonCRUD;
+    use DubInfo_gestion_immobilier\business\AdresseCRUD;
     use DubInfo_gestion_immobilier\business\SourceMaisonCRUD;
     use DubInfo_gestion_immobilier\business\ContactCRUD;
     
@@ -12,11 +14,11 @@
     $form_maison->language("francais");
     
     //création de la liste des locataire
-//    $business = new LocataireCRUD();
+    $business = new MaisonCRUD();
     $list_maisons[''] = '- Nouveau -';
-//    foreach ($business->readList() as $locataire) {
-//        $list_locataire[$locataire->getId()] = $locataire->toString();
-//    }
+    foreach ($business->readList() as $maison) {
+        $list_maisons[$maison->getId()] = $maison->toString();
+    }
     
     //liste déroulante avec les maisons déjà existante
     $form_maison->add('label','label_id', 'select_id', 'Liste des Maisons');
@@ -39,6 +41,15 @@
     $numero = $form_maison->add('text', 'numero', null, array(
                                     'maxlength' => Adresse::MAX_SIZE_NUMERO
                                 ));
+    
+    //communes préférées
+    $business_adresse = new AdresseCRUD();
+    $list_communes[''] = '- Choisissez une commune -';
+    $list_communes = array_merge($list_communes, 
+            $business_adresse->readCommunesBruxelles());
+    $form_maison->add('label','label_commune', 'select_commune', 'Communes');
+    $communes = $form_maison->add('select', 'select_commune');
+    $communes->add_options($list_communes, true);
     
     $business_source = new SourceMaisonCRUD();
     $list_sources[''] = '- Choisissez une source -';
