@@ -72,7 +72,7 @@ class Maison {
      *
      * @var Adresse 
      */
-    private $_commune;
+    private $_adresse;
     
     /**
      *
@@ -179,17 +179,19 @@ class Maison {
      * @throws StringAttributeTooLong
      * @throws KeyDontExistException
      */
-    public function __construct($id_proposition = NULL, $id_maison = NULL, $date_creation = NULL, 
-            $date_modification = NULL, $adresse = NULL, $prix = NULL, $superficie_habitable = NULL,
-            $nb_salle_de_bain = NULL, $cout_travaux = NULL, $titres = NULL, $descriptions = NULL,
-            $descriptions_chambres = NULL, $descriptions_charges = NULL, $commentaire = NULL,
-            $raison_abandon = NULL, $etat = NULL, $commune = NULL, $chambres = NULL,
-            $contacts = NULL, $sources = NULL, $offres = NULL, $projets = NULL) {
+    public function __construct($id_proposition = NULL, $id_maison = NULL, $prix = NULL, 
+            $superficie_habitable = NULL, $nb_salle_de_bain = NULL, $cout_travaux = NULL,
+            $commentaire = NULL, $raison_abandon = NULL, $etat = NULL, $commune = NULL,
+            $adresse = NULL, $date_creation = NULL, $date_modification = NULL,  
+            $titres = NULL, $descriptions = NULL, $descriptions_chambres = NULL, 
+            $descriptions_charges = NULL, $chambres = NULL, $contacts = NULL, 
+            $sources = NULL, $offres = NULL, $projets = NULL) {
         $this->setIdProposition($id_proposition);
         $this->setIdMaison($id_maison);
         $this->setDateCreation($date_creation);
         $this->setDateModification($date_modification);
         $this->setAdresse($adresse);
+        $this->setCommune($commune);
         $this->setPrix($prix);
         $this->setSuperficieHabitable($superficie_habitable);
         $this->setNbSalleDeBain($nb_salle_de_bain);
@@ -515,7 +517,7 @@ class Maison {
      * @return Adresse
      */
     public function getAdresse() {
-        return $this->_commune;
+        return $this->_adresse;
     }
     
     /**
@@ -524,7 +526,7 @@ class Maison {
      * @throws BadTypeException
      */
     public function setAdresse($adresse) {
-        $this->_commune = CheckTyper::isModel($adresse, Adresse::class, 'adresse', __CLASS__);
+        $this->_adresse = CheckTyper::isModel($adresse, Adresse::class, 'adresse', __CLASS__);
     }
     
     /**
