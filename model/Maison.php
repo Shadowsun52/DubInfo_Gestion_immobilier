@@ -10,7 +10,7 @@ use DubInfo_gestion_immobilier\Exception\KeyDontExistException;
  *
  * @author Jenicot Alexandre
  */
-class Maison {
+class Maison implements \JsonSerializable{
     const MAX_SIZE_TITRE = 100;
     const MAX_SIZE_DESCR = 500;
     const MAX_SIZE_ADRESSE = 70;
@@ -920,4 +920,42 @@ class Maison {
                 'projets', __CLASS__);
     }
 //</editor-fold>
+    
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getIdProposition(),
+            'id_maison' => $this->getIdMaison(),
+            'titre' => $this->getTitre(self::LANGUAGE_FR),
+            'date_creation' => $this->getStringOfDate($this->getDateCreation()),
+            'adresse' => $this->getAdresse(),
+            'commune' => $this->getCommune(),
+            'prix' => $this->getPrix(),
+            'superficie' => $this->getSuperficeHabitable(),
+            'nb_sdb' => $this->getNbSalleDeBain(),
+            'cout_travaux' => $this->getCoutTravaux(),
+            'commentaire' => $this->getCommentaire(),
+            'raison_abandon' => $this->getRaisonAbandon(),
+            'etat' => $this->getEtat(),
+            'contacts' => $this->getContacts(),
+            'sources' => $this->getSources(),
+        ];
+    }
+    
+    /**
+     * Méthode qui retourne une date sous forme de string avec le format suivant
+     * d-m-Y
+     * @param \DateTime $date
+     * @return string
+     */
+    protected function getStringOfDate($date) {
+        if($date == NULL) {
+            return NULL;
+        }
+        return $date->format('d-m-Y');
+    }
+    
+    public function toString() {
+        return $this->getTitre(self::LANGUAGE_FR) . ' ' . 
+                $this->getCommune()->getLibelle();
+    }
 }
