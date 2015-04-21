@@ -1,0 +1,49 @@
+<?php
+namespace DubInfo_gestion_immobilier\business;
+
+use DubInfo_gestion_immobilier\data\DAOMaison;
+use DubInfo_gestion_immobilier\model\Maison;
+use DubInfo_gestion_immobilier\model\Adresse;
+use DubInfo_gestion_immobilier\model\Commune;
+use DubInfo_gestion_immobilier\model\Etat;
+use DubInfo_gestion_immobilier\model\SourceMaison;
+use DubInfo_gestion_immobilier\model\Contact;
+
+/**
+ * Description of MaisonCRUD
+ *
+ * @author Jenicot Alexandre
+ */
+class MaisonCRUD extends AbstractBusiness{
+    
+    public function __construct() {
+        parent::__construct(new DAOMaison(), 'maison', self::GENRE_FEMININ);
+    }
+    
+    /**
+     * Méthode créant un objet maison à l'aide de données provenant d'un
+     * formulaire
+     * @param array[mixed] $data
+     * @return Maison
+     */
+    public function createObject($data) {
+        $adresse = new Adresse($data['rue'], $data['numero']);
+        $commune = new Commune($data['select_commune']);
+        $etat = new Etat($data['select_etat']);
+        $source = new SourceMaison($data['select_source'], null, $data['reference']);
+        $contact = new Contact($data['select_contact']);
+        
+        /*La seconde valeur NULL correspond à raison_abandon qui n'est pas encore
+         * gérer dans cette version du programme
+         */
+        $maison = new Maison($data['select_id'], null, $data['prix'],
+                $data['superficie_habitable'], $data['select_sdb'], 
+                $data['cout_travaux'], $data['remarque'], null, $etat, $commune, 
+                $adresse);
+        $maison->addTitre(Maison::LANGUAGE_FR, $data['titre']);
+        $maison->addSource($source);
+        $maison->addContact($contact);
+        
+        return $maison;
+    }  
+}
