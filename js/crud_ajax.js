@@ -332,3 +332,10 @@ function feedLocataireForm(data) {
     });
     $("#select_communes").multipleSelect("setSelects", communes_preferees);
 }
+
+/*
+ *  Fonction pour remplir les champs du formulaire d'un contact selectionné
+ */
+function feedContactForm(data) {
+    feedPersonForm(data);
+}

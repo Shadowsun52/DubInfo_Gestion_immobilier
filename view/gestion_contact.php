@@ -1,17 +1,18 @@
 <h2>Gestion des contacts</h2>
 <div id="formulaire">
 <?php
+    use DubInfo_gestion_immobilier\business\ContactCRUD;
     use DubInfo_gestion_immobilier\model\Contact;
     
     $form_contact = new Zebra_Form('form_contact');
     $form_contact->language("francais");
     
     //création de la liste des contacts
-//    $business = new LocataireCRUD();
+    $business = new ContactCRUD();
     $list_contacts[''] = '- Nouveau -';
-//    foreach ($business->readList() as $contact) {
-//        $list_contacts[$contact->getId()] = $contact->toString();
-//    }
+    foreach ($business->readList() as $contact) {
+        $list_contacts[$contact->getId()] = $contact->toString();
+    }
     
     //liste déroulante avec les contacts déjà existants
     $form_contact->add('label','label_id', 'select_id', 'Liste des Contacts');
