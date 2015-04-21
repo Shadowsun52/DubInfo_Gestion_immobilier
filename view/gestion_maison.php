@@ -3,6 +3,9 @@
     use DubInfo_gestion_immobilier\model\Maison;
     use DubInfo_gestion_immobilier\model\Adresse;
     use DubInfo_gestion_immobilier\model\SourceMaison;
+    use DubInfo_gestion_immobilier\business\SourceMaisonCRUD;
+    use DubInfo_gestion_immobilier\business\ContactCRUD;
+    
     //formulaire qui permet de gérer les maisons
     
     $form_maison = new Zebra_Form('form_maison');
@@ -37,11 +40,11 @@
                                     'maxlength' => Adresse::MAX_SIZE_NUMERO
                                 ));
     
-//    $business_source = new SourceLocataireCRUD();
+    $business_source = new SourceMaisonCRUD();
     $list_sources[''] = '- Choisissez une source -';
-//    foreach ($business_source->readList() as $source) {
-//        $list_sources[$source->getId()] = $source->toString();
-//    }
+    foreach ($business_source->readList() as $source) {
+        $list_sources[$source->getId()] = $source->toString();
+    }
     
     //label de la source
     $form_maison->add('label','label_source', 'select_source', 'Source');
@@ -54,11 +57,12 @@
                                     'maxlength' => SourceMaison::MAX_SIZE_REFERENCE
                                 ));
     
-//    $business_source = new SourceLocataireCRUD();
+    $business_contact = new ContactCRUD();
     $list_contact[''] = '- Choisissez un contact -';
-//    foreach ($business_source->readList() as $source) {
-//        $list_sources[$source->getId()] = $source->toString();
-//    }
+    foreach ($business_contact->readList() as $contact) {
+        $list_contact[$contact->getId()] = $contact->toString();
+    }
+    
     $form_maison->add('label', 'label_contact', 'select_contact', 'Contact');
     $contact = $form_maison->add('select', 'select_contact');
     $contact->add_options($list_contact, true);
@@ -117,14 +121,13 @@
     
     $form_maison->add('label','label_etat','select_etat','Etat');
     $etat = $form_maison->add('select', 'select_etat');
-    $etat->add_options(array( 
-        ''  => '- Choisissez un etat -',
+    $etat->add_options(array(
         '1' => 'Potentiel',
         '5' => 'Retenu',
         '6' => 'A suivre',
         '7' => 'Prêt à louer',
         '3' => 'Abandonné'
-    ));
+    ),true);
     
     //label et text de la remarque
     $form_maison->add('label','label_remarque', 'remarque', 'Remarque');
