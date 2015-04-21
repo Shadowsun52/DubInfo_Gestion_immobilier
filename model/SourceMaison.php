@@ -52,4 +52,11 @@ class SourceMaison extends Source{
         
         $this->_reference = $_reference;
     }
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(),
+                array(
+                    'reference' => $this->getReference(),
+                ));
+    }
 }

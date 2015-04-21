@@ -304,10 +304,16 @@ function feedMetierForm(data) {
 }
 
 /*
- * Fonction pour remplir les champs du formulaire d'un metier selectionné
+ * Fonction pour remplir les champs du formulaire d'une source de locataires selectionné
  */
 function feedSourceLocataireForm(data) {
-    console.log(data);
+    $("#libelle").val(data.libelle);
+}
+
+/*
+ * Fonction pour remplir les champs du formulaire d'une source de maisons selectionné
+ */
+function feedSourceMaisonForm(data) {
     $("#libelle").val(data.libelle);
 }
 
