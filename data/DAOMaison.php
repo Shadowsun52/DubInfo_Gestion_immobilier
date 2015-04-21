@@ -73,7 +73,7 @@ class DAOMaison extends AbstractDAO{
     public function readList() {
         try{
             $sql = "SELECT pt.id, pt.titre_fr, cbt.name FROM propositions_table pt
-                    JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id 
+                    LEFT JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id 
                     ORDER BY pt.titre_fr, cbt.name ";
             $request = $this->getConnection()->prepare($sql);
             $request->execute();

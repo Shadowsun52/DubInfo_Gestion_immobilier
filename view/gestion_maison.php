@@ -17,7 +17,7 @@
     $business = new MaisonCRUD();
     $list_maisons[''] = '- Nouveau -';
     foreach ($business->readList() as $maison) {
-        $list_maisons[$maison->getId()] = $maison->toString();
+        $list_maisons[$maison->getIdProposition()] = $maison->toString();
     }
     
     //liste déroulante avec les maisons déjà existante
