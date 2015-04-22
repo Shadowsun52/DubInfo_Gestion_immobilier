@@ -53,16 +53,23 @@ class MaisonCRUD extends AbstractBusiness{
      */
     protected function createContacts($data) {
         $contacts = [];
+        $id_contact = []; //permet d'éviter les doublons
+        
         for($i = 1; isset($data['select_contact' . $i]) 
                 && $data['select_contact' . $i] != ''; $i++) {
-            if($data['select_contact' . $i] == '@Autre@') {
-                $contacts[] = new Contact(null, $data['contact_nom' . $i], 
+            if(!in_array($data['select_contact' . $i], $id_contact)) {
+                if($data['select_contact' . $i] == '@Autre@') {
+                    $id = null;
+                }
+                else {
+                    $id = $data['select_contact' . $i];
+                    $id_contact[] = $id;
+                }
+                
+                $contacts[] = new Contact($id, $data['contact_nom' . $i], 
                         $data['contact_prenom' . $i], $data['contact_num_tel' . $i], 
                         $data['contact_num_gsm' . $i], $data['contact_mail' . $i], 
                         $data['contact_remarque' .$i]);
-            }
-            else {
-                $contacts[] = new Contact($data['select_contact' . $i]);
             }
         }
         

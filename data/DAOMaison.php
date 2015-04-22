@@ -7,6 +7,7 @@ use DubInfo_gestion_immobilier\model\Commune;
 use DubInfo_gestion_immobilier\model\Etat;
 use DubInfo_gestion_immobilier\model\SourceMaison;
 use DubInfo_gestion_immobilier\model\Contact;
+use DubInfo_gestion_immobilier\data\DAOContact;
 use DubInfo_gestion_immobilier\Exception\PDOException;
 
 /**
@@ -15,6 +16,17 @@ use DubInfo_gestion_immobilier\Exception\PDOException;
  * @author Jenicot Alexandre
  */
 class DAOMaison extends AbstractDAO{
+    /**
+     *
+     * @var DAOContact 
+     */
+    private $_dao_contact;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->setDaoContact();
+    }
+    
     /**
      * Méthode permettant d'ajouter une maison et ses liens dans la DB
      * @param Maison $maison
@@ -46,7 +58,7 @@ class DAOMaison extends AbstractDAO{
 //            if($result) {
 //                $id = $this->getConnection()->lastInsertId();
 //                $this->addSource($id, $maison->getSource(0));
-//                $this->addContact($id, $maison->getContact(0));
+//                $this->addContacts($id, $maison->getContacts());
 //            }
 //            else {
 //                throw new PDOException('Erreur lors de l\'ajout!');
@@ -125,15 +137,23 @@ class DAOMaison extends AbstractDAO{
     /**
      * Méthode qui ajoute un lien entre un contact et une maison dans la DB
      * @param int $id   Identifiant de la maison
-     * @param Contact $contact la source a liée à la maison
+     * @param array[Contact] $contacts les sources a liées à la maison
      */
-    protected function addContact($id, $contact) {
+    protected function addContacts($id, $contacts) {
+        foreach ($contacts as $contact) {
+            if($contact->getId() === NULL) {
+                $this->getDaoContact()->add($contact);
+            }
+            else {
+                $this->getDaoContact()->update($contact);
+            }
+        }
         $sql = "INSERT INTO contact_maison (propositions_table_id, contact_id, 
                 reference_maison) VALUES (:propositision_id, :contact_id)";
         $request = $this->getConnection()->prepare($sql);
         $request->execute(array(
             ':propositision_id' => $id,
-            ':contact_id' => $contact->getId()));
+            ':contact_id' => $contacts->getId()));
     }
     
     /**
@@ -144,5 +164,17 @@ class DAOMaison extends AbstractDAO{
         $sql = "DELETE FROM contact_maison WHERE propositions_table_id = :id";
         $request = $this->getConnection()->prepare($sql);
         $request->execute(array(':id' => $id));
+    }
+    
+    /**
+     * 
+     * @return DAOContact
+     */
+    protected function getDaoContact() {
+        return $this->_dao_contact;
+    }
+
+    protected function setDaoContact() {
+        $this->_dao_contact = new DAOContact();
     }
 }

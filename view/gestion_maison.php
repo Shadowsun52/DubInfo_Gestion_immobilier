@@ -74,7 +74,7 @@
     foreach ($business_contact->readList() as $contact) {
         $list_contact[$contact->getId()] = $contact->toString();
     }
-    $list_contact['@Autre@'] = '- Autres -';
+    $list_contact['@Autre@'] = '- Ajouter un contact -';
     
     $form_maison->add('label', 'label_contact', 'select_contact1', 'Contact');
     $contact = $form_maison->add('select', 'select_contact1');

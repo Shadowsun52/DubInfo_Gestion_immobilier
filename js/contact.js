@@ -3,16 +3,13 @@ function listenerContact(pos) {
     $('#select_contact' + pos).bind('change', function(e) {
         if($("#select_contact" + pos).val() !== '') {
             
-            /*
-             * si l'option autre a été choisi on ajoute le formulaire pour un 
-             * nouveau contact
-             */
-            if($("#select_contact" + pos).val() === '@Autre@') {
-                createFormAddContact(pos);
+            //on ajoute le formulaire pour le contact
+            createFormAddContact(pos);
+            //c'est c'est un contact existant on récupérer ses données dans la DB
+            if($("#select_contact" + pos).val() !== '@Autre@') {
+                ReadContact(pos);
             }
-            else {
-                $("#new_contact" + pos).remove();
-            }
+                
             new_pos = pos+1;
             /* on regarde si le choix du contacts suivant existe déjà et qu'on 
              * en dépasse pas le nombre maximun de contact
@@ -58,6 +55,7 @@ function listenerContact(pos) {
  * Méthode qui créer le formulaire d'ajout d'un contact pour une maison
  */
 function createFormAddContact(pos) {
+    $("#new_contact" + pos).remove();
     //on créer le bloc principale contenant le formulaire d'ajout d'un contact
     $("#select_contact" + pos).after('<div id="new_contact' + pos + '" class="new_contact"/>');
     //On créer les différents bloque ( Utile pour la mise en forme)
@@ -82,10 +80,58 @@ function createFormAddContact(pos) {
             .append('<textarea name="contact_remarque' + pos + '" maxlength="500" cols="80" rows="3"/>');
 }
 
+/**
+ * Fonction qui décale la position des contacts suivant un autres
+ * @param {integer} pos
+ */
 function decalageFormAddContact(pos) {
-    console.log("decal" + pos);
     new_pos = pos - 1;
     $("#new_contact" + pos).attr("id","new_contact" + new_pos);
     $("contact_nom" + pos).attr("name","contact_nom" + new_pos);
 }
+
+/**
+ * Fonction qui remet la partie du formulaire qui gérer les contacts à zero
+ */
+function cleanSelectsContact() {
+    for(i = 2; $("#contact" + i).length !== 0; i++){
+        $("#contact" + i).remove();
+    }
+    
+    $("#new_contact1").remove();
+}
+
+/**
+ * Fonction qui remplie le formulaire d'un contact avec ses données récupérer 
+ * dans la DB via AJAX
+ */
+function ReadContact(pos) {
+    $.ajax({
+        type: 'post',
+        url: 'controller/gestion_ajax.php',
+        data: "action=read&item=contact&id=" + $("#select_contact" + pos).val(),
+        dataType: 'json',
+        success: function(retour_php)
+        {
+            if(retour_php.success === false)
+            {
+                alert(retour_php.erreur);
+            }
+            else
+            {
+               $("input[name=contact_nom" + pos + "]").val(retour_php.nom);
+               $("input[name=contact_prenom" + pos + "]").val(retour_php.prenom);
+               $("input[name=contact_num_tel" + pos + "]").val(retour_php.num_tel);
+               $("input[name=contact_num_gsm" + pos + "]").val(retour_php.num_gsm);
+               $("input[name=contact_mail" + pos + "]").val(retour_php.mail);
+               $("textarea[name=contact_remarque" + pos + "]").val(retour_php.commentaire);
+            }
+        },
+        error: function(retour_php)
+        {
+            alert("Erreur avec la communication serveur.");
+        } 
+    });
+}
+
 listenerContact(1);

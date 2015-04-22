@@ -37,6 +37,7 @@ function addAjaxListener(btn_name, form_name) {
                             $('#' + form_name)[0].reset();
                             $('#select_communes').multipleSelect("refresh");
                             putFormListAddress();
+                            cleanSelectsContact();
                         }
                     }
                     else
