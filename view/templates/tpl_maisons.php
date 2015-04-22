@@ -1,4 +1,3 @@
-<h2>Gestion des maisons</h2>
 <div id="form_maison">
     
 <div class="row">

@@ -1,3 +1,4 @@
+<h2>Gestion des maisons</h2>
 <div id="formulaire">
 <?php
     use DubInfo_gestion_immobilier\model\Maison;
@@ -73,6 +74,7 @@
     foreach ($business_contact->readList() as $contact) {
         $list_contact[$contact->getId()] = $contact->toString();
     }
+    $list_contact['@Autre@'] = '- Autres -';
     
     $form_maison->add('label', 'label_contact', 'select_contact1', 'Contact');
     $contact = $form_maison->add('select', 'select_contact1');
@@ -151,5 +153,5 @@
     
     $form_maison->render('view/templates/tpl_maisons.php');
 ?>
-    <script src="js/contact.js" />
-        
+    </div>
+<script src="js/contact.js"></script>

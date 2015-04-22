@@ -4,10 +4,19 @@
 {
    margin-left: auto;
    margin-right: auto;
-   width: 50%; /* largeur obligatoire pour tre centr */
+   width: 50%; /* largeur obligatoire pour ï¿½tre centrï¿½ */
 }
 
 h2
 {
   color: grey;
+}
+
+.new_contact {
+    margin: 10px 0 10px 20px;
+}
+
+.new_contact div {
+    display: inline-block;
+    margin-left: 5px;
 }
