@@ -31,7 +31,7 @@ class MaisonCRUD extends AbstractBusiness{
         $commune = new Commune($data['select_commune']);
         $etat = new Etat($data['select_etat']);
         $source = new SourceMaison($data['select_source'], null, $data['reference']);
-        $contact = new Contact($data['select_contact']);
+        $contacts = $this->createContacts($data);
         
         /*La seconde valeur NULL correspond à raison_abandon qui n'est pas encore
          * gérer dans cette version du programme
@@ -42,8 +42,30 @@ class MaisonCRUD extends AbstractBusiness{
                 $adresse);
         $maison->addTitre(Maison::LANGUAGE_FR, $data['titre']);
         $maison->addSource($source);
-        $maison->addContact($contact);
-        
+        $maison->setContacts($contacts);
         return $maison;
     }  
+    
+    /**
+     * Méthode créer la liste des contacts d'une maison
+     * @param type $data
+     * @return Contact
+     */
+    protected function createContacts($data) {
+        $contacts = [];
+        for($i = 1; isset($data['select_contact' . $i]) 
+                && $data['select_contact' . $i] != ''; $i++) {
+            if($data['select_contact' . $i] == '@Autre@') {
+                $contacts[] = new Contact(null, $data['contact_nom' . $i], 
+                        $data['contact_prenom' . $i], $data['contact_num_tel' . $i], 
+                        $data['contact_num_gsm' . $i], $data['contact_mail' . $i], 
+                        $data['contact_remarque' .$i]);
+            }
+            else {
+                $contacts[] = new Contact($data['select_contact' . $i]);
+            }
+        }
+        
+        return $contacts;
+    }
 }
