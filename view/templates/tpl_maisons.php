@@ -40,7 +40,11 @@
     
 <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_contact . $select_contact ?></div>
+    <div class="cell"><?php echo $label_contact ?>
+        <div id="contact1">
+            <?php echo $select_contact1 ?>
+        </div>
+    </div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>

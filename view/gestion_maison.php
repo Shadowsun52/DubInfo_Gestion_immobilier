@@ -74,8 +74,8 @@
         $list_contact[$contact->getId()] = $contact->toString();
     }
     
-    $form_maison->add('label', 'label_contact', 'select_contact', 'Contact');
-    $contact = $form_maison->add('select', 'select_contact');
+    $form_maison->add('label', 'label_contact', 'select_contact1', 'Contact');
+    $contact = $form_maison->add('select', 'select_contact1');
     $contact->add_options($list_contact, true);
     
     //label et text du prix
@@ -150,4 +150,6 @@
     $form_maison->add('submit', 'btnsubmit', 'Ajouter');
     
     $form_maison->render('view/templates/tpl_maisons.php');
-
+?>
+    <script src="js/contact.js" />
+        
