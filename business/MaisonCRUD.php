@@ -49,6 +49,15 @@ class MaisonCRUD extends AbstractBusiness{
     }  
     
     /**
+     * Méthode qui permet de retourner les contacts d'une maison
+     * @param array[mixed] $data
+     * @return array[Contact]
+     */
+    public function readContact($data) {
+        return $this->getDao()->readContactsMaison($data['id']);
+    }
+    
+    /**
      * Méthode créer la liste des contacts d'une maison
      * @param type $data
      * @return Contact

@@ -150,17 +150,53 @@ function refreshContact(pos) {
         success: function(retour_php)
         {
             $("#select_contact" + pos).empty();  //on vide la liste
-            $("#select_contact" + pos).append($('<option/>').val('').html('- Choississez un contact -')); //première valeur de la liste déroulante
+            
+            //première valeur de la liste déroulante
+            $("#select_contact" + pos).append($('<option/>').val('')
+                    .html('- Choisissez un contact -')); 
             $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
             {
                 $("#select_contact" + pos).append($('<option/>').val(cont.id).html(cont.toString ));    
             });
+            //option d'ajout d'un contact
+            $("#select_contact" + pos).append($('<option/>').val('@Autre@')
+                    .html('- Ajouter un contact -'));
         },
         error: function(retour_php)
         {
             alert("Erreur avec la communication serveur.");
         } 
     });
+}
+
+/**
+ * Fonction qui permet de récupérer et d'afficher tout les contacts d'une maison
+ *  après l'édition de celle-ci
+ */
+function feedSubformContactAfterUpdate() {
+    $.ajax({
+        type: 'post',
+        url: 'controller/gestion_ajax.php',
+        data: "action=readContact&item=maison&id=" + $("#select_id").val(),
+        async: false,
+        dataType: 'json',
+        success: function(retour_php)
+        {
+            cleanSelectsContact();
+            feedContactsSubForm(retour_php);
+        },
+        error: function(retour_php)
+        {
+            alert("Erreur avec la communication serveur.");
+        } 
+    });
+}
+
+function feedContactsSubForm(contacts) {
+    for(i=0; contacts[i] !== undefined; i++) {
+        $("#select_contact" + (i+1)).val(contacts[i].id);
+        $("#select_contact" + (i+1)).change();
+    }
 }
 
 listenerContact(1);

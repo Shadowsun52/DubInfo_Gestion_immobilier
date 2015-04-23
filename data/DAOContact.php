@@ -2,6 +2,7 @@
 namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\Contact;
+use \DubInfo_gestion_immobilier\Exception\ForeignKeyConstraintException;
 use DubInfo_gestion_immobilier\Exception\PDOException;
 /**
  * Description of DAOContact
@@ -37,6 +38,7 @@ class DAOContact extends AbstractDAO{
      *  Méthode qui permet la suppression d'un contact grâce à sont identifiant
      * @param int $id Identifiant de l'investisseur à supprimer
      * @throws PDOException
+     * @throws ForeignKeyConstraintException
      */
     public function delete($id) {
         if($this->checkForeignKeyContraint($id)) {
@@ -139,7 +141,7 @@ class DAOContact extends AbstractDAO{
      */
     protected function checkForeignKeyContraint($id) {
         try {
-            $sql = "SELECT id FROM contact_maison WHERE contact_id = :id";
+            $sql = "SELECT * FROM contact_maison WHERE contact_id = :id";
             $request = $this->getConnection()->prepare($sql);
             $request->execute(array(':id' => $id));
             

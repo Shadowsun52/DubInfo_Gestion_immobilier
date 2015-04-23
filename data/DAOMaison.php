@@ -247,7 +247,7 @@ class DAOMaison extends AbstractDAO{
      * @param int $id l'identifiant de la maison
      * @return array[Contact] Liste des contacts
      */
-    protected function readContactsMaison($id) {
+    public function readContactsMaison($id) {
         $sql = "SELECT * FROM contact JOIN contact_maison ON contact_id = id
                 WHERE propositions_table_id = :id";
         $request = $this->getConnection()->prepare($sql);
@@ -270,6 +270,7 @@ class DAOMaison extends AbstractDAO{
         foreach ($contacts as $contact) {
             if($contact->getId() === NULL) {
                 $this->getDaoContact()->add($contact);
+                $contact->setId($this->getConnection()->lastInsertId());
             }
             else {
                 $this->getDaoContact()->update($contact);

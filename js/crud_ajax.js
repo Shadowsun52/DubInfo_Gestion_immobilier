@@ -51,6 +51,11 @@ function addAjaxListener(btn_name, form_name) {
                              */
                             cleanSelectsContact();
                         }
+                        else {
+                            if(url_param['item'] === 'maison') {
+                                feedSubformContactAfterUpdate()
+                            }
+                        }
                     }
                     else
                     {
@@ -376,8 +381,5 @@ function feedMaisonForm(data) {
     $("#select_etat").val(data.etat.id);
     $("#remarque").val(data.commentaire);
     
-    for(i=0; data.contacts[i] !== undefined; i++) {
-        $("#select_contact" + (i+1)).val(data.contacts[i].id);
-        $("#select_contact" + (i+1)).change();
-    }
+    feedContactsSubForm(data.contacts);
 }
