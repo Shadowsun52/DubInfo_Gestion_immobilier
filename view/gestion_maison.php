@@ -45,9 +45,10 @@
     
     //communes préférées
     $business_adresse = new AdresseCRUD();
-    $list_communes[''] = '- Choisissez une commune -';
-    $list_communes = array_merge($list_communes, 
-            $business_adresse->readCommunesBruxelles());
+    $_list_communes = array_reverse($business_adresse->readCommunesBruxelles(),true);
+    $_list_communes[''] = '- Choisissez une commune -';
+    $list_communes = array_reverse($_list_communes, true);
+    
     $form_maison->add('label','label_commune', 'select_commune', 'Communes');
     $communes = $form_maison->add('select', 'select_commune');
     $communes->add_options($list_communes, true);
@@ -113,7 +114,7 @@
     //ceci ne fonctionne pas (choisissez un etat)    
     ''  => '- Combien de salle de bain ? -',
     '1' => '1',
-    '2 '=> '2',
+    '2' => '2',
     '3' => '3',
     '4' => '4',
     '5' => '5'
