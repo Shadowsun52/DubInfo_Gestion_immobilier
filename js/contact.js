@@ -99,6 +99,7 @@ function cleanSelectsContact() {
     }
     
     $("#new_contact1").remove();
+    refreshContact(pos);
 }
 
 /**
@@ -135,7 +136,11 @@ function ReadContact(pos) {
     });
 }
 
-function refreshContact() {
+/**
+ * Fonction qui actualise la liste des contacts pour un select donnée
+ * @param {int} pos position du select
+ */
+function refreshContact(pos) {
     $.ajax({
         type: 'post',
         url: 'controller/gestion_ajax.php',
@@ -144,11 +149,11 @@ function refreshContact() {
         dataType: 'json',
         success: function(retour_php)
         {
-            $("#select_contact1").empty();  //on vide la liste
-            $("#select_contact1").append($('<option/>').val('').html('- Choississez un contact -')); //première valeur de la liste déroulante
+            $("#select_contact" + pos).empty();  //on vide la liste
+            $("#select_contact" + pos).append($('<option/>').val('').html('- Choississez un contact -')); //première valeur de la liste déroulante
             $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
             {
-                $("#select_id").append($('<option/>').val(cont.id).html(cont.toString ));    
+                $("#select_contact" + pos).append($('<option/>').val(cont.id).html(cont.toString ));    
             });
         },
         error: function(retour_php)

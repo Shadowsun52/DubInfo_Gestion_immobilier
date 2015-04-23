@@ -50,7 +50,6 @@ function addAjaxListener(btn_name, form_name) {
                              * le formulaire maison
                              */
                             cleanSelectsContact();
-                            refreshContact();
                         }
                     }
                     else
@@ -82,6 +81,13 @@ function addAjaxListener(btn_name, form_name) {
  */
 function changeAjaxListener(select_name) {
     $('#' + select_name).bind('change', function(e) {
+        url_param = getParamsUrl();
+        
+        //on remet a zéro les choix des contacts
+        if(url_param['item'] === 'maison') {
+            cleanSelectsContact();    
+        }
+        
         //on regarde si on a choisi un élement ou l'option d'ajout
         if($('#select_id').val() === '') {
             //on change le text du bouton submit
@@ -91,7 +97,6 @@ function changeAjaxListener(select_name) {
             $("#deleting").remove();
             
             //on vide le formulaire
-            url_param = getParamsUrl();
             $('#form_' + url_param['item'])[0].reset();
             
             //et on vide les listes adresses
@@ -157,26 +162,26 @@ function addDeleteListener() {
     });
 }
 
-//appel en ajax de l'ajout de manière forcé, c-a-d sans vérification de doublons
-function addAjaxForced($form, url_param) {
-    $.ajax({
-        'url': 'controller/add_ajax_forced.php',
-        'type': 'post',
-        //on retour le type de l'item et le contenu du form
-        'data': 'item=' + url_param['item'] +'&' + $form.serialize(),
-        'dataType': 'json',
-        'success': function(data) {
-            if(data.success) {
-                alert(data.message); 
-                $('#' + form_name)[0].reset();
-            }
-            else
-            {
-                alert(data.erreur);
-            }
-        }
-    });
-}
+////appel en ajax de l'ajout de manière forcé, c-a-d sans vérification de doublons
+//function addAjaxForced($form, url_param) {
+//    $.ajax({
+//        'url': 'controller/add_ajax_forced.php',
+//        'type': 'post',
+//        //on retour le type de l'item et le contenu du form
+//        'data': 'item=' + url_param['item'] +'&' + $form.serialize(),
+//        'dataType': 'json',
+//        'success': function(data) {
+//            if(data.success) {
+//                alert(data.message); 
+//                $('#' + form_name)[0].reset();
+//            }
+//            else
+//            {
+//                alert(data.erreur);
+//            }
+//        }
+//    });
+//}
 
 //fonction ajax qui met à jour la liste d'item du formulaire
 function refreshList(item) {
@@ -358,5 +363,21 @@ function feedContactForm(data) {
  *  Fonction pour remplir les champs du formulaire d'une maison selectionnée
  */
 function feedMaisonForm(data) {
-    console.log(data);
+    $("#titre").val(data.titre);
+    $("#rue").val(data.adresse.rue);
+    $("#numero").val(data.adresse.numero);
+    $("#select_commune").val(data.commune.id);
+    $("#select_source").val(data.sources[0].id);
+    $("#reference").val(data.sources[0].reference);
+    $("#prix").val(data.prix);
+    $("#superficie_habitable").val(data.superficie);
+    $("#select_sdb").val(data.nb_sdb);
+    $("#cout_travaux").val(data.cout_travaux);
+    $("#select_etat").val(data.etat.id);
+    $("#remarque").val(data.commentaire);
+    
+    for(i=0; data.contacts[i] !== undefined; i++) {
+        $("#select_contact" + (i+1)).val(data.contacts[i].id);
+        $("#select_contact" + (i+1)).change();
+    }
 }
