@@ -8,6 +8,7 @@ use DubInfo_gestion_immobilier\model\Commune;
 use DubInfo_gestion_immobilier\model\Etat;
 use DubInfo_gestion_immobilier\model\SourceMaison;
 use DubInfo_gestion_immobilier\model\Contact;
+use DubInfo_gestion_immobilier\Exception\NomContactException;
 
 /**
  * Description of MaisonCRUD
@@ -25,6 +26,7 @@ class MaisonCRUD extends AbstractBusiness{
      * formulaire
      * @param array[mixed] $data
      * @return Maison
+     * @throws NomContactException
      */
     public function createObject($data) {
         $adresse = new Adresse($data['rue'], $data['numero']);
@@ -50,6 +52,7 @@ class MaisonCRUD extends AbstractBusiness{
      * Méthode créer la liste des contacts d'une maison
      * @param type $data
      * @return Contact
+     * @throws NomContactException
      */
     protected function createContacts($data) {
         $contacts = [];
@@ -66,6 +69,9 @@ class MaisonCRUD extends AbstractBusiness{
                     $id_contact[] = $id;
                 }
                 
+                if($data['contact_nom' . $i] === '') {
+                    throw new NomContactException($i);
+                }
                 $contacts[] = new Contact($id, $data['contact_nom' . $i], 
                         $data['contact_prenom' . $i], $data['contact_num_tel' . $i], 
                         $data['contact_num_gsm' . $i], $data['contact_mail' . $i], 

@@ -147,13 +147,14 @@ class DAOMaison extends AbstractDAO{
             else {
                 $this->getDaoContact()->update($contact);
             }
+            
+            $sql = "INSERT INTO contact_maison (propositions_table_id, contact_id)
+                    VALUES (:propositision_id, :contact_id)";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(
+                ':propositision_id' => $id,
+                ':contact_id' => $contact->getId()));
         }
-        $sql = "INSERT INTO contact_maison (propositions_table_id, contact_id, 
-                reference_maison) VALUES (:propositision_id, :contact_id)";
-        $request = $this->getConnection()->prepare($sql);
-        $request->execute(array(
-            ':propositision_id' => $id,
-            ':contact_id' => $contacts->getId()));
     }
     
     /**

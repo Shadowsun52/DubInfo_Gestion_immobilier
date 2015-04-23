@@ -104,6 +104,7 @@ function cleanSelectsContact() {
 /**
  * Fonction qui remplie le formulaire d'un contact avec ses données récupérer 
  * dans la DB via AJAX
+ * @param {integer} pos
  */
 function ReadContact(pos) {
     $.ajax({
