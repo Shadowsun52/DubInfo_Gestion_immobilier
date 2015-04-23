@@ -99,7 +99,7 @@ function cleanSelectsContact() {
     }
     
     $("#new_contact1").remove();
-    refreshContact(pos);
+    refreshContact(1);
 }
 
 /**

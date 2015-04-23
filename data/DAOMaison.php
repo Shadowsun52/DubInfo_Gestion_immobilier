@@ -69,8 +69,25 @@ class DAOMaison extends AbstractDAO{
         }
     }
 
+    /**
+     *  Méthode qui permet la suppression d'une maison grâce à son identifiant
+     * @param int $id Identifiant de la maison à supprimer
+     * @throws PDOException
+     */
     public function delete($id) {
-        
+        try {
+            //suppression des contacts
+            $this->deleteContacts($id);
+            
+            //suppression de la source
+            $this->deleteSources($id);
+            
+            $sql = "DELETE FROM propositions_table WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
@@ -150,8 +167,53 @@ class DAOMaison extends AbstractDAO{
         }
     }
 
-    public function update($object) {
-        
+    /**
+     * Méthode permettant d'update une maison dans la DB
+     * @param Maison $maison
+     * @throws PDOException
+     */
+    public function update($maison) {
+        try {
+            $sql = "UPDATE propositions_table SET titre_fr = :titre, 
+                    commentaire = :commentaire, adresse_rue = :rue, 
+                    adresse_numero = :numero, commune_id = :commune, prix = :prix, 
+                    superficie_habitable = :superficie, nb_salle_de_bain = :nb_sdb, 
+                    cout_travaux = :cout_travaux, raison_abandon = :raison_abandon, 
+                    etat_id = :etat WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);            
+            $result = $request->execute(array(
+                ':titre' => $maison->getTitre(Maison::LANGUAGE_FR),
+                ':commentaire' => $maison->getCommentaire(),
+                ':rue' => $maison->getAdresse()->getRue(),
+                ':numero' => $maison->getAdresse()->getNumero(),
+                ':commune' => $maison->getCommune()->getId(),
+                ':prix' => $maison->getPrix(),
+                ':superficie' => $maison->getSuperficeHabitable(),
+                ':nb_sdb' => $maison->getNbSalleDeBain(),
+                ':cout_travaux' => $maison->getCoutTravaux(),
+                ':raison_abandon' => $maison->getRaisonAbandon(),
+                ':etat' => $maison->getEtat()->getId(),
+                ':id' => $maison->getIdProposition()));
+            
+            if($result) {
+                //suppression de l'anciennes source
+                $this->deleteSources($maison->getIdProposition());
+            
+                //ajout de la nouvelle source
+                $this->addSource($maison->getIdProposition(), $maison->getSource(0));
+                
+                //suppression des anciens contacts
+                $this->deleteContacts($maison->getIdProposition());
+            
+                //ajout des nouveaux contacts
+                $this->addContacts($maison->getIdProposition(), $maison->getContacts());
+            }
+            else {
+                throw new PDOException('Erreur durant l\'update');
+            }
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
 //<editor-fold defaultstate="collapsed" desc="Gestion source & contacts">
