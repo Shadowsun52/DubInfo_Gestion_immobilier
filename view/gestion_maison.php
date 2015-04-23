@@ -149,6 +149,11 @@
                                     'maxlength' => Maison::MAX_SIZE_COMMENTAIRE
                                 ));
     
+    $form_maison->add('label','label_raison_abandon','raison_abandon','Raison de l\'abandon');
+    $abandon = $form_maison->add('textarea', 'raison_abandon', null, array(
+                                    'maxlength' => Maison::MAX_SIZE_RAISON_ABANDON
+                                ));
+    
     //Il ne faut pas oublier d'ajouter le bouton submit
     $form_maison->add('submit', 'btnsubmit', 'Ajouter');
     
@@ -156,3 +161,6 @@
 ?>
     </div>
 <script src="js/contact.js"></script>
+<script type="text/javascript">
+    addChangeEtatListener();
+</script>

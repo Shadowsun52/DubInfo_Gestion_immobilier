@@ -34,14 +34,11 @@ class MaisonCRUD extends AbstractBusiness{
         $etat = new Etat($data['select_etat']);
         $source = new SourceMaison($data['select_source'], null, $data['reference']);
         $contacts = $this->createContacts($data);
-        
-        /*La seconde valeur NULL correspond à raison_abandon qui n'est pas encore
-         * gérer dans cette version du programme
-         */
+
         $maison = new Maison($data['select_id'], null, $data['prix'],
                 $data['superficie_habitable'], $data['select_sdb'], 
-                $data['cout_travaux'], $data['remarque'], null, $etat, $commune, 
-                $adresse);
+                $data['cout_travaux'], $data['remarque'], $data['raison_abandon'],
+                $etat, $commune, $adresse);
         $maison->addTitre(Maison::LANGUAGE_FR, $data['titre']);
         $maison->addSource($source);
         $maison->setContacts($contacts);

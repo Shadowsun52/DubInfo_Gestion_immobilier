@@ -1,5 +1,5 @@
 <div id="form_maison">
-    
+
 <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_id . $select_id ?></div>
@@ -80,6 +80,13 @@
 <div class="row even">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_remarque . $remarque ?></div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row optional">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $label_raison_abandon . $raison_abandon ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>

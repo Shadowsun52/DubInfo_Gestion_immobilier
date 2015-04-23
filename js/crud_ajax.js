@@ -56,6 +56,7 @@ function addAjaxListener(btn_name, form_name) {
                                 feedSubformContactAfterUpdate()
                             }
                         }
+                        $("#select_etat").change();
                     }
                     else
                     {
@@ -124,6 +125,7 @@ function changeAjaxListener(select_name) {
             //on remplie le formulaire avec les informations de l'élement
             feedForm();
         }
+        $("#select_etat").change();
     });
 }
 
@@ -379,7 +381,24 @@ function feedMaisonForm(data) {
     $("#select_sdb").val(data.nb_sdb);
     $("#cout_travaux").val(data.cout_travaux);
     $("#select_etat").val(data.etat.id);
+    $("#select_etat").change();
     $("#remarque").val(data.commentaire);
-    
+    $("#raison_abandon").val(data.raison_abandon);
     feedContactsSubForm(data.contacts);
+}
+
+function addChangeEtatListener() {
+    $('#select_etat').bind('change', function(e) {
+        console.log($('#select_etat').val());
+        url_param = getParamsUrl();
+        if(url_param['item'] === 'maison') {
+            if($("#select_etat").val() === '3') {
+                $(".optional").show();
+            }
+            else {
+                $('#raison_abandon').val('');
+                $(".optional").hide();
+            }
+        }
+    });
 }
