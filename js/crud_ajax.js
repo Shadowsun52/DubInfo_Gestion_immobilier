@@ -35,9 +35,22 @@ function addAjaxListener(btn_name, form_name) {
                         $("#select_id").val(id);
                         if(action === 'add') {
                             $('#' + form_name)[0].reset();
+                            
+                            /*
+                             * pour remettre à zero les communes préférées du
+                             * formulaire locataire et lettre de missions
+                             */
                             $('#select_communes').multipleSelect("refresh");
+                            
+                            //pour remettre à l'état de liste le choix de l'adresse
                             putFormListAddress();
+                            
+                            /*
+                             * Pour remettre à zero le choix des contacts pour 
+                             * le formulaire maison
+                             */
                             cleanSelectsContact();
+                            refreshContact();
                         }
                     }
                     else
@@ -339,4 +352,11 @@ function feedLocataireForm(data) {
  */
 function feedContactForm(data) {
     feedPersonForm(data);
+}
+
+/*
+ *  Fonction pour remplir les champs du formulaire d'une maison selectionnée
+ */
+function feedMaisonForm(data) {
+    console.log(data);
 }

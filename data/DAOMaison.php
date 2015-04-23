@@ -37,12 +37,14 @@ class DAOMaison extends AbstractDAO{
             $sql = "INSERT INTO propositions_table (titre_fr, date_creation, 
                     commentaire, adresse_rue, adresse_numero, commune_id, prix,
                     superficie_habitable, nb_salle_de_bain, cout_travaux, etat_id,
-                    raison_abandon) VALUES (:titre, NOW(), :commentaire, 
+                    raison_abandon) VALUES (:titre, :date_creation, :commentaire, 
                     :adresse_rue, :adresse_numero, :commune, :prix, :superficie,
                     :nb_sdb, :cout_travaux, :etat, :raison_abandon)";
             $request = $this->getConnection()->prepare($sql);
+            $date = new \DateTime();
             $result = $request->execute(array(
                 ':titre' => $maison->getTitre(Maison::LANGUAGE_FR),
+                ':date_creation' => $date->getTimestamp(),
                 ':commentaire' => $maison->getCommentaire(),
                 ':adresse_rue' => $maison->getAdresse()->getRue(),
                 ':adresse_numero' => $maison->getAdresse()->getNumero(),
@@ -71,8 +73,52 @@ class DAOMaison extends AbstractDAO{
         
     }
 
+    /**
+     * Fonction qui retourne une maison par rapport à un id donné
+     * @param int $id
+     * @return Maison La maison lut dans la base de données
+     * @throws PDOException
+     */
     public function read($id) {
-        
+        try {
+            $sql = "SELECT pt.*, e.libelle as 'etat', cbt.name as 'commune', 
+                    sm.id as 'id_source', sm.libelle as 'source', pm.reference_maison
+                    FROM propositions_table pt LEFT JOIN etat e ON pt.etat_id = e.id
+                    LEFT JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id
+                    LEFT JOIN provenance_maison pm ON pm.propositions_table_id = pt.id
+                    LEFT JOIN source_maison sm ON pm.source_maison_id = sm.id WHERE pt.id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            //création de l'objet adresse
+            $adresse = new Adresse($result['adresse_rue'], $result['adresse_numero']);
+            $commune = new Commune($result['commune_id'], $result['commune']);
+            
+            //création de la source
+            $etat = new Etat($result['etat_id'], $result['etat']);
+            
+            //création de l'objet source_locataire
+            $source = new SourceMaison($result['id_source'], $result['source'],
+                    $result['reference_maison']);
+            
+            //creation date creation
+            $date = new \DateTime();
+            $date->setTimestamp(intval($result['date_creation']));
+            
+            //création de l'objet maison
+            $maison = new Maison($result['id'], null, $result['prix'],
+                    $result['superficie_habitable'], $result['nb_salle_de_bain'], 
+                    $result['cout_travaux'], $result['commentaire'], 
+                    $result['raison_abandon'], $etat, $commune, $adresse, $date);
+            $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
+            $maison->addSource($source);
+            $maison->setContacts($this->readContactsMaison($id));
+            
+            return $maison;
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
@@ -132,6 +178,25 @@ class DAOMaison extends AbstractDAO{
         $sql = "DELETE FROM provenance_maison WHERE propositions_table_id = :id";
         $request = $this->getConnection()->prepare($sql);
         $request->execute(array(':id' => $id));
+    }
+    
+    /**
+     * Méthode qui retourne la liste des contacts d'une maison
+     * @param int $id l'identifiant de la maison
+     * @return array[Contact] Liste des contacts
+     */
+    protected function readContactsMaison($id) {
+        $sql = "SELECT * FROM contact JOIN contact_maison ON contact_id = id
+                WHERE propositions_table_id = :id";
+        $request = $this->getConnection()->prepare($sql);
+        $request->execute(array(':id' => $id));
+        foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+        {
+            $contacts[] = new Contact($result['id'], $result['nom'], 
+                    $result['prenom'], $result['num_telephone'], 
+                    $result['num_gsm'], $result['mail'], $result['commentaire']);
+        }
+        return isset( $contacts) ?  $contacts : [];
     }
     
     /**

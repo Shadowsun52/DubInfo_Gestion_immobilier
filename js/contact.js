@@ -135,4 +135,27 @@ function ReadContact(pos) {
     });
 }
 
+function refreshContact() {
+    $.ajax({
+        type: 'post',
+        url: 'controller/gestion_ajax.php',
+        data: "action=readList&item=contact",
+        async: false,
+        dataType: 'json',
+        success: function(retour_php)
+        {
+            $("#select_contact1").empty();  //on vide la liste
+            $("#select_contact1").append($('<option/>').val('').html('- Choississez un contact -')); //première valeur de la liste déroulante
+            $.each(retour_php, function(idx, cont) //parcours du retour php qui est au format json
+            {
+                $("#select_id").append($('<option/>').val(cont.id).html(cont.toString ));    
+            });
+        },
+        error: function(retour_php)
+        {
+            alert("Erreur avec la communication serveur.");
+        } 
+    });
+}
+
 listenerContact(1);
