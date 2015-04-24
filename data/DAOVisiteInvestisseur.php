@@ -2,6 +2,7 @@
 namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\VisiteInvestisseur;
+use DubInfo_gestion_immobilier\model\Investisseur;
 use DubInfo_gestion_immobilier\Exception\PDOException;
 use DateTime;
 /**
@@ -49,8 +50,40 @@ class DAOVisiteInvestisseur extends DAOVisite{
         
     }
 
+    /**
+     * Fonction qui retourne une rencontre investisseur  par rapport à un id donné
+     * @param int $id
+     * @return VisiteInvestisseur La rencontre avec l'investisseur lut dans 
+     * la base de données
+     * @throws PDOException
+     */
     public function read($id) {
-        
+        try {
+            $sql = "SELECT * FROM rencontre_investisseur WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            //création de l'objet investisseur
+            $investisseur = new Investisseur($result['investisseur_id']);
+            
+            //création de la date
+            if($result['date'] == '') {
+                $date = null;
+            }
+            else {
+                $date = new DateTime($result['date']);
+            }
+            
+            //création de l'objet visite
+            $visite = new VisiteInvestisseur($result['id'], $date, 
+                    $result['endroit'], $result['rapport'], $investisseur);
+            $visite->setParticipants($this->readParticipants($id, 
+                    'rencontre_invest', 'rencontre_investisseur'));
+            return $visite;
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**

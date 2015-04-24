@@ -405,6 +405,17 @@ function feedMaisonForm(data) {
     feedContactsSubForm(data.contacts);
 }
 
+function feedRencontreInvestisseurForm(data) {
+    $("#date_rencontre").val(data.date);
+    $("#endroit").val(data.endroit);
+    $("#rapport").val(data.rapport);
+    participants = new Array();
+    data.participants.forEach(function(entry) {
+        participants.push(entry.id);
+    });
+    $("#select_participants").multipleSelect("setSelects", participants);
+}
+
 function addChangeEtatListener() {
     $('#select_etat').bind('change', function(e) {
         console.log($('#select_etat').val());
