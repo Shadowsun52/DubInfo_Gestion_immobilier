@@ -1,3 +1,6 @@
+//les deux tableaux ci-dessous permette de gérer le cas des visites
+list_visites = ['rencontreInvestisseur'];
+list_fields = ['investisseur'];
 //ici on ajout un script qui réagit au clique du bouton submit
 function addAjaxListener(btn_name, form_name) {
     url_param = getParamsUrl();
@@ -94,7 +97,7 @@ function addAjaxListener(btn_name, form_name) {
  * actualiser le formulaire
  */
 function changeAjaxListener(select_name) {
-    $('#' + select_name).bind('change', function(e) {
+    $('#' + select_name).bind('change', function(e) { 
         url_param = getParamsUrl();
         
         //on remet a zéro les choix des contacts
@@ -110,8 +113,17 @@ function changeAjaxListener(select_name) {
             //On retire le bouton de suppression
             $("#deleting").remove();
             
-            //on vide le formulaire
-            $('#form_' + url_param['item'])[0].reset();
+            in_array = $.inArray(url_param['item'],list_visites);
+            if(in_array === -1) {
+                //on vide le formulaire
+                $('#form_' + url_param['item'])[0].reset();
+            }
+            else {
+                //on vide le formulaire sauf le select principale
+                id_selected = $("#select_" + list_fields[in_array]).val();
+                $('#form_' + url_param['item'])[0].reset();
+                $("#select_" + list_fields[in_array]).val(id_selected);
+            }
             
             //et on vide les listes adresses
             $("#select_pays").change();
@@ -149,9 +161,21 @@ function addDeleteListener() {
         
         url_param = getParamsUrl();
         
-        if(confirm("Etez-vous sur de vouloir supprimer le/la/l' " +
-                url_param['item'] + " " + $("#select_id option:selected").text() + "?")) {
-            
+        in_array = $.inArray(url_param['item'],list_visites);
+        if(in_array === -1) {
+            text = "Etez-vous sur de vouloir supprimer le/la/l' " +
+                url_param['item'] + " " + $("#select_id option:selected").text() + "?";
+            sub_item = undefined;
+        }
+        else {
+            text = "Etez-vous sur de vouloir supprimer la visite du" +
+                    $("#select_id option:selected").text() + " avec le/l " +
+                    list_fields[in_array] + " " + $("#select_" + list_fields[in_array] + 
+                    " option:selected").text() + "?";
+            sub_item = "select_" + list_fields[in_array];
+        }
+        
+        if(confirm(text)) {  
             $.ajax({
                 'url': 'controller/gestion_ajax.php',
                 'type': 'post',
@@ -164,7 +188,7 @@ function addDeleteListener() {
                         alert(data.message); 
 
                         //on refresh la liste des investisseurs
-                        refreshList(url_param['item']);
+                        refreshList(url_param['item'], sub_item);
 
                         //on revient sur la formulaire en mode ajout
                         $("#select_id").val('');

@@ -46,8 +46,23 @@ class DAOVisiteInvestisseur extends DAOVisite{
         }
     }
 
+    /**
+     *  Méthode qui permet la suppression d'une rencontre avec un investisseur
+     * @param int $id Identifiant de la rencontre à supprimer
+     * @throws PDOException
+     */
     public function delete($id) {
-        
+        try {
+            //suppression des communes préférées
+            $this->deleteParticipants($id,'rencontre_invest',
+                    'rencontre_investisseur');
+            
+            $sql = "DELETE FROM rencontre_investisseur WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
