@@ -18,10 +18,11 @@ class DAOInvestisseur extends AbstractDAO{
      * Fonction qui lit tous les investisseurs pour les mettres dans une listes
      * Donc pas toute les informations sont lu pour l'investisseur, uniquement
      * l'id, le nom et le prénom
+     * @param int $id NO USE
      * @return array[Investisseur]
      * @throws PDOException
      */
-    public function readList() {
+    public function readList($id = NULL) {
         try{
             $sql = "SELECT id, nom, prenom FROM investisseur ORDER BY nom, prenom";
             $request = $this->getConnection()->prepare($sql);

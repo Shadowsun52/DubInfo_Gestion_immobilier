@@ -49,7 +49,9 @@ function addAjaxListener(btn_name, form_name) {
                              * Pour remettre à zero le choix des contacts pour 
                              * le formulaire maison
                              */
-                            cleanSelectsContact();
+                            if(url_param['item'] === 'maison') {
+                                cleanSelectsContact();
+                            }
                         }
                         else {
                             if(url_param['item'] === 'maison') {
@@ -191,11 +193,18 @@ function addDeleteListener() {
 //}
 
 //fonction ajax qui met à jour la liste d'item du formulaire
-function refreshList(item) {
+function refreshList(item, sub_item) {
+    if(sub_item === undefined) {
+        supplement_get = '';
+    }
+    else {
+        supplement_get = '&id=' + $("#" + sub_item).val();
+    }
+    
     $.ajax({
         type: 'post',
         url: 'controller/gestion_ajax.php',
-        data: "action=readList&item=" + item,
+        data: "action=readList&item=" + item + supplement_get,
         async: false,
         dataType: 'json',
         success: function(retour_php)

@@ -8,18 +8,11 @@
     $form_rencontre_investisseur = new Zebra_Form('form_rencontreInvestisseur');
     $form_rencontre_investisseur->language("francais");
     
-    //création de la liste des rencontres avec les investisseurs
-//    $business = new LocataireCRUD();
-    $liste_rencontre[''] = '- Nouveau -';
-//    foreach ($business->readList() as $locataire) {
-//        $liste_rencontre[$locataire->getId()] = $locataire->toString();
-//    }
-    
     $form_rencontre_investisseur->add('label','label_id', 'select_id', 'Liste des rencontres');
     $id = $form_rencontre_investisseur->add('select', 'select_id', null, array(
                                             'disabled' => 'disabled'
                                         ));
-    $id->add_options($liste_rencontre ,TRUE);
+    $id->add_options(array('' => '- Nouveau -') ,TRUE);
     
     //choix de l'investisseur
     $business_investisseur = new InvestisseurCRUD();
@@ -61,3 +54,6 @@
 
 ?>
 </div>
+<script type="text/javascript">
+    choosenVisiteItemListener("select_investisseur");
+</script>

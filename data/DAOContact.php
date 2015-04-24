@@ -83,10 +83,11 @@ class DAOContact extends AbstractDAO{
      * Fonction qui lit tous les contacts pour les mettres dans une listes
      * Donc pas toute les informations sont lu pour, uniquement l'id, le nom 
      * et le prénom
+     * @param int $id NO USE
      * @return array[Contact]
      * @throws PDOException
      */
-    public function readList() {
+    public function readList($id = NULL) {
         try{
             $sql = "SELECT id, nom, prenom FROM contact ORDER BY nom, prenom";
             $request = $this->getConnection()->prepare($sql);

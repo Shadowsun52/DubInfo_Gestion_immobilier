@@ -142,10 +142,11 @@ class DAOMaison extends AbstractDAO{
      * Fonction qui lit tous les maisons pour les mettres dans une listes
      * Donc pas toute les informations sont lu pour, uniquement l'id, le titre 
      * et la commune
+     * @param int $id NO USE
      * @return array[Maison]
      * @throws PDOException
      */
-    public function readList() {
+    public function readList($id = NULL) {
         try{
             $sql = "SELECT pt.id, pt.titre_fr, cbt.name FROM propositions_table pt
                     LEFT JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id 

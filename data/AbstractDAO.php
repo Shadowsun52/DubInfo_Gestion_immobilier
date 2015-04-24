@@ -13,7 +13,7 @@ abstract class AbstractDAO {
         $this->setConnection();
     }
     
-    public abstract function readList();
+    public abstract function readList($id = NULL);
 
     public abstract function read($id);
     

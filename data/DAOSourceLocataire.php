@@ -70,10 +70,11 @@ class DAOSourceLocataire extends AbstractDAO{
     /**
      * Fonction qui lit tous les sources locataires pour les mettres dans 
      * une listes
+     * @param int $id NO USE
      * @return array[SourceLocataire]
      * @throws PDOException
      */
-    public function readList() {
+    public function readList($id = NULL) {
         try{
             $sql = "SELECT * FROM source_locataire ORDER BY libelle";
             $request = $this->getConnection()->prepare($sql);

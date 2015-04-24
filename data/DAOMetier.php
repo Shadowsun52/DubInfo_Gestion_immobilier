@@ -17,10 +17,11 @@ class DAOMetier extends AbstractDAO{
     
     /**
      * Fonction qui lit tous les metiers pour les mettres dans une listes
+     * @param int $id NO USE
      * @return array[Metier]
      * @throws PDOException
      */
-    public function readList() {
+    public function readList($id = NULL) {
         try{
             $sql = "SELECT * FROM metier ORDER BY libelle";
             $request = $this->getConnection()->prepare($sql);

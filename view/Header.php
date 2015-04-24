@@ -15,6 +15,7 @@
 ?>
         <script src="js/crud_ajax.js"></script>
         <script src="js/adresse_list.js"></script>
+        <script src="js/visite.js"></script>
 <?php
     }
 ?>

@@ -103,10 +103,11 @@ class DAOProfessionnel extends AbstractDAO{
     /**
      * Fonction qui lit tous les professionnels pour les mettres dans une listes
      * Donc pas toute les informations, uniquement l'id, le nom et le prénom
+     * @param int $id NO USE
      * @return array[Investisseur]
      * @throws PDOException
      */
-    public function readList() {
+    public function readList($id = NULL) {
         try{
             $sql = "SELECT id, nom, prenom FROM professionnel ORDER BY nom, prenom";
             $request = $this->getConnection()->prepare($sql);

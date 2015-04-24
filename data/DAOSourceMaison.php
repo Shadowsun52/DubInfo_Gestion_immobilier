@@ -26,7 +26,7 @@ class DAOSourceMaison extends AbstractDAO{
 
     /**
      * Méthode qui permet de supprimer une source maison en fonction de son id
-     * @param int $id
+     * @param int $id NO USE
      * @throws PDOException
      * @throws ForeignKeyConstraintException
      */
@@ -69,10 +69,11 @@ class DAOSourceMaison extends AbstractDAO{
     /**
      * Fonction qui lit tous les sources maisons pour les mettres dans 
      * une listes
+     * @param int $id
      * @return array[SourceMaison]
      * @throws PDOException
      */
-    public function readList() {
+    public function readList($id = NULL) {
         try{
             $sql = "SELECT * FROM source_maison ORDER BY libelle";
             $request = $this->getConnection()->prepare($sql);
