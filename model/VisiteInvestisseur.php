@@ -97,6 +97,6 @@ class VisiteInvestisseur extends Visite{
      * @return string
      */
     public function toString() {
-        return $this->getInvestisseur()->toString() . ' ' . $this->getDate();
+        return $this->getInvestisseur()->toString() . ' ' . parent::toString();
     }
 }

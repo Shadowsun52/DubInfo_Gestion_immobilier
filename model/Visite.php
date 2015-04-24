@@ -165,6 +165,6 @@ abstract class Visite implements \JsonSerializable{
      * @return string
      */
     public function toString() {
-        return $this->getDate();
+        return $this->getDate()->format('d-m-Y');
     }
 }
