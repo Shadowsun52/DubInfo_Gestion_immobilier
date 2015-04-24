@@ -11,13 +11,14 @@
 
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_date_rencontre . $date_rencontre ?></div>
+     <div class="cell"><?php echo $label_endroit . $endroit ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
 
 <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_endroit . $endroit ?></div>
+    <div class="cell"><?php echo $label_participants . $select_participants ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>

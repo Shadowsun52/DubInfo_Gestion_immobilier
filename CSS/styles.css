@@ -24,3 +24,11 @@ h2
 .Zebra_Form .optional {
     display: none 
 }
+
+.cell {
+    margin-left: 10px;
+}
+
+.row .cell:first-child {
+    margin-left: 0;
+}

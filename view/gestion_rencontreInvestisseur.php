@@ -4,6 +4,8 @@
 <?php
     use DubInfo_gestion_immobilier\model\VisiteInvestisseur;
     use DubInfo_gestion_immobilier\business\InvestisseurCRUD;
+    
+    define('SIZE_LIST_PARTICIPANT', 5);
     //formulaire qui permet de gérer les rencontres avec les investisseurs
     $form_rencontre_investisseur = new Zebra_Form('form_rencontreInvestisseur');
     $form_rencontre_investisseur->language("francais");
@@ -41,6 +43,21 @@
                                     'maxlength' => VisiteInvestisseur::MAX_SIZE_ENDROIT,
                                 ));
 
+    //participants
+//    $business_investisseur = new InvestisseurCRUD();
+//    foreach ($business_investisseur->readList() as $investisseur) {
+//        $list_participants[$investisseur->getId()] = $investisseur->toString();
+//    }
+    $form_rencontre_investisseur->add('label','label_participants', 
+            'select_participants', 'Participants');
+    $communes = $form_rencontre_investisseur->add('select', 'select_participants',
+                                null, array(
+                                    'name' => 'select_participants[]',
+                                    'multiple' => 'multiple',
+                                    'size' => SIZE_LIST_PARTICIPANT
+                                ));
+    $communes->add_options(array(),false);
+    
     //rapport
     $form_rencontre_investisseur->add('label','label_rapport', 'rapport', 'Rapport');
     $remarque = $form_rencontre_investisseur->add('textarea', 'rapport', null, array(
@@ -56,4 +73,5 @@
 </div>
 <script type="text/javascript">
     choosenVisiteItemListener("select_investisseur");
+    $('#select_participants').multipleSelect();
 </script>
