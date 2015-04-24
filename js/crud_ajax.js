@@ -42,6 +42,12 @@ function addAjaxListener(btn_name, form_name) {
                              */
                             $('#select_communes').multipleSelect("refresh");
                             
+                            /*
+                             * pour remettre à zero les participants des
+                             * formulaire pour les visites
+                             */
+                            $('#select_participants').multipleSelect("refresh");
+                            
                             //pour remettre à l'état de liste le choix de l'adresse
                             putFormListAddress();
                             
@@ -112,6 +118,9 @@ function changeAjaxListener(select_name) {
             
             //on vide la liste des communes préférées
              $("#select_communes").multipleSelect("refresh");
+             
+             //on vide la liste des participants
+             $('#select_participants').multipleSelect("refresh");
         }
         else {
             //on change le text du bouton submit

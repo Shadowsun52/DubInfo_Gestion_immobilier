@@ -4,6 +4,7 @@
 <?php
     use DubInfo_gestion_immobilier\model\VisiteInvestisseur;
     use DubInfo_gestion_immobilier\business\InvestisseurCRUD;
+    use DubInfo_gestion_immobilier\business\UserCRUD;
     
     define('SIZE_LIST_PARTICIPANT', 5);
     //formulaire qui permet de gérer les rencontres avec les investisseurs
@@ -44,10 +45,10 @@
                                 ));
 
     //participants
-//    $business_investisseur = new InvestisseurCRUD();
-//    foreach ($business_investisseur->readList() as $investisseur) {
-//        $list_participants[$investisseur->getId()] = $investisseur->toString();
-//    }
+    $business_participant = new UserCRUD();
+    foreach ($business_participant->readList() as $participant) {
+        $list_participants[$participant->getId()] = $participant->toString();
+    }
     $form_rencontre_investisseur->add('label','label_participants', 
             'select_participants', 'Participants');
     $communes = $form_rencontre_investisseur->add('select', 'select_participants',
@@ -56,7 +57,7 @@
                                     'multiple' => 'multiple',
                                     'size' => SIZE_LIST_PARTICIPANT
                                 ));
-    $communes->add_options(array(),false);
+    $communes->add_options($list_participants,true);
     
     //rapport
     $form_rencontre_investisseur->add('label','label_rapport', 'rapport', 'Rapport');
