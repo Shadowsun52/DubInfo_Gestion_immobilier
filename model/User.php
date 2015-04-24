@@ -86,4 +86,11 @@ class User extends Person{
         
         $this->_password = $_password;
     }
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(),
+                array(
+                    'login' => $this->getLogin()
+                ));
+    }
 }

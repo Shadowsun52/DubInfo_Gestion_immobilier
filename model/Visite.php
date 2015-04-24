@@ -10,7 +10,7 @@ use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
  *
  * @author Jenicot Alexandre
  */
-abstract class Visite {
+abstract class Visite implements \JsonSerializable{
     const MAX_SIZE_RAPPORT = 500;
     
     /**
@@ -148,5 +148,23 @@ abstract class Visite {
     public function addParticipant($participant) {
         $this->_participants[] = CheckTyper::isModel($participant, User::class, 
                 'Participant', __CLASS__);
+    }
+    
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'date' => ($this->getDate() == NULL)? NULL : $this->getDate()->format('d-m-Y'),
+            'rapport' => $this->getRapport(),
+            'participants' => $this->getParticipants(),
+            'toString' => $this->toString()
+        ];
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function toString() {
+        return $this->getDate();
     }
 }
