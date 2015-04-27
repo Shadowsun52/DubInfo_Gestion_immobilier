@@ -8,7 +8,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-abstract class VisiteMaison extends Visite{
+class VisiteMaison extends Visite{
     /**
      *
      * @var Maison 

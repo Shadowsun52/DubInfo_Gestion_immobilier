@@ -10,7 +10,7 @@
 <div class="row even">
 
     <!-- things that need to be side-by-side go in "cells" -->
-    <div class="cell"><?php echo $label_date_rencontre . $date_rencontre ?></div>
+    <div class="cell"><?php echo $label_date_visite . $date_visite ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>

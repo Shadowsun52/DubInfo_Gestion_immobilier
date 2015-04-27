@@ -31,8 +31,8 @@
     ));
     
     //datepicker
-    $form_rencontre_investisseur->add('label','label_date_rencontre', 'date_rencontre', 'Date de la recontre');
-    $date = $form_rencontre_investisseur->add('date', 'date_rencontre');
+    $form_rencontre_investisseur->add('label','label_date_visite', 'date_visite', 'Date de la recontre');
+    $date = $form_rencontre_investisseur->add('date', 'date_visite');
     $date->set_rule(array(
         'required'      =>  array('error', 'La date est requise!'),
         'date'          =>  array('error', 'La date est invalide!'),

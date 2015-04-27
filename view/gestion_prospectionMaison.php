@@ -30,8 +30,8 @@
     ));
     
     //datepicker
-    $form_prospection->add('label','label_date_rencontre', 'date_visite', 'Date de la visite');
-    $date = $form_prospection->add('date', 'date_rencontre');
+    $form_prospection->add('label','label_date_visite', 'date_visite', 'Date de la visite');
+    $date = $form_prospection->add('date', 'date_visite');
     $date->set_rule(array(
         'required'      =>  array('error', 'La date est requise!'),
         'date'          =>  array('error', 'La date est invalide!'),
@@ -61,7 +61,7 @@
     //Il ne faut pas oublier d'ajouter le bouton submit
     $form_prospection->add('submit', 'btnsubmit', 'Ajouter');
     
-    $form_prospection->render('view/templates/tpl_prospectionMaison.php');
+    $form_prospection->render('view/templates/tpl_prospection_maison.php');
 
 ?>
 </div>
