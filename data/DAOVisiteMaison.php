@@ -130,8 +130,42 @@ class DAOVisiteMaison extends DAOVisite{
         }
     }
 
-    public function update($object) {
-        
+    /**
+     * Méthode permettant d'update une visite de prospection dans la DB
+     * @param VisiteMaison $visite
+     * @throws PDOException
+     */
+    public function update($visite) {
+        try {
+            $sql = "UPDATE visite_prospection SET date = :date,
+                    rapport = :rapport WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            
+            if($visite->getDate() === NULL) {
+                $date = null;
+            }
+            else {
+                $date = $visite->getDate()->format('Y-m-d H:i:s');
+            }
+            
+            $result = $request->execute(array(
+                ':date' => $date,
+                ':rapport' => $visite->getRapport(),
+                ':id' => $visite->getId()));
+            
+            if($result) {
+                //suppression des participants
+                $this->deleteParticipants($visite->getId(),'visite_prospection');
+                
+                //ajout des nouveaux participants
+                $this->addParticipants($visite, 'visite_prospection');
+            }
+            else {
+                throw new PDOException('Erreur durant l\'update');
+            }
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
 }
