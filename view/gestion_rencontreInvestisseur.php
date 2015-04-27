@@ -20,7 +20,7 @@
     //choix de l'investisseur
     $business_investisseur = new InvestisseurCRUD();
     $list_investisseur[''] = '- Choisissez un investisseur -';
-    foreach ($business_investisseur->readList(['filter' => true]) as $investisseur) {
+    foreach ($business_investisseur->readList() as $investisseur) {
         $list_investisseur[$investisseur->getId()] = $investisseur->toString();
     }
     $form_rencontre_investisseur->add('label','label_investisseur', 'select_investisseur', 'Investisseur');

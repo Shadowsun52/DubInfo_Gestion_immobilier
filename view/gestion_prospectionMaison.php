@@ -2,8 +2,8 @@
 <div id="formulaire">
 
 <?php
-    use DubInfo_gestion_immobilier\model\VisiteInvestisseur;
-    use DubInfo_gestion_immobilier\business\InvestisseurCRUD;
+    use DubInfo_gestion_immobilier\model\VisiteMaison;
+    use DubInfo_gestion_immobilier\business\MaisonCRUD;
     use DubInfo_gestion_immobilier\business\UserCRUD;
     
     //formulaire qui permet de gérer les rencontres avec les investisseurs
@@ -17,60 +17,55 @@
     $id->add_options(array('' => '- Nouveau -') ,TRUE);
     
     //choix de l'investisseur
-    $business_investisseur = new InvestisseurCRUD();
-    $list_investisseur[''] = '- Choisissez un investisseur -';
-    foreach ($business_investisseur->readList() as $investisseur) {
-        $list_investisseur[$investisseur->getId()] = $investisseur->toString();
+    $business_maison = new MaisonCRUD();
+    $list_maison[''] = '- Choisissez une maison -';
+    foreach ($business_maison->readList() as $maison) {
+        $list_maison[$maison->getIdProposition()] = $maison->toString();
     }
-    $form_rencontre_investisseur->add('label','label_investisseur', 'select_investisseur', 'Investisseur');
-    $investisseur = $form_rencontre_investisseur->add('select', 'select_investisseur');
-    $investisseur->add_options($list_investisseur, true);
+    $form_prospection->add('label','label_maison', 'select_maison', 'Maison');
+    $investisseur = $form_prospection->add('select', 'select_maison');
+    $investisseur->add_options($list_maison, true);
     $investisseur->set_rule(array(
-        'required'      =>  array('error', 'Le choix de l\'investisseur est requis!')
+        'required'      =>  array('error', 'Le choix de la maison est requis!')
     ));
     
     //datepicker
-    $form_rencontre_investisseur->add('label','label_date_rencontre', 'date_rencontre', 'Date de la recontre');
-    $date = $form_rencontre_investisseur->add('date', 'date_rencontre');
+    $form_prospection->add('label','label_date_rencontre', 'date_visite', 'Date de la visite');
+    $date = $form_prospection->add('date', 'date_rencontre');
     $date->set_rule(array(
         'required'      =>  array('error', 'La date est requise!'),
         'date'          =>  array('error', 'La date est invalide!'),
     ));
     $date->format('d-m-Y');
-    
-    $form_rencontre_investisseur->add('label','label_endroit', 'endroit', 'Endroit');
-    $nom = $form_rencontre_investisseur->add('text', 'endroit', null, array(
-                                    'maxlength' => VisiteInvestisseur::MAX_SIZE_ENDROIT,
-                                ));
 
     //participants
     $business_participant = new UserCRUD();
     foreach ($business_participant->readList() as $participant) {
         $list_participants[$participant->getId()] = $participant->toString();
     }
-    $form_rencontre_investisseur->add('label','label_participants', 
+    $form_prospection->add('label','label_participants', 
             'select_participants', 'Participants');
-    $communes = $form_rencontre_investisseur->add('select', 'select_participants',
+    $participants = $form_prospection->add('select', 'select_participants',
                                 null, array(
                                     'name' => 'select_participants[]',
                                     'multiple' => 'multiple',
                                 ));
-    $communes->add_options($list_participants,true);
+    $participants->add_options($list_participants,true);
     
     //rapport
-    $form_rencontre_investisseur->add('label','label_rapport', 'rapport', 'Rapport');
-    $remarque = $form_rencontre_investisseur->add('textarea', 'rapport', null, array(
-                                    'maxlength' => VisiteInvestisseur::MAX_SIZE_RAPPORT
+    $form_prospection->add('label','label_rapport', 'rapport', 'Rapport');
+    $remarque = $form_prospection->add('textarea', 'rapport', null, array(
+                                    'maxlength' => VisiteMaison::MAX_SIZE_RAPPORT
                                 ));
     
     //Il ne faut pas oublier d'ajouter le bouton submit
-    $form_rencontre_investisseur->add('submit', 'btnsubmit', 'Ajouter');
+    $form_prospection->add('submit', 'btnsubmit', 'Ajouter');
     
-    $form_rencontre_investisseur->render('view/templates/tpl_rencontre_investisseur.php');
+    $form_prospection->render('view/templates/tpl_prospectionMaison.php');
 
 ?>
 </div>
 <script type="text/javascript">
-    choosenVisiteItemListener("select_investisseur");
+    choosenVisiteItemListener("select_maison");
     $('#select_participants').multipleSelect();
 </script>

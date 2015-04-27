@@ -43,15 +43,14 @@ abstract class AbstractBusiness {
     }
     
     /**
-     * Fonction qui retourne la liste des objets pour un certain choix
-     * @param int $data donnée envoyer avec la requête ajax
+     * Fonction qui retourne la liste des objets
      * @return array[mixed]
      * @throws PDOException
      */
-    public function readList($data = NULL) {
-        return $this->getDao()->readList($data['filter']);
-    }
-    
+    public function readList() {
+        return $this->getDao()->readList();
+        }
+        
     /**
      * Méthode qui interroge la couche data pour récuperer un objet grâce à son id
      * @param array[mixed] $data
