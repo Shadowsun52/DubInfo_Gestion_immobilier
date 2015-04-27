@@ -25,7 +25,7 @@ function activeSelectVisite(field_name) {
     $('#select_id').removeAttr("disabled");
     $('#select_id').removeClass("disabled");
     $('#label_id').removeClass("disabled");
-    refreshList(url_param['item'], field_name);
+    refreshList(url_param['item']);
     $('#select_id').change();
 }
 
