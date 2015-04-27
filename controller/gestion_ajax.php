@@ -11,7 +11,7 @@ define('DEFAULT_NAMESPACE', 'DubInfo_gestion_immobilier\business\\');
  */
 if(isset($_POST['action']) && isset($_POST['item'])) {
     try {
-        $name_business = DEFAULT_NAMESPACE. ucfirst(strtolower($_POST['item'])) . "CRUD";
+        $name_business = DEFAULT_NAMESPACE. ucfirst($_POST['item']) . "CRUD";
         $business = new $name_business();
         $name_function = $_POST['action'];
         if(method_exists($business, $name_function)) {

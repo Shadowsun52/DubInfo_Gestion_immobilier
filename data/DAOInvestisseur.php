@@ -82,7 +82,7 @@ class DAOInvestisseur extends AbstractDAO{
      */
     public function add($investisseur) {
         try {
-            $sql = "INSERT INTO Investisseur (nom, prenom, num_telephone, 
+            $sql = "INSERT INTO investisseur (nom, prenom, num_telephone, 
                     num_gsm, mail, num_tva, commentaire, adresse_rue, adresse_numero, 
                     adresse_boite, adresse_ville, adresse_code_postal, 
                     adresse_pays, etat_id) 

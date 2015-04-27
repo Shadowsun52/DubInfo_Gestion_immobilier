@@ -10,7 +10,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  * @author Jenicot Alexandre
  */
 class Etat implements \JsonSerializable{
-    const MAX_SIZE_LIBELLE = 15;
+    const MAX_SIZE_LIBELLE = 25;
     
     /**
      * @var int 
