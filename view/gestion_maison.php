@@ -139,7 +139,8 @@
         '1' => 'Potentiel',
         '5' => 'Retenu',
         '6' => 'A suivre',
-        '7' => 'Prêt à louer',
+        '10' => 'Projet',
+        '7' => 'Location',
         '3' => 'Abandonné'
     ),true);
     

@@ -32,7 +32,7 @@ class RencontreInvestisseurCRUD extends VisiteBusiness{
                 $data['endroit'], $data['rapport'], $investisseur, $participants);
         return $visite;
     }
-
+    
     protected function createDate($data) {
        if($data['date_rencontre'] === '') {
            return null;

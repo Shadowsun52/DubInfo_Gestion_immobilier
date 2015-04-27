@@ -103,7 +103,8 @@
     $etat = $form_investisseur->add('select', 'select_etat');
     $etat->add_options(array(
         '1' => 'Potentiel',
-        '2'=> 'Actif',
+        '2' => 'Actif',
+        '9' => 'Propriétaire',
         '3' => 'Abandonné'
     ),true);
     

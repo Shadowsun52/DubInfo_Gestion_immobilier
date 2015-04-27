@@ -135,8 +135,9 @@
     $etat = $form_locataire->add('select', 'select_etat');
     $etat->add_options(array(
         '1' => 'Potentiel',
-        '2'=> 'Actif',
-        '4' => 'Locataire',
+        '2' => 'Actif',
+        '4' => 'Locataire en cours',
+        '8' => 'Locataire confirmé',
         '3' => 'Abandonné'
     ),true);
     
