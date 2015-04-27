@@ -43,8 +43,22 @@ class DAOVisiteMaison extends DAOVisite{
         }
     }
 
+    /**
+     *  Méthode qui permet la suppression d'une visite de prospectionr
+     * @param int $id Identifiant de la visite à supprimer
+     * @throws PDOException
+     */
     public function delete($id) {
-        
+        try {
+            //suppression des participants
+            $this->deleteParticipants($id,'visite_prospection');
+            
+            $sql = "DELETE FROM visite_prospection WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**

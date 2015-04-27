@@ -61,7 +61,7 @@ abstract class DAOVisite extends AbstractDAO{
      * @param string $table_name Le nom de la tableau ou est stocker la visite
      * @param string $field_name Le nom du champs contenant l'id de la visite
      */
-    protected function deleteParticipants($id, $table_name, $field_name) {
+    protected function deleteParticipants($id, $table_name, $field_name = NULL) {
         if($field_name == NULL) {
             $field_name = $table_name;
         }

@@ -1,6 +1,6 @@
 //les deux tableaux ci-dessous permette de gérer le cas des visites
-list_visites = ['rencontreInvestisseur'];
-list_fields = ['investisseur'];
+list_visites = ['rencontreInvestisseur', 'prospectionMaison'];
+list_fields = ['investisseur', 'maison'];
 //ici on ajout un script qui réagit au clique du bouton submit
 function addAjaxListener(btn_name, form_name) {
     url_param = getParamsUrl();
@@ -175,7 +175,7 @@ function addDeleteListener() {
             sub_item = undefined;
         }
         else {
-            text = "Etez-vous sur de vouloir supprimer la visite du" +
+            text = "Etez-vous sur de vouloir supprimer la visite du " +
                     $("#select_id option:selected").text() + " avec le/l " +
                     list_fields[in_array] + " " + $("#select_" + list_fields[in_array] + 
                     " option:selected").text() + "?";
