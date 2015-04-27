@@ -37,19 +37,8 @@ function addAjaxListener(btn_name, form_name) {
                         refreshList(url_param['item'], false);
                         $("#select_id").val(id);
                         if(action === 'add') {
-                            $('#' + form_name)[0].reset();
-                            
-                            /*
-                             * pour remettre à zero les communes préférées du
-                             * formulaire locataire et lettre de missions
-                             */
-                            $('#select_communes').multipleSelect("refresh");
-                            
-                            /*
-                             * pour remettre à zero les participants des
-                             * formulaire pour les visites
-                             */
-                            $('#select_participants').multipleSelect("refresh");
+                            //on nettoye le formulaire
+                            cleanForm(url_param['item']);
                             
                             //pour remettre à l'état de liste le choix de l'adresse
                             putFormListAddress();
@@ -63,6 +52,10 @@ function addAjaxListener(btn_name, form_name) {
                             }
                         }
                         else {
+                            /*
+                             * permet de charger les contacts d'une maison après 
+                             * une édition
+                             */
                             if(url_param['item'] === 'maison') {
                                 feedSubformContactAfterUpdate()
                             }
@@ -113,26 +106,11 @@ function changeAjaxListener(select_name) {
             //On retire le bouton de suppression
             $("#deleting").remove();
             
-            in_array = $.inArray(url_param['item'],list_visites);
-            if(in_array === -1) {
-                //on vide le formulaire
-                $('#form_' + url_param['item'])[0].reset();
-            }
-            else {
-                //on vide le formulaire sauf le select principale
-                id_selected = $("#select_" + list_fields[in_array]).val();
-                $('#form_' + url_param['item'])[0].reset();
-                $("#select_" + list_fields[in_array]).val(id_selected);
-            }
+            //on nettoye le formulaire
+            cleanForm(url_param['item']);
             
             //et on vide les listes adresses
-            $("#select_pays").change();
-            
-            //on vide la liste des communes préférées
-             $("#select_communes").multipleSelect("refresh");
-             
-             //on vide la liste des participants
-             $('#select_participants').multipleSelect("refresh");
+            $("#select_pays").change(); 
         }
         else {
             //on change le text du bouton submit
@@ -150,6 +128,35 @@ function changeAjaxListener(select_name) {
         }
         $("#select_etat").change();
     });
+}
+
+/**
+ * Fonction qui nettoye un formulaire
+ * @param {string} item
+ */
+function cleanForm(item) {
+    if($(".select_sub_item").length) {
+        //on vide le formulaire sauf le select principale
+        id_selected = $(".select_sub_item").val();
+        $('#form_' + item)[0].reset();
+        $(".select_sub_item").val(id_selected);
+    }
+    else {
+        //on vide le formulaire
+        $('#form_' + item)[0].reset();
+    }
+    
+    /*
+     * pour remettre à zero les communes préférées du
+     * formulaire locataire et lettre de missions
+     */
+    $('#select_communes').multipleSelect("refresh");
+
+    /*
+     * pour remettre à zero les participants des
+     * formulaire pour les visites
+     */
+    $('#select_participants').multipleSelect("refresh");
 }
 
 /*
@@ -187,8 +194,8 @@ function addDeleteListener() {
                     if(data.success) {
                         alert(data.message); 
 
-                        //on refresh la liste des investisseurs
-                        refreshList(url_param['item'], sub_item);
+                        //on refresh la liste des items
+                        refreshList(url_param['item']);
 
                         //on revient sur la formulaire en mode ajout
                         $("#select_id").val('');
@@ -227,11 +234,11 @@ function addDeleteListener() {
 
 //fonction ajax qui met à jour la liste d'item du formulaire
 function refreshList(item, sub_item) {
-    if(sub_item === undefined) {
-        supplement_get = '';
+    if($(".select_sub_item").length) {
+        supplement_get = '&id=' + $(".select_sub_item").val();
     }
     else {
-        supplement_get = '&id=' + $("#" + sub_item).val();
+        supplement_get = '';
     }
     
     $.ajax({

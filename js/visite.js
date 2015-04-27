@@ -4,6 +4,7 @@
  * @param {string} field_name Le nom du champs auquel lié le Listener
  */
 function choosenVisiteItemListener(field_name) {
+    $('#' + field_name).addClass('select_sub_item');
     $('#' + field_name).bind('change', function(e) {
         id_invest = $('#' + field_name).val();
         
@@ -25,6 +26,7 @@ function activeSelectVisite(field_name) {
     $('#select_id').removeClass("disabled");
     $('#label_id').removeClass("disabled");
     refreshList(url_param['item'], field_name);
+    $('#select_id').change();
 }
 
 /**

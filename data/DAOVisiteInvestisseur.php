@@ -53,7 +53,7 @@ class DAOVisiteInvestisseur extends DAOVisite{
      */
     public function delete($id) {
         try {
-            //suppression des communes préférées
+            //suppression des participants
             $this->deleteParticipants($id,'rencontre_invest',
                     'rencontre_investisseur');
             
@@ -135,8 +135,44 @@ class DAOVisiteInvestisseur extends DAOVisite{
         }
     }
 
-    public function update($object) {
-        
+    /**
+     * Méthode permettant d'update une rencontre avec un investisseur dans la DB
+     * @param VisiteInvestisseur $visite
+     * @throws PDOException
+     */
+    public function update($visite) {
+        try {
+            $sql = "UPDATE rencontre_investisseur SET endroit = :endroit,
+                    date = :date, rapport = :rapport WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            
+            if($visite->getDate() === NULL) {
+                $date = null;
+            }
+            else {
+                $date = $visite->getDate()->format('Y-m-d H:i:s');
+            }
+            
+            $result = $request->execute(array(
+                ':endroit' => $visite->getEndroit(),
+                ':date' => $date,
+                ':rapport' => $visite->getRapport(),
+                ':id' => $visite->getId()));
+            
+            if($result) {
+                //suppression des participants
+                $this->deleteParticipants($visite->getId(),'rencontre_invest',
+                        'rencontre_investisseur');
+                
+                //ajout des nouveaux participants
+                $this->addParticipants($visite, 'rencontre_invest', 
+                        'rencontre_investisseur');
+            }
+            else {
+                throw new PDOException('Erreur durant l\'update');
+            }
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
-
 }
