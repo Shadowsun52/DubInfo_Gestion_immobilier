@@ -72,4 +72,17 @@ class VisiteLocataire extends VisiteMaison{
         $this->_locataire = CheckTyper::isModel($locataire, Locataire::class, 
                 'locataire', __CLASS__);
     }
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(), 
+                array(
+                    'locataire' =>  $this->getLocataire(),
+                    'candidat' => $this->getCandidat()
+                ));
+    }
+    
+    public function toString() {
+        return $this->getMaison()->getTitre(Maison::LANGUAGE_FR) . ' ' 
+                . parent::toString();
+    }
 }
