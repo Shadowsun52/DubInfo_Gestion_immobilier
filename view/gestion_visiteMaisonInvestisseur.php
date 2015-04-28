@@ -8,7 +8,7 @@
     use DubInfo_gestion_immobilier\business\UserCRUD;
     
     //formulaire qui permet de gérer les rencontres avec les investisseurs
-    $form_visite_maison_invest = new Zebra_Form('form_prospectionMaison');
+    $form_visite_maison_invest = new Zebra_Form('form_visiteMaisonInvestisseur');
     $form_visite_maison_invest->language("francais");
     
     $form_visite_maison_invest->add('label','label_id', 'select_id', 'Liste des visites');
