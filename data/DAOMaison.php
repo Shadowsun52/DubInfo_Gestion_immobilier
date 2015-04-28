@@ -8,6 +8,7 @@ use DubInfo_gestion_immobilier\model\Etat;
 use DubInfo_gestion_immobilier\model\SourceMaison;
 use DubInfo_gestion_immobilier\model\Contact;
 use DubInfo_gestion_immobilier\data\DAOContact;
+use DubInfo_gestion_immobilier\data\DAOMaisonLocation;
 use DubInfo_gestion_immobilier\Exception\PDOException;
 
 /**
@@ -16,15 +17,23 @@ use DubInfo_gestion_immobilier\Exception\PDOException;
  * @author Jenicot Alexandre
  */
 class DAOMaison extends AbstractDAO{
+    const ETAT_LOCATION = 7;
     /**
      *
      * @var DAOContact 
      */
     private $_dao_contact;
     
+    /**
+     *
+     * @var DAOMaisonLocation 
+     */
+    private $_dao_maison_location;
+    
     public function __construct() {
         parent::__construct();
         $this->setDaoContact();
+        $this->setDaoMaisonLocation();
     }
     
     /**
@@ -60,6 +69,7 @@ class DAOMaison extends AbstractDAO{
                 $id = $this->getConnection()->lastInsertId();
                 $this->addSource($id, $maison->getSource(0));
                 $this->addContacts($id, $maison->getContacts());
+                $this->addMaisonLocation($maison);
             }
             else {
                 throw new PDOException('Erreur lors de l\'ajout!');
@@ -81,6 +91,9 @@ class DAOMaison extends AbstractDAO{
             
             //suppression de la source
             $this->deleteSources($id);
+            
+            //suppression de la maison dans la table maison_table
+            $this->deleteMaisonLocation($id);
             
             $sql = "DELETE FROM propositions_table WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);
@@ -213,6 +226,15 @@ class DAOMaison extends AbstractDAO{
             
                 //ajout des nouveaux contacts
                 $this->addContacts($maison->getIdProposition(), $maison->getContacts());
+                
+                //suppression de la version actuelle de la maison dans maison_table
+                $this->deleteMaisonLocation($maison->getIdProposition());
+                
+                /*
+                 * ajout de la nouvelle version, si dans le bon état, de la 
+                 * maison dans maisons_table
+                 */
+                $this->addMaisonLocation($maison);
             }
             else {
                 throw new PDOException('Erreur durant l\'update');
@@ -302,6 +324,28 @@ class DAOMaison extends AbstractDAO{
     }
 //</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="Gestion Maison location">
+    /**
+     * Méthode qui permet d'ajouter une maison dans la table maisons_table si
+     * sont état est location
+     * @param Maison $maison
+     */
+    protected  function addMaisonLocation($maison) {
+        if($maison->getEtat()->getId() == self::ETAT_LOCATION) {
+            $this->getDaoMaisonLocation()->add($maison);
+        }
+    }
+    
+    /**
+     * Méthode qui permet de supprimmer une maison de la table maison_table en 
+     * fonction de l'id dans la table proposition
+     * @param int $id
+     */
+    protected function deleteMaisonLocation($id) {
+        $this->getDaoMaisonLocation()->delete($id);
+    }
+//</editor-fold>
+    
     /**
      * 
      * @return DAOContact
@@ -312,5 +356,17 @@ class DAOMaison extends AbstractDAO{
 
     protected function setDaoContact() {
         $this->_dao_contact = new DAOContact();
+    }
+    
+    /**
+     * 
+     * @return DAOMaisonLocation
+     */
+    protected function getDaoMaisonLocation() {
+        return $this->_dao_maison_location;
+    }
+
+    protected function setDaoMaisonLocation() {
+        $this->_dao_maison_location = new DAOMaisonLocation();
     }
 }

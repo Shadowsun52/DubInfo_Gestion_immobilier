@@ -43,7 +43,7 @@
     $business_maison = new MaisonLocationCRUD();
     $list_maison[''] = '- Choisissez une maison -';
     foreach ($business_maison->readList() as $maison) {
-        $list_maison[$maison->getIdProposition()] = $maison->toString();
+        $list_maison[$maison->getIdMaison()] = $maison->toString();
     }
     $form_visite_locataire->add('label','label_maison', 'select_maison', 'Maison');
     $maison = $form_visite_locataire->add('select', 'select_maison');

@@ -44,7 +44,7 @@ class DAOMaisonLocation extends AbstractDAO{
      */
     public function delete($id) {
         try {            
-            $sql = "DELETE FROM maisons_table WHERE id = :id";
+            $sql = "DELETE FROM maisons_table WHERE propositions_table_id = :id";
             $request = $this->getConnection()->prepare($sql);
             $request->execute(array(':id' => $id));
         } catch (Exception $ex) {
@@ -95,7 +95,7 @@ class DAOMaisonLocation extends AbstractDAO{
             
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
             {
-                $maison = new Maison($result['id']);
+                $maison = new Maison(null, $result['id']);
                 $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
                 $maison->setCommune(new Commune(null, $result['name']));
                 $maisons[] = $maison;
