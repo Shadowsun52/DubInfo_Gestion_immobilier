@@ -16,16 +16,16 @@
                                         ));
     $id->add_options(array('' => '- Nouveau -') ,TRUE);
     
-    //choix de l'investisseur
+    //choix de la maison
     $business_maison = new MaisonCRUD();
     $list_maison[''] = '- Choisissez une maison -';
     foreach ($business_maison->readList() as $maison) {
         $list_maison[$maison->getIdProposition()] = $maison->toString();
     }
     $form_prospection->add('label','label_maison', 'select_maison', 'Maison');
-    $investisseur = $form_prospection->add('select', 'select_maison');
-    $investisseur->add_options($list_maison, true);
-    $investisseur->set_rule(array(
+    $maison = $form_prospection->add('select', 'select_maison');
+    $maison->add_options($list_maison, true);
+    $maison->set_rule(array(
         'required'      =>  array('error', 'Le choix de la maison est requis!')
     ));
     
