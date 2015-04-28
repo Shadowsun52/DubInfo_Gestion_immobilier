@@ -4,7 +4,7 @@
 <?php
     use DubInfo_gestion_immobilier\model\VisiteLocataire;
     use DubInfo_gestion_immobilier\business\LocataireCRUD;
-    use DubInfo_gestion_immobilier\business\MaisonCRUD;
+    use DubInfo_gestion_immobilier\business\MaisonLocationCRUD;
     use DubInfo_gestion_immobilier\business\UserCRUD;
     
     //formulaire qui permet de gérer les rencontres avec les investisseurs
@@ -23,8 +23,8 @@
     foreach ($business_locataire->readList() as $locataire) {
         $list_locataire[$locataire->getId()] = $locataire->toString();
     }
-    $form_visite_locataire->add('label','label_investisseur', 'select_investisseur', 'Locataire');
-    $investisseur = $form_visite_locataire->add('select', 'select_investisseur');
+    $form_visite_locataire->add('label','label_locataire', 'select_locataire', 'Locataire');
+    $investisseur = $form_visite_locataire->add('select', 'select_locataire');
     $investisseur->add_options($list_locataire, true);
     $investisseur->set_rule(array(
         'required'      =>  array('error', 'Le choix de l\'investisseur est requis!')
@@ -40,7 +40,7 @@
     $date->format('d-m-Y');
 
     //choix de la maison
-    $business_maison = new MaisonCRUD();
+    $business_maison = new MaisonLocationCRUD();
     $list_maison[''] = '- Choisissez une maison -';
     foreach ($business_maison->readList() as $maison) {
         $list_maison[$maison->getIdProposition()] = $maison->toString();
@@ -84,6 +84,6 @@
 ?>
 </div>
 <script type="text/javascript">
-    choosenVisiteItemListener("select_investisseur");
+    choosenVisiteItemListener("select_locataire");
     $('#select_participants').multipleSelect();
 </script>
