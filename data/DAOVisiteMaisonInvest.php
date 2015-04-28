@@ -12,8 +12,40 @@ use \DateTime;
  * @author Jenicot Alexandre
  */
 class DAOVisiteMaisonInvest extends DAOVisite{
-    public function add($object) {
-        
+    /**
+     * Méthode permettant d'ajouter une viste de maison par un investisseur
+     * dans la DB
+     * @param VisiteMaisonInvestisseur $visite
+     * @throws PDOException
+     */
+    public function add($visite) {
+        try {
+            $sql = "INSERT INTO visite_invest_maison (date, rapport, 
+                    investisseur_id, propositions_table_id) 
+                    VALUES (:date, :rapport, :investisseur, :maison)";
+            $request = $this->getConnection()->prepare($sql);
+            
+            if($visite->getDate() === NULL) {
+                $date = null;
+            }
+            else {
+                $date = $visite->getDate()->format('Y-m-d H:i:s');
+            }
+            
+            $request->execute(array(
+                ':date' => $date,
+                ':rapport' => $visite->getRapport(),
+                ':investisseur' => $visite->getInvestisseur()->getId(),
+                ':maison' => $visite->getMaison()->getIdProposition()));
+            
+            //ajout des participants
+            $visite->setId($this->getConnection()->lastInsertId());
+            $this->addParticipants($visite, 'visite_invest', 
+                    'visite_invest_maison');
+            
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     public function delete($id) {
@@ -36,7 +68,7 @@ class DAOVisiteMaisonInvest extends DAOVisite{
         try{
             
             $sql = "SELECT vim.id, vim.date , pt.titre_fr FROM visite_invest_maison vim
-                    JOIN propositions_table p ON pt.id = vim.propositions_table_id
+                    JOIN propositions_table pt ON pt.id = vim.propositions_table_id
                     WHERE vim.investisseur_id = :id ORDER BY pt.titre_fr, vim.date ";
             $request = $this->getConnection()->prepare($sql);
             $request->execute(array(':id' => $id));
