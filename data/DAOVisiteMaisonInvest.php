@@ -48,8 +48,23 @@ class DAOVisiteMaisonInvest extends DAOVisite{
         }
     }
 
+    /**
+     * Méthode qui permet la suppression d'une visite d'une maison par un 
+     * investisseur
+     * @param int $id Identifiant de la visite à supprimer
+     * @throws PDOException
+     */
     public function delete($id) {
-        
+        try {
+            //suppression des participants
+            $this->deleteParticipants($id,'visite_invest', 'visite_invest_maison');
+            
+            $sql = "DELETE FROM visite_invest_maison WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**

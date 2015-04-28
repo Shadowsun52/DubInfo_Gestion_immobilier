@@ -1,6 +1,7 @@
 //les deux tableaux ci-dessous permette de gérer le cas des visites
-list_visites = ['rencontreInvestisseur', 'prospectionMaison'];
-list_fields = ['investisseur', 'maison'];
+list_visites = ['rencontreInvestisseur', 'prospectionMaison', 
+    'visiteMaisonInvestisseur'];
+list_fields = ['investisseur', 'maison', 'investisseur'];
 //ici on ajout un script qui réagit au clique du bouton submit
 function addAjaxListener(btn_name, form_name) {
     url_param = getParamsUrl();
