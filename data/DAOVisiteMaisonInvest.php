@@ -147,8 +147,43 @@ class DAOVisiteMaisonInvest extends DAOVisite{
         }
     }
 
-    public function update($object) {
-        
+    /**
+     * Méthode permettant d'update une visite d'une maison par un investisseur
+     *  dans la DB
+     * @param VisiteMaisonInvestisseur $visite
+     * @throws PDOException
+     */
+    public function update($visite) {
+        try {
+            $sql = "UPDATE visite_invest_maison SET date = :date,
+                    rapport = :rapport, propositions_table_id = :maison WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            
+            if($visite->getDate() === NULL) {
+                $date = null;
+            }
+            else {
+                $date = $visite->getDate()->format('Y-m-d H:i:s');
+            }
+            
+            $result = $request->execute(array(
+                ':date' => $date,
+                ':rapport' => $visite->getRapport(),
+                ':maison' => $visite->getMaison()->getIdProposition(),
+                ':id' => $visite->getId()));
+            
+            if($result) {
+                //suppression des participants
+                $this->deleteParticipants($visite->getId(), 'visite_invest', 'visite_invest_maison');
+                
+                //ajout des nouveaux participants
+                $this->addParticipants($visite, 'visite_invest', 'visite_invest_maison');
+            }
+            else {
+                throw new PDOException('Erreur durant l\'update');
+            }
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
-
 }
