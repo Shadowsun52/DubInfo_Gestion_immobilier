@@ -455,6 +455,11 @@ function feedProspectionMaisonForm(data) {
     feedVisiteForm(data);
 }
 
+function feedVisiteMaisonInvestisseurForm(data) {
+    feedVisiteForm(data);
+    $("#select_maison").val(data.maison.id);
+}
+
 function addChangeEtatListener() {
     $('#select_etat').bind('change', function(e) {
         console.log($('#select_etat').val());

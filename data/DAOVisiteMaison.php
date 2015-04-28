@@ -64,8 +64,7 @@ class DAOVisiteMaison extends DAOVisite{
     /**
      * Fonction qui retourne une visite de prospection par rapport à un id donné
      * @param int $id
-     * @return VisiteInvestisseur La rencontre avec l'investisseur lut dans 
-     * la base de données
+     * @return VisiteMaison La visite de la maison lut dans la base de données
      * @throws PDOException
      */
     public function read($id) {
@@ -75,7 +74,7 @@ class DAOVisiteMaison extends DAOVisite{
             $request->execute(array(':id' => $id));
             $result = $request->fetch();
             
-            //création de l'objet investisseur
+            //création de l'objet maison
             $maison = new Maison($result['propositions_table_id']);
             
             //création de la date

@@ -282,8 +282,11 @@ class Maison implements \JsonSerializable{
      * @throws KeyDontExistException
      */
     public function getTitre($language) {
-        if($this->languageExist($language)) {
+        if($this->languageExist($language) && isset($this->_titres[$language])) {
             return $this->_titres[$language];
+        }
+        else {
+            return null;
         }
     }
     
@@ -336,8 +339,11 @@ class Maison implements \JsonSerializable{
      * @throws KeyDontExistException
      */
     public function getDescription($language) {
-        if($this->languageExist($language)) {
+        if($this->languageExist($language) && isset($this->_descriptions[$language])) {
             return $this->_descriptions[$language];
+        }
+        else {
+            return null;
         }
     }
     
@@ -392,8 +398,11 @@ class Maison implements \JsonSerializable{
      * @throws KeyDontExistException
      */
     public function getDescriptionChambres($language) {
-        if($this->languageExist($language)) {
+        if($this->languageExist($language) && isset($this->_descriptions_chambres[$language])) {
             return $this->_descriptions_chambres[$language];
+        }
+        else {
+            return null;
         }
     }
     
@@ -448,8 +457,12 @@ class Maison implements \JsonSerializable{
      * @throws KeyDontExistException
      */
     public function getDescriptionCharges($language) {
-        if($this->languageExist($language)) {
+        if($this->languageExist($language) 
+                && isset($this->_description_charges[$language])) {
             return $this->_description_charges[$language];
+        }
+        else {
+            return null;
         }
     }
     

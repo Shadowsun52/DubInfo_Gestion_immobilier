@@ -49,4 +49,16 @@ class VisiteMaisonInvestisseur extends VisiteMaison {
         $this->_investisseur = CheckTyper::isModel($investisseur, 
                 Investisseur::class, 'investisseur', __CLASS__);
     }
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(), 
+                array(
+                    'investisseur' =>  $this->getInvestisseur(),
+                ));
+    }
+    
+    public function toString() {
+        return $this->getMaison()->getTitre(Maison::LANGUAGE_FR) . ' ' 
+                . parent::toString();
+    }
 }

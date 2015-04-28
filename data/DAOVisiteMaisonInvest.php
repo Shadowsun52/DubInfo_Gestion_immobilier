@@ -52,8 +52,44 @@ class DAOVisiteMaisonInvest extends DAOVisite{
         
     }
 
+    /**
+     * Fonction qui retourne une visite de maison pour un investisseur
+     * par rapport à un id donné
+     * @param int $id
+     * @return VisiteInvestisseur La visite de la maison par un investisseur lut 
+     * dans la base de données
+     * @throws PDOException
+     */
     public function read($id) {
-        
+        try {
+            $sql = "SELECT * FROM visite_invest_maison WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            //création de l'objet maison
+            $maison = new Maison($result['propositions_table_id']);
+            
+            //création de l'object investisseur
+            $investisseur = new Investisseur($result['investisseur_id']);
+            
+            //création de la date
+            if($result['date'] == '') {
+                $date = null;
+            }
+            else {
+                $date = new DateTime($result['date']);
+            }
+            
+            //création de l'objet visite
+            $visite = new VisiteMaisonInvestisseur($id, $date, 
+                    $result['rapport'], $maison, $investisseur);
+            $visite->setParticipants($this->readParticipants($id,'visite_invest', 
+                    'visite_invest_maison'));
+            return $visite;
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**

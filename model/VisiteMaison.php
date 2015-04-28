@@ -46,4 +46,11 @@ class VisiteMaison extends Visite{
     public function setMaison($maison) {
         $this->_maison = CheckTyper::isModel($maison, Maison::class, 'maison', __CLASS__);
     }
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(), 
+                array(
+                    'maison' =>  $this->getMaison(),
+                ));
+    }
 }
