@@ -5,6 +5,7 @@ use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
 use DubInfo_gestion_immobilier\Exception\BadTypeException;
 use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
 use DubInfo_gestion_immobilier\Exception\KeyDontExistException;
+use \DateTime;
 /**
  * Description of Maison
  *
@@ -16,6 +17,9 @@ class Maison implements \JsonSerializable{
     const MAX_SIZE_ADRESSE = 70;
     const MAX_SIZE_COMMENTAIRE = 500;
     const MAX_SIZE_RAISON_ABANDON = 500;
+    const MAX_SIZE_REFERENCE = 70;
+    const MAX_SIZE_LOCALISATION = 120;
+    const MAX_SIZE_QUALITE = 120;
     const LANGUAGE_FR = "french";
     const LANGUAGE_NE = "dutch";
     const LANGUAGE_EN = "english";
@@ -118,6 +122,60 @@ class Maison implements \JsonSerializable{
     
     /**
      *
+     * @var string 
+     */
+    private $_reference;
+    
+    /**
+     *
+     * @var double
+     */
+    private $_prix_conseille;
+    
+    /**
+     *
+     * @var double 
+     */
+    private $_rendement;
+    
+    /**
+     *
+     * @var boolean
+     */
+    private $_dossier_realise;
+    
+    /**
+     *
+     * @var string 
+     */
+    private $_localisation;
+    
+    /**
+     *
+     * @var int 
+     */
+    private $_localisation_indice;
+    
+    /**
+     *
+     * @var string 
+     */
+    private $_qualite;
+    
+    /**
+     *
+     * @var int 
+     */
+    private $_qualite_indice;
+    
+    /**
+     *
+     * @var boolean 
+     */
+    private $_show_on_web;
+    
+    /**
+     *
      * @var Etat 
      */
     private $_etat;
@@ -156,53 +214,75 @@ class Maison implements \JsonSerializable{
      * 
      * @param int $id_proposition
      * @param int $id_maison
-     * @param DateTime $date_creation
-     * @param DateTime $date_modification
-     * @param Adresse $adresse
+     * @param string $reference
      * @param double $prix
+     * @param double $prix_conseille
+     * @param double $rendement
      * @param int $superficie_habitable
      * @param int $nb_salle_de_bain
      * @param double $cout_travaux
+     * @param boolean $dossier_realise
+     * @param string $localisation
+     * @param int $localisation_indice
+     * @param string $qualite
+     * @param int $qualite_indice
+     * @param string $commentaire
+     * @param string $raison_abandon
+     * @param boolean $show_on_web
+     * @param Etat $etat
+     * @param Commune $commune
+     * @param Adresse $adresse
+     * @param DateTime $date_creation
+     * @param DateTime $date_modification
      * @param array[string] $titres
      * @param array[string] $descriptions
      * @param array[string] $descriptions_chambres
      * @param array[string] $descriptions_charges
-     * @param string $commentaire
-     * @param string $raison_abandon
-     * @param Etat $etat
-     * @param array[Chambre] $chambres
-     * @param array[Contact] $contacts
-     * @param array[Source] $sources
-     * @param array[Offre] $offres
-     * @param array[Projet] $projets
+     * @param Chambre $chambres
+     * @param Contact $contacts
+     * @param Source $sources
+     * @param Offre $offres
+     * @param Projet $projets
      * @throws BadTypeException
      * @throws StringAttributeTooLong
      * @throws KeyDontExistException
      */
-    public function __construct($id_proposition = NULL, $id_maison = NULL, $prix = NULL, 
+    public function __construct($id_proposition = NULL, $id_maison = NULL, 
+            $reference = NULL, $prix = NULL, $prix_conseille = NULL, $rendement = NULL, 
             $superficie_habitable = NULL, $nb_salle_de_bain = NULL, $cout_travaux = NULL,
-            $commentaire = NULL, $raison_abandon = NULL, $etat = NULL, $commune = NULL,
+            $dossier_realise = NULL, $localisation = NULL, $localisation_indice = NULL,
+            $qualite = NULL, $qualite_indice = NULL, $commentaire = NULL, 
+            $raison_abandon = NULL, $show_on_web = NULL, $etat = NULL, $commune = NULL,
             $adresse = NULL, $date_creation = NULL, $date_modification = NULL,  
             $titres = NULL, $descriptions = NULL, $descriptions_chambres = NULL, 
             $descriptions_charges = NULL, $chambres = NULL, $contacts = NULL, 
             $sources = NULL, $offres = NULL, $projets = NULL) {
         $this->setIdProposition($id_proposition);
         $this->setIdMaison($id_maison);
-        $this->setDateCreation($date_creation);
-        $this->setDateModification($date_modification);
-        $this->setAdresse($adresse);
-        $this->setCommune($commune);
+        $this->setReference($reference);
         $this->setPrix($prix);
+        $this->setPrixConseille($prix_conseille);
+        $this->setRendement($rendement);
         $this->setSuperficieHabitable($superficie_habitable);
         $this->setNbSalleDeBain($nb_salle_de_bain);
         $this->setCoutTravaux($cout_travaux);
+        $this->setDossierRealise($dossier_realise);
+        $this->setLocalisation($localisation);
+        $this->setLocalisationIndice($localisation_indice);
+        $this->setQualite($qualite);
+        $this->setQualiteIndice($qualite_indice);
+        $this->setCommentaire($commentaire);
+        $this->setRaisonAbandon($raison_abandon);
+        $this->setShowOnWeb($show_on_web);
+        $this->setEtat($etat);
+        $this->setCommune($commune);
+        $this->setAdresse($adresse);
+        $this->setDateCreation($date_creation);
+        $this->setDateModification($date_modification);
         $this->setTitres($titres);
         $this->setDescriptions($descriptions);
         $this->setDescriptionsChambres($descriptions_chambres);
         $this->setDescriptionsCharges($descriptions_charges);
-        $this->setCommentaire($commentaire);
-        $this->setRaisonAbandon($raison_abandon);
-        $this->setEtat($etat);
         $this->setChambres($chambres);
         $this->setContacts($contacts);
         $this->setSources($sources);
@@ -571,6 +651,76 @@ class Maison implements \JsonSerializable{
     }
 //</editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc="Cout & prix">
+    /**
+     * 
+     * @return double
+     */
+    public function getPrix() {
+        return $this->_prix;
+    }
+    
+    /**
+     * 
+     * @param double $prix
+     * @throws BadTypeException
+     */
+    public function setPrix($prix) {
+        $this->_prix = CheckTyper::isDouble($prix, 'prix', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return double
+     */
+    public function getPrixConseille() {
+        return $this->_prix_conseille;
+    }
+    
+    /**
+     * 
+     * @param double $prix
+     * @throws BadTypeException
+     */
+    public function setPrixConseille($prix) {
+        $this->_prix_conseille = CheckTyper::isDouble($prix, 'prix', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return double
+     */
+    public function getCoutTravaux() {
+        return $this->_cout_travaux;
+    }
+
+    /**
+     * 
+     * @param double $cout_travaux
+     * @throws BadTypeException
+     */
+    public function setCoutTravaux($cout_travaux) {
+        $this->_cout_travaux = CheckTyper::isInteger($cout_travaux, 'cout travaux', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return double
+     */
+    public function getRendement() {
+        return $this->_rendement;
+    }
+
+    /**
+     * 
+     * @param double $rendement
+     * @throws BadTypeException
+     */
+    public function setRendement($rendement) {
+        $this->_rendement = CheckTyper::isInteger($rendement, 'rendement', __CLASS__);
+    }
+//</editor-fold>
+    
 //<editor-fold defaultstate="collapsed" desc="Autre informations">
     /**
      * 
@@ -587,23 +737,6 @@ class Maison implements \JsonSerializable{
      */
     public function setEtat($etat) {
         $this->_etat = CheckTyper::isModel($etat, Etat::class, 'prix', __CLASS__);
-    }
-    
-    /**
-     * 
-     * @return double
-     */
-    public function getPrix() {
-        return $this->_prix;
-    }
-    
-    /**
-     * 
-     * @param double $prix
-     * @throws BadTypeException
-     */
-    public function setPrix($prix) {
-        $this->_prix = CheckTyper::isDouble($prix, 'prix', __CLASS__);
     }
     
     /**
@@ -634,7 +767,7 @@ class Maison implements \JsonSerializable{
             return 0;
         }
         
-        return $this->getPrix() / $this->getSuperficeHabitable(); 
+        return $this->getPrixConseille() / $this->getSuperficeHabitable(); 
     }
     
     /**
@@ -657,20 +790,61 @@ class Maison implements \JsonSerializable{
     
     /**
      * 
-     * @return double
+     * @return string
      */
-    public function getCoutTravaux() {
-        return $this->_cout_travaux;
+    public function getReference() {
+        return $this->_reference;
     }
     
     /**
      * 
-     * @param double $cout_travaux
+     * @param string $reference
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
+    public function setReference($reference) {
+        $_reference = CheckTyper::isString($reference, 'reference', __CLASS__);
+        
+        if(strlen($_reference) > self::MAX_SIZE_REFERENCE) {
+            throw new StringAttributeTooLong('reference', __CLASS__);
+        }
+        
+        $this->_reference = $_reference;
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function getDossierRealise() {
+        return $this->_dossier_realise;
+    }
+
+    /**
+     * 
+     * @param boolean $dossier_realise
      * @throws BadTypeException
      */
-    public function setCoutTravaux($cout_travaux) {
-        $this->_cout_travaux = CheckTyper::isInteger($cout_travaux, 
-                'cout travaux', __CLASS__);
+    public function setDossierRealise($dossier_realise) {
+        $this->_dossier_realise = CheckTyper::isBoolean($dossier_realise, 
+                'dossier realise', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function getShowOnWeb() {
+        return $this->_show_on_web;
+    }
+
+    /**
+     * 
+     * @param boolean $show_on_web
+     * @throws BadTypeException
+     */
+    public function setShowOnWeb($show_on_web) {
+        $this->_show_on_web = CheckTyper::isBoolean($show_on_web, 'show on web', __CLASS__);
     }
 //</editor-fold>
     
@@ -723,6 +897,93 @@ class Maison implements \JsonSerializable{
         $this->_raison_abandon = $_raison_abandon;
     }
 //</editor-fold>
+    
+//<editor-fold defaultstate="collapsed" desc="Localisation">    
+    /**
+     * 
+     * @return string
+     */
+    public function getLocalisation() {
+        return $this->_localisation;
+    }
+    
+    /**
+     * 
+     * @param string $localisation
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
+    public function setLocalisation($localisation) {
+        $_localisation = CheckTyper::isString($localisation, 'localisation', __CLASS__);
+        
+        if(strlen($_localisation) > self::MAX_SIZE_LOCALISATION) {
+            throw new StringAttributeTooLong('localisation', __CLASS__);
+        }
+        
+        $this->_localisation = $_localisation;
+    }
+    
+    /**
+     * 
+     * @return int
+     */
+    public function getLocalisationIndice() {
+        return $this->_localisation_indice;
+    }
+    
+    /**
+     * 
+     * @param int $indice
+     * @throws BadTypeException
+     */
+    public function setLocalisationIndice($indice) {
+        $this->_localisation_indice = CheckTyper::isInteger($indice, 
+                'localisation indice', __CLASS__);
+    }
+//</editor-fold>
+   
+//<editor-fold defaultstate="collapsed" desc="Qualite">    
+    /**
+     * 
+     * @return string
+     */
+    public function getQualite() {
+        return $this->_qualite;
+    }
+    
+    /**
+     * 
+     * @param string $qualite
+     * @throws BadTypeException
+     * @throws StringAttributeTooLong
+     */
+    public function setQualite($qualite) {
+        $_qualite = CheckTyper::isString($qualite, 'qualite', __CLASS__);
+        
+        if(strlen($_qualite) > self::MAX_SIZE_QUALITE) {
+            throw new StringAttributeTooLong('qualite', __CLASS__);
+        }
+        
+        $this->_qualite = $_qualite;
+    }
+    
+    /**
+     * 
+     * @return int
+     */
+    public function getQualiteIndice() {
+        return $this->_qualite_indice;
+    }
+    
+    /**
+     * 
+     * @param int $indice
+     * @throws BadTypeException
+     */
+    public function setQualiteIndice($indice) {
+        $this->_qualite_indice = CheckTyper::isInteger($indice, 'qualite indice', __CLASS__);
+    }
+//</editor-fold>    
     
 //<editor-fold defaultstate="collapsed" desc="Chambres">
     /**

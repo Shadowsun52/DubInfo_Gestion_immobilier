@@ -114,7 +114,7 @@
                                 ));
     $budget->set_rule(array(
         'regexp' => array(
-           '^[0-9]{0,8}(|[,\.]?[0-9]{1,2})$',
+           '^[0-9]{0,10}(|[,\.]?[0-9]{1,2})$',
            'error',
            "Le budget est incorrect (format: 12345,67)"
         )
