@@ -8,6 +8,7 @@ use DubInfo_gestion_immobilier\model\Commune;
 use DubInfo_gestion_immobilier\model\Etat;
 use DubInfo_gestion_immobilier\model\SourceMaison;
 use DubInfo_gestion_immobilier\model\Contact;
+use DubInfo_gestion_immobilier\model\Chambre;
 use DubInfo_gestion_immobilier\Exception\NomContactException;
 
 /**
@@ -35,13 +36,16 @@ class MaisonCRUD extends AbstractBusiness{
         $source = new SourceMaison($data['select_source'], null, $data['reference']);
         $contacts = $this->createContacts($data);
 
-        $maison = new Maison($data['select_id'], null, $data['prix'],
-                $data['superficie_habitable'], $data['select_sdb'], 
-                $data['cout_travaux'], $data['remarque'], $data['raison_abandon'],
-                $etat, $commune, $adresse);
+        $maison = new Maison($data['select_id'], null, $data['prix'], 
+                $data['prix_conseille'], $data['rendement'], $data['superficie_habitable'], 
+                $data['select_sdb'], $data['cout_travaux'], $data['dossier'], 
+                $data['localisation'], $data['localisation_indice'], $data['qualite'],
+                $data['qualite_indice'], $data['remarque'], $data['raison_abandon'],
+                $data['show'], $etat, $commune, $adresse);
         $maison->addTitre(Maison::LANGUAGE_FR, $data['titre']);
         $maison->addSource($source);
         $maison->setContacts($contacts);
+        $maison->setChambres($this->createChambres($data));
         return $maison;
     }  
     
@@ -84,7 +88,19 @@ class MaisonCRUD extends AbstractBusiness{
                         $data['contact_remarque' .$i]);
             }
         }
-        
         return $contacts;
+    }
+    
+    /**
+     * Méthode qui créer le nombre de chambres choisi dans le formulaire
+     * @param array[mixed] $data
+     * @return array[Chambre]
+     */
+    protected function createChambres($data) {
+        for ($i = 0; $i < $data['chambres']; $i++) {
+            $chambres[] = new Chambre();
+        }
+        
+        return isset($chambres) ? $chambres : [];
     }
 }
