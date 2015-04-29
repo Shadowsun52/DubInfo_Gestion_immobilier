@@ -32,3 +32,12 @@ h2
 .row .cell:first-child {
     margin-left: 0;
 }
+
+.radio {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.radio label{
+    display: inline;
+}

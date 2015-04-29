@@ -98,6 +98,28 @@
         '' => '- choisissez une ville -'
     ),true);
     
+    $form_investisseur->add('label', 'label_lettre_mission', 'lettre_mission', 
+            'Lettre de mission faite ?');
+    $lettre_mission = $form_investisseur->add('radios', 'lettre_mission',
+            array(
+                '1'    =>  'Oui',
+                '0'    =>  'Non'
+            ),
+            '', // no default value
+            array('class' => 'radio_class'));
+    
+    $form_investisseur->add('label','label_budget', 'budget', 'Budget');
+    $budget = $form_investisseur->add('text', 'budget', null, array(
+                                    'maxlength' => 11
+                                ));
+    $budget->set_rule(array(
+        'regexp' => array(
+           '^[0-9]{0,8}(|[,\.]?[0-9]{1,2})$',
+           'error',
+           "Le budget est incorrect (format: 12345,67)"
+        )
+    ));
+    
     //liste déroulante avec les 3 pays possibles ou autre, si c'est un pays différent des trois proposés
     $form_investisseur->add('label','label_etat', 'select_etat', 'Etat');
     $etat = $form_investisseur->add('select', 'select_etat');

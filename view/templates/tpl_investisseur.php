@@ -61,7 +61,28 @@
 </div>
 
 <div class="row">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell">
+        <?php echo $label_lettre_mission ?>
+        <div class="radio">
+            <?php echo  $lettre_mission_1 . $label_lettre_mission_1 ?>
+        </div>
+        <div class="radio">
+            <?php echo $lettre_mission_0 . $label_lettre_mission_0 ?>
+        </div>
+    </div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
 
+<div class="row even">
+    <!-- things that need to be side-by-side go in "cells" -->
+    <div class="cell"><?php echo $label_budget . $budget ?></div>
+    <!-- once we're done with "cells" we *must* place a "clear" div -->
+    <div class="clear"></div>
+</div>
+
+<div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_etat . $select_etat ?></div>
     
