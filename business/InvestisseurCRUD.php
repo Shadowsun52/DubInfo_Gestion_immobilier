@@ -28,7 +28,8 @@ class InvestisseurCRUD extends AbstractBusiness{
         $etat = new Etat($_POST['select_etat']);    
         $investisseur = new Investisseur($data['select_id'], $data['nom'],
                 $data['prenom'], $data['num_tel'], $data['num_gsm'],
-                $data['mail'], $adresse, $etat, $data['num_tva'], $data['remarque']);
+                $data['mail'], $adresse, $etat, $data['num_tva'], $data['remarque'], 
+                $data['lettre_mission'], $data['budget']);
         return $investisseur; 
     }
 }

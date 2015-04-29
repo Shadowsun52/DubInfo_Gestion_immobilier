@@ -357,6 +357,8 @@ function feedInvestisseurForm(data) {
     //partie ne consernant que l'investisseur
     $("#num_tva").val(data.num_tva);
     $("#select_etat").val(data.etat.id);
+    $("input[name=lettre_mission]").val([data.lettre_mission ? '1' : '0']);
+    $("#budget").val(data.budget);
 }
 
 /*

@@ -67,7 +67,8 @@ class DAOInvestisseur extends AbstractDAO{
             $investisseur = new Investisseur($id, $result['nom'], 
                     $result['prenom'], $result['num_telephone'], 
                     $result['num_gsm'], $result['mail'], $adresse, $etat, 
-                    $result['num_tva'], $result['commentaire']);
+                    $result['num_tva'], $result['commentaire'], 
+                    $result['lettre_de_mission'], $result['budget']);
             
             return $investisseur;
         } catch (Exception $ex) {
@@ -83,12 +84,13 @@ class DAOInvestisseur extends AbstractDAO{
     public function add($investisseur) {
         try {
             $sql = "INSERT INTO investisseur (nom, prenom, num_telephone, 
-                    num_gsm, mail, num_tva, commentaire, adresse_rue, adresse_numero, 
-                    adresse_boite, adresse_ville, adresse_code_postal, 
-                    adresse_pays, etat_id) 
+                    num_gsm, mail, num_tva, commentaire, lettre_de_mission, 
+                    budget, adresse_rue, adresse_numero, adresse_boite, 
+                    adresse_ville, adresse_code_postal, adresse_pays, etat_id) 
                     VALUES (:nom, :prenom, :num_telephone, :num_gsm, :mail, :num_tva,
-                    :commentaire, :adresse_rue, :adresse_numero, :adresse_boite, 
-                    :adresse_ville, :adresse_code_postal, :adresse_pays, :etat)";
+                    :commentaire, :lettre_mission, :budget, :adresse_rue, 
+                    :adresse_numero, :adresse_boite, :adresse_ville, 
+                    :adresse_code_postal, :adresse_pays, :etat)";
             $request = $this->getConnection()->prepare($sql);
             $request->execute(array(
                 ':nom' => $investisseur->getNom(),
@@ -98,6 +100,8 @@ class DAOInvestisseur extends AbstractDAO{
                 ':mail' => $investisseur->getMail(),
                 ':num_tva' => $investisseur->getNumTva(),
                 ':commentaire' => $investisseur->getCommentaire(),
+                ':lettre_mission' => $investisseur->getLettreMission(),
+                ':budget' => $investisseur->getBudget(),
                 ':adresse_rue' => $investisseur->getAdresse()->getRue(),
                 ':adresse_numero' => $investisseur->getAdresse()->getNumero(),
                 ':adresse_boite' => $investisseur->getAdresse()->getBoite(),
@@ -120,6 +124,7 @@ class DAOInvestisseur extends AbstractDAO{
             $sql = "UPDATE investisseur SET nom = :nom, prenom = :prenom, 
                     num_telephone = :num_telephone, num_gsm = :num_gsm,
                     mail = :mail, num_tva = :num_tva, commentaire = :commentaire,
+                    lettre_de_mission = :lettre_mission, budget = :budget,
                     adresse_rue = :adresse_rue, adresse_numero = :adresse_numero,
                     adresse_boite = :adresse_boite, adresse_ville = :adresse_ville,
                     adresse_code_postal = :adresse_code_postal, 
@@ -133,6 +138,8 @@ class DAOInvestisseur extends AbstractDAO{
                 ':mail' => $investisseur->getMail(),
                 ':num_tva' => $investisseur->getNumTva(),
                 ':commentaire' => $investisseur->getCommentaire(),
+                'lettre_mission' => $investisseur->getLettreMission(),
+                'budget' => $investisseur->getBudget(),
                 ':adresse_rue' => $investisseur->getAdresse()->getRue(),
                 ':adresse_numero' => $investisseur->getAdresse()->getNumero(),
                 ':adresse_boite' => $investisseur->getAdresse()->getBoite(),

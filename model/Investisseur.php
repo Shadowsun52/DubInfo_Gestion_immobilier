@@ -282,6 +282,8 @@ class Investisseur extends Contact implements \JsonSerializable{
         return array_merge(parent::jsonSerialize(),
                 array(
                     'num_tva' => $this->getNumTva(),
+                    'lettre_mission' => $this->getLettreMission(),
+                    'budget' => $this->getBudget()
                 ));
     }
 }
