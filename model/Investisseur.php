@@ -28,9 +28,15 @@ class Investisseur extends Contact implements \JsonSerializable{
     
     /**
      *
-     * @var array[LettreMission] 
+     * @var boolean 
      */
-    private $_lettres_mission;
+    private $_lettre_mission;
+    
+    /**
+     *
+     * @var double 
+     */
+    private $_budget;
     
     /**
      *
@@ -51,14 +57,15 @@ class Investisseur extends Contact implements \JsonSerializable{
      * @param string $prenom
      * @param string $num_telephone
      * @param string $num_gsm
-     * @param string $num_fax
      * @param string $mail
      * @param Adresse $adresse
      * @param Etat $etat
      * @param string $num_tva
      * @param string $commentaire
+     * @param boolean $lettre_mission
+     * @param double $budget
      * @param array[VisiteMaisonLocataire] $visites Liste des maisons visitées par l'investisseur
-     * @param array[LettreMission] $lettres_mission 
+     * @param boolean $lettre_mission 
      * @param array[Offre] $offres 
      * @param array[Projet] $projets
      * @throws BadTypeException
@@ -66,13 +73,14 @@ class Investisseur extends Contact implements \JsonSerializable{
      */
     public function __construct($id = NULL, $nom = NULL, $prenom = NULL,
             $num_telephone = NULL, $num_gsm = NULL, $mail = NULL, $adresse = NULL, 
-            $etat = NULL, $num_tva = NULL, $commentaire = NULL, $visites = NULL, 
-            $lettres_mission = NULL, $offres = NULL, $projets = NULL) {
+            $etat = NULL, $num_tva = NULL, $commentaire = NULL, $lettre_mission = NULL ,
+            $budget = NULL, $visites = NULL, $offres = NULL, $projets = NULL) {
         parent::__construct($id, $nom, $prenom, $num_telephone, $num_gsm, $mail,
                 $commentaire, $etat, $adresse);
         $this->setNumTva($num_tva);
         $this->setVisites($visites);
-        $this->setLettresMission($lettres_mission);
+        $this->setLettreMission($lettre_mission);
+        $this->setBudget($budget);
         $this->setOffres($offres);
         $this->setProjets($projets);
     }
@@ -101,6 +109,23 @@ class Investisseur extends Contact implements \JsonSerializable{
         $this->_num_tva = $_num_tva;
     }
 
+    /**
+     * 
+     * @return double
+     */
+    public function getBudget() {
+        return $this->_budget;
+    }
+    
+    /**
+     * 
+     * @param double $budget
+     * @throws BadTypeException
+     */
+    public function setBudget($budget) {
+        $this->_budget = CheckTyper::isDouble($budget, 'budget', __CLASS__);
+    }
+    
 //<editor-fold defaultstate="collapsed" desc="Visites">
     /**
      * 
@@ -148,44 +173,20 @@ class Investisseur extends Contact implements \JsonSerializable{
 //<editor-fold defaultstate="collapsed" desc="Lettres mission">
     /**
      * 
-     * @return array[LettreMission]
+     * @return boolean
      */
-    public function getLettresMission() {
-        return $this->_lettres_mission;
+    public function getLettreMission() {
+        return $this->_lettre_mission;
     }
     
     /**
      * 
-     * @param array[LettreMission] $lettres_mission
+     * @param boolean $lettre_mission
      * @throws BadTypeException
      */
-    public function setLettresMission($lettres_mission) {
-        $this->_lettres_mission = CheckTyper::isArrayOfModel($lettres_mission,
-                LettreMission::class, 'lettres mission', __CLASS__);
-    }
-    
-    /**
-     * 
-     * @param int $id index de la valeur dans le tableau
-     * @return LettreMission
-     * @throws ReadOusideArrayException
-     */
-    public function getLettreMission($id) {
-        if($id < count($this->_visites)) {
-            return $this->_visites[$id];
-        }
-        
-        throw new ReadOusideArrayException('lettres mission', __CLASS__);
-    }
-    
-    /**
-     * 
-     * @param LettreMission $lettre_mission
-     * @throws BadTypeException
-     */
-    public function addLettreMission($lettre_mission) {
-        $this->_lettres_mission[] = CheckTyper::isModel($lettre_mission, 
-                LettreMission::class, 'lettres mission', __CLASS__);
+    public function setLettreMission($lettre_mission) {
+        $this->_lettre_mission = CheckTyper::isBoolean($lettre_mission, 
+                'lettre mission', __CLASS__);
     }
 //</editor-fold>
     

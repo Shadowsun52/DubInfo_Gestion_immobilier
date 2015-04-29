@@ -75,7 +75,7 @@ class DAOAdresse {
      */
     public function getCommunesBruxelles() {
         try{
-            $sql = "SELECT * FROM communes_bruxelles_table";
+            $sql = "SELECT * FROM communes_bruxelles_table ORDER BY name";
             $request = $this->_getConnection()->prepare($sql);
             $request->execute();
             
