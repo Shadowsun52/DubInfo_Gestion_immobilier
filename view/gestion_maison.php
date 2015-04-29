@@ -9,6 +9,7 @@
     use DubInfo_gestion_immobilier\business\SourceMaisonCRUD;
     use DubInfo_gestion_immobilier\business\ContactCRUD;
     
+    define('MAX_NB_CHAMBRES', 20);
     //formulaire qui permet de gérer les maisons
     
     $form_maison = new Zebra_Form('form_maison');
@@ -94,6 +95,20 @@
         )
     ));
     
+    //label et text du prix conseillé
+    $form_maison->add('label','label_prix_conseille', 'prix_conseille', 
+            'Prix conseillé');
+    $prix_conseille = $form_maison->add('text', 'prix_conseille', null, array(
+                                    'maxlength' => 13
+                                ));
+    $prix_conseille->set_rule(array(
+        'regexp' => array(
+           '^[0-9]{0,10}(|[,\.]?[0-9]{1,2})$',
+           'error',
+           "Le prix conseillé est incorrect (format: 12345,67)"
+        )
+    ));
+    
     //label et text de la superficie
     $form_maison->add('label','label_superficie_habitable', 'superficie_habitable', 'Superficie habitable en m²');
     $superficie = $form_maison->add('text', 'superficie_habitable', null, array(
@@ -107,17 +122,42 @@
         )
     ));
     
+    $form_maison->add('label','label_prix_mcarre', 'prix_mcarre', 'Prix/m²');
+    $prixmcarre = $form_maison->add('text', 'prix_mcarre', null, array(
+                                    'readonly' => 'true'
+                                ));
+    
+    //nombre de chambres
+    $nb_chambres[''] = '- Combien de chambres ? -';
+    for ($i=1; $i <= MAX_NB_CHAMBRES; $i++) {
+        $nb_chambres[$i] = $i;
+    }
+    $form_maison->add("label","label_chambres","select_chambres","Nombre de chambres");
+    $chambres = $form_maison->add('select', 'select_chambres');
+    $chambres->add_options($nb_chambres, true);
+    
     //salle de bain (sdb)
     $form_maison->add("label","label_sdb","select_sdb","Nombre de salle de bain");
     $sdb = $form_maison->add('select', 'select_sdb');
-    $sdb->add_options(array(
-    //ceci ne fonctionne pas (choisissez un etat)    
+    $sdb->add_options(array( 
     ''  => '- Combien de salle de bain ? -',
     '1' => '1',
     '2' => '2',
     '3' => '3',
     '4' => '4',
     '5' => '5'
+    ), true);
+    
+    $form_maison->add('label','label_rendement', 'rendement', 'Rendement');
+    $rendement = $form_maison->add('text', 'rendement', null, array(
+                                    'maxlength' => 4
+                                ));
+    $rendement->set_rule(array(
+        'regexp' => array(
+           '^[0-9]{0,2}(|[,\.]?[0-9]?)$',
+           'error',
+           "Le rendement sont incorrect (format: 12,3)"
+        )
     ));
     
     ////label et text des coûts des travaux
@@ -133,6 +173,45 @@
         )
     ));
     
+    $form_maison->add('label', 'label_dossier', 'dossier', 
+            'Dossier réalisé ?');
+    $dossier = $form_maison->add('radios', 'dossier',
+            array(
+                '1'    =>  'Oui',
+                '0'    =>  'Non'
+            ),
+            '', // no default value
+            array('class' => 'radio_class'));
+    
+    $form_maison->add('label','label_localisation', 'localisation', 'Localisation');
+    $localisation = $form_maison->add('text', 'localisation', null, array(
+                                    'maxlength' => Maison::MAX_SIZE_LOCALISATION
+                                ));
+    
+    $form_maison->add("label","label_localisation_indice",
+            "select_localisation_indice","Indice");
+    $localisation_indice = $form_maison->add('select', 'select_localisation_indice');
+    $localisation_indice->add_options(array( 
+    ''  => '- Choissisez l\'indice ? -',
+    '1' => '1',
+    '2' => '2',
+    '3' => '3',
+    ), true);
+    
+    $form_maison->add('label','label_qualite', 'qualite', 'Qualité du bien');
+    $qualite = $form_maison->add('text', 'qualite', null, array(
+                                    'maxlength' => Maison::MAX_SIZE_QUALITE
+                                ));
+    
+    $form_maison->add("label","label_qualite_indice", "select_qualite_indice","Indice");
+    $qualite_indice = $form_maison->add('select', 'select_qualite_indice');
+    $qualite_indice->add_options(array( 
+    ''  => '- Choissisez l\'indice ? -',
+    '1' => '1',
+    '2' => '2',
+    '3' => '3',
+    ), true);
+    
     $form_maison->add('label','label_etat','select_etat','Etat');
     $etat = $form_maison->add('select', 'select_etat');
     $etat->add_options(array(
@@ -143,6 +222,16 @@
         '7' => 'Location',
         '3' => 'Abandonné'
     ),true);
+    
+    $form_maison->add('label', 'label_show', 'show', 
+            'Afficher la maison sur le site ?');
+    $show = $form_maison->add('radios', 'show',
+            array(
+                '1'    =>  'Oui',
+                '0'    =>  'Non'
+            ),
+            '', // no default value
+            array('class' => 'radio_class'));
     
     //label et text de la remarque
     $form_maison->add('label','label_remarque', 'remarque', 'Remarque');
