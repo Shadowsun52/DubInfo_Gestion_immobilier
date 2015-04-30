@@ -10,6 +10,7 @@
  <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_titre . $titre ?></div>
+    <div class="cell"><?php echo $label_reference . $reference ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>
@@ -32,7 +33,7 @@
 <div class="row even">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_source . $select_source ?></div>
-    <div class="cell"><?php echo $label_reference . $reference ?></div>
+    <div class="cell"><?php echo $label_reference_source . $reference_source ?></div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>

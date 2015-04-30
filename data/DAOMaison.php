@@ -42,41 +42,42 @@ class DAOMaison extends AbstractDAO{
      * @throws PDOException
      */
     public function add($maison) {
-        try {
-            $sql = "INSERT INTO propositions_table (titre_fr, date_creation, 
-                    commentaire, adresse_rue, adresse_numero, commune_id, prix,
-                    superficie_habitable, nb_salle_de_bain, cout_travaux, etat_id,
-                    raison_abandon) VALUES (:titre, :date_creation, :commentaire, 
-                    :adresse_rue, :adresse_numero, :commune, :prix, :superficie,
-                    :nb_sdb, :cout_travaux, :etat, :raison_abandon)";
-            $request = $this->getConnection()->prepare($sql);
-            $date = new \DateTime();
-            $result = $request->execute(array(
-                ':titre' => $maison->getTitre(Maison::LANGUAGE_FR),
-                ':date_creation' => $date->getTimestamp(),
-                ':commentaire' => $maison->getCommentaire(),
-                ':adresse_rue' => $maison->getAdresse()->getRue(),
-                ':adresse_numero' => $maison->getAdresse()->getNumero(),
-                ':commune' => $maison->getCommune()->getId(),
-                ':prix' => $maison->getPrix(),
-                ':superficie' => $maison->getSuperficeHabitable(),
-                ':nb_sdb' => $maison->getNbSalleDeBain(),
-                'cout_travaux' => $maison->getCoutTravaux(),
-                'raison_abandon' => $maison->getRaisonAbandon(),
-                ':etat' => $maison->getEtat()->getId()));
-            
-            if($result) {
-                $id = $this->getConnection()->lastInsertId();
-                $this->addSource($id, $maison->getSource(0));
-                $this->addContacts($id, $maison->getContacts());
-                $this->addMaisonLocation($maison);
-            }
-            else {
-                throw new PDOException('Erreur lors de l\'ajout!');
-            }
-        } catch (Exception $ex) {
-            throw new PDOException($ex->getMessage());
-        }
+        var_dump($maison);
+//        try {
+//            $sql = "INSERT INTO propositions_table (titre_fr, date_creation, 
+//                    commentaire, adresse_rue, adresse_numero, commune_id, prix,
+//                    superficie_habitable, nb_salle_de_bain, cout_travaux, etat_id,
+//                    raison_abandon) VALUES (:titre, :date_creation, :commentaire, 
+//                    :adresse_rue, :adresse_numero, :commune, :prix, :superficie,
+//                    :nb_sdb, :cout_travaux, :etat, :raison_abandon)";
+//            $request = $this->getConnection()->prepare($sql);
+//            $date = new \DateTime();
+//            $result = $request->execute(array(
+//                ':titre' => $maison->getTitre(Maison::LANGUAGE_FR),
+//                ':date_creation' => $date->getTimestamp(),
+//                ':commentaire' => $maison->getCommentaire(),
+//                ':adresse_rue' => $maison->getAdresse()->getRue(),
+//                ':adresse_numero' => $maison->getAdresse()->getNumero(),
+//                ':commune' => $maison->getCommune()->getId(),
+//                ':prix' => $maison->getPrix(),
+//                ':superficie' => $maison->getSuperficeHabitable(),
+//                ':nb_sdb' => $maison->getNbSalleDeBain(),
+//                'cout_travaux' => $maison->getCoutTravaux(),
+//                'raison_abandon' => $maison->getRaisonAbandon(),
+//                ':etat' => $maison->getEtat()->getId()));
+//            
+//            if($result) {
+//                $id = $this->getConnection()->lastInsertId();
+//                $this->addSource($id, $maison->getSource(0));
+//                $this->addContacts($id, $maison->getContacts());
+//                $this->addMaisonLocation($maison);
+//            }
+//            else {
+//                throw new PDOException('Erreur lors de l\'ajout!');
+//            }
+//        } catch (Exception $ex) {
+//            throw new PDOException($ex->getMessage());
+//        }
     }
 
     /**

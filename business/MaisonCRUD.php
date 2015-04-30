@@ -33,15 +33,15 @@ class MaisonCRUD extends AbstractBusiness{
         $adresse = new Adresse($data['rue'], $data['numero']);
         $commune = new Commune($data['select_commune']);
         $etat = new Etat($data['select_etat']);
-        $source = new SourceMaison($data['select_source'], null, $data['reference']);
+        $source = new SourceMaison($data['select_source'], null, 
+                $data['reference_source']);
         $contacts = $this->createContacts($data);
-
-        $maison = new Maison($data['select_id'], null, $data['prix'], 
+        $maison = new Maison($data['select_id'], null, $data['reference'], $data['prix'], 
                 $data['prix_conseille'], $data['rendement'], $data['superficie_habitable'], 
                 $data['select_sdb'], $data['cout_travaux'], $data['dossier'], 
-                $data['localisation'], $data['localisation_indice'], $data['qualite'],
-                $data['qualite_indice'], $data['remarque'], $data['raison_abandon'],
-                $data['show'], $etat, $commune, $adresse);
+                $data['localisation'], $data['select_localisation_indice'], 
+                $data['qualite'], $data['select_qualite_indice'], $data['remarque'], 
+                $data['raison_abandon'], $data['show'], $etat, $commune, $adresse);
         $maison->addTitre(Maison::LANGUAGE_FR, $data['titre']);
         $maison->addSource($source);
         $maison->setContacts($contacts);
@@ -97,7 +97,7 @@ class MaisonCRUD extends AbstractBusiness{
      * @return array[Chambre]
      */
     protected function createChambres($data) {
-        for ($i = 0; $i < $data['chambres']; $i++) {
+        for ($i = 0; $i < $data['select_chambres']; $i++) {
             $chambres[] = new Chambre();
         }
         

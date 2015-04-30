@@ -717,7 +717,7 @@ class Maison implements \JsonSerializable{
      * @throws BadTypeException
      */
     public function setRendement($rendement) {
-        $this->_rendement = CheckTyper::isInteger($rendement, 'rendement', __CLASS__);
+        $this->_rendement = CheckTyper::isDouble($rendement, 'rendement', __CLASS__);
     }
 //</editor-fold>
     

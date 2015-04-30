@@ -31,6 +31,12 @@
     $titre = $form_maison->add('text', 'titre', null, array(
                                     'maxlength' => Maison::MAX_SIZE_TITRE
                                 ));
+    
+    $form_maison->add('label','label_reference', 'reference', 'Référence');
+    $reference = $form_maison->add('text', 'reference', null, array(
+                                    'maxlength' => Maison::MAX_SIZE_REFERENCE
+                                ));
+    
     $titre->set_rule(array(
                'required' => array('error', 'Titre requis!'), 
             ));
@@ -66,8 +72,9 @@
     $source = $form_maison->add('select', 'select_source');
     $source->add_options($list_sources, true);
     
-    $form_maison->add('label','label_reference', 'reference', 'Référence');
-    $reference = $form_maison->add('text', 'reference', null, array(
+    $form_maison->add('label','label_reference_source', 'reference_source', 
+            'Référence source');
+    $reference_source = $form_maison->add('text', 'reference_source', null, array(
                                     'maxlength' => SourceMaison::MAX_SIZE_REFERENCE
                                 ));
     
