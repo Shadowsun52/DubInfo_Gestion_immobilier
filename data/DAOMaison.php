@@ -227,8 +227,12 @@ class DAOMaison extends AbstractDAO{
             $sql = "UPDATE propositions_table SET titre_fr = :titre, 
                     commentaire = :commentaire, adresse_rue = :rue, 
                     adresse_numero = :numero, commune_id = :commune, prix = :prix, 
-                    superficie_habitable = :superficie, nb_salle_de_bain = :nb_sdb, 
-                    cout_travaux = :cout_travaux, raison_abandon = :raison_abandon, 
+                    prix_conseille = :prix_conseille, superficie_habitable = :superficie, 
+                    nb_salle_de_bain = :nb_sdb, cout_travaux = :cout_travaux, 
+                    raison_abandon = :raison_abandon, reference = :reference, 
+                    rendement = :rendement, show_on_web = :show, localisation = :localisation,
+                    localisation_indice = :localisation_indice, qualite = :qualite,
+                    qualite_indice = :qualite_indice, dossier_realise = :dossier, 
                     etat_id = :etat WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);            
             $result = $request->execute(array(
@@ -238,10 +242,19 @@ class DAOMaison extends AbstractDAO{
                 ':numero' => $maison->getAdresse()->getNumero(),
                 ':commune' => $maison->getCommune()->getId(),
                 ':prix' => $maison->getPrix(),
+                ':prix_conseille' => $maison->getPrixConseille(),
                 ':superficie' => $maison->getSuperficeHabitable(),
                 ':nb_sdb' => $maison->getNbSalleDeBain(),
                 ':cout_travaux' => $maison->getCoutTravaux(),
                 ':raison_abandon' => $maison->getRaisonAbandon(),
+                ':reference' => $maison->getReference(),
+                ':rendement' => $maison->getRendement(),
+                ':show' => $maison->getShowOnWeb(),
+                ':localisation' => $maison->getLocalisation(),
+                ':localisation_indice' => $maison->getLocalisationIndice(),
+                ':qualite' => $maison->getQualite(),
+                ':qualite_indice' => $maison->getQualiteIndice(),
+                ':dossier' => $maison->getDossierRealise(),
                 ':etat' => $maison->getEtat()->getId(),
                 ':id' => $maison->getIdProposition()));
             
@@ -257,6 +270,12 @@ class DAOMaison extends AbstractDAO{
             
                 //ajout des nouveaux contacts
                 $this->addContacts($maison->getIdProposition(), $maison->getContacts());
+                
+                //suppression des anciennes chambres
+                $this->deleteChambres($maison->getIdProposition());
+                
+                //ajout des nouvelles chambres
+                $this->createChambres($maison);
                 
                 //suppression de la version actuelle de la maison dans maison_table
                 $this->deleteMaisonLocation($maison->getIdProposition());

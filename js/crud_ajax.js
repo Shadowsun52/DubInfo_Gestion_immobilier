@@ -475,7 +475,6 @@ function feedVisiteMaisonInvestisseurForm(data) {
 
 function addChangeEtatListener() {
     $('#select_etat').bind('change', function(e) {
-        console.log($('#select_etat').val());
         url_param = getParamsUrl();
         if(url_param['item'] === 'maison') {
             if($("#select_etat").val() === '3') {
