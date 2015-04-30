@@ -473,6 +473,10 @@ function feedVisiteMaisonInvestisseurForm(data) {
     $("#select_maison").val(data.maison.id);
 }
 
+function feedCommuneForm(data) {
+    $("#libelle").val(data.libelle);
+}
+
 function addChangeEtatListener() {
     $('#select_etat').bind('change', function(e) {
         url_param = getParamsUrl();
