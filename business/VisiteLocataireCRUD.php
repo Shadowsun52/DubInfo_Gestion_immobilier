@@ -36,7 +36,7 @@ class VisiteLocataireCRUD extends VisiteBusiness{
             $candidat = false;
         }
         
-        $visite = new VisiteLocataire($data['id'], $date, $data['rapport'], 
+        $visite = new VisiteLocataire($data['select_id'], $date, $data['rapport'], 
                 $candidat, $maison, $locataire, $participants);
         return $visite;
     }
