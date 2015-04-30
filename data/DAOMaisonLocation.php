@@ -31,6 +31,10 @@ class DAOMaisonLocation extends AbstractDAO{
                 ':commentaire' => $maison->getCommentaire(),
                 ':commune' => $maison->getCommune()->getId(),
                 ':proposition_id' => $maison->getIdProposition()));
+            if($result) {
+                $maison->setIdMaison($this->getConnection()->lastInsertId());
+                $this->attachToChambres($maison);
+            }
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
         }
@@ -118,14 +122,30 @@ class DAOMaisonLocation extends AbstractDAO{
                     commentaire = :commentaire, commune_id = :commune 
                     WHERE propositions_table_id = :id";
             $request = $this->getConnection()->prepare($sql);            
-            $request->execute(array(
+            $result = $request->execute(array(
                 ':titre' => $maison->getTitre(Maison::LANGUAGE_FR),
                 ':commentaire' => $maison->getCommentaire(),
                 ':commune' => $maison->getCommune()->getId(),
                 ':id' => $maison->getIdProposition()));
+            if($result) {
+                $this->attachToChambres($maison);
+            }
         } catch (Exception $ex) {
             throw new PDOException($ex->getMessage());
         }
     }
 
+    /**
+     * Méthode qui permet de lié les chambres à la table maison 
+     * (utile pour le site déjà existant)
+     * @param Maison $maison
+     */
+    protected function attachToChambres($maison) {
+        $sql = "UPDATE chambres_table SET maison_id = :id_maison
+                WHERE propositions_table_id = :id";
+        $request = $this->getConnection()->prepare($sql);            
+            $request->execute(array(
+                ':id_maison' => $maison->getIdMaison(),
+                ':id' => $maison->getIdProposition()));
+    }
 }
