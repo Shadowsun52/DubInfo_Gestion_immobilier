@@ -49,6 +49,7 @@
                     <li>----------------------</li>
                     <li><a href="index.php?action=gestion&item=professionnel">Gestion des professionnels</a></li>
                     <li><a href="index.php?action=gestion&item=metier">Gestion des métiers</a></li>
+                    <li><a href="index.php?action=gestion&item=commune">Gestion des communes</a></li>
                     
                 </ul>
             </nav>
