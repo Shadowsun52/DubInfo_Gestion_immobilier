@@ -199,4 +199,29 @@ function feedContactsSubForm(contacts) {
     }
 }
 
+function dataForPrixMCarreIsCorrect() {
+    return $('#prix_conseille').val() !=='' 
+            && !isNaN($('#prix_conseille').val()) 
+            && $('#superficie_habitable').val() !=='';
+}
+/**
+ * fonction qui calcule le prix/m² et qui l'affiche dans le formulaire maison
+ */
+function prixMCarreCompute() {
+    if(dataForPrixMCarreIsCorrect()) {
+        $("#prix_mcarre").val(Math.round(100*$('#prix_conseille').val()/$('#superficie_habitable').val())/100);
+    }
+    else {
+        $("#prix_mcarre").val('');
+    }
+}
+
 listenerContact(1);
+
+$('#prix_conseille').bind('change', function(e) {
+    prixMCarreCompute();
+});
+
+$('#superficie_habitable').bind('change', function(e) {
+    prixMCarreCompute();
+});
