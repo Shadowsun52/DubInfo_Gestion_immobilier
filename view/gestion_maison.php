@@ -135,7 +135,7 @@
                                 ));
     
     //nombre de chambres
-    $nb_chambres[''] = '- Combien de chambres ? -';
+    $nb_chambres[0] = '- Combien de chambres ? -';
     for ($i=1; $i <= MAX_NB_CHAMBRES; $i++) {
         $nb_chambres[$i] = $i;
     }

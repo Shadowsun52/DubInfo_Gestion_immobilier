@@ -7,6 +7,7 @@ use DubInfo_gestion_immobilier\model\Commune;
 use DubInfo_gestion_immobilier\model\Etat;
 use DubInfo_gestion_immobilier\model\SourceMaison;
 use DubInfo_gestion_immobilier\model\Contact;
+use DubInfo_gestion_immobilier\model\Chambre;
 use DubInfo_gestion_immobilier\data\DAOContact;
 use DubInfo_gestion_immobilier\data\DAOMaisonLocation;
 use DubInfo_gestion_immobilier\Exception\PDOException;
@@ -106,6 +107,9 @@ class DAOMaison extends AbstractDAO{
             //suppression de la source
             $this->deleteSources($id);
             
+            //suppression des chambres
+            $this->deleteChambres($id);
+            
             //suppression de la maison dans la table maison_table
             $this->deleteMaisonLocation($id);
             
@@ -126,11 +130,14 @@ class DAOMaison extends AbstractDAO{
     public function read($id) {
         try {
             $sql = "SELECT pt.*, e.libelle as 'etat', cbt.name as 'commune', 
-                    sm.id as 'id_source', sm.libelle as 'source', pm.reference_maison
-                    FROM propositions_table pt LEFT JOIN etat e ON pt.etat_id = e.id
+                    sm.id as 'id_source', sm.libelle as 'source', pm.reference_maison,
+                    count(ct.id) as 'nb_chambres' FROM propositions_table pt 
+                    LEFT JOIN etat e ON pt.etat_id = e.id
                     LEFT JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id
                     LEFT JOIN provenance_maison pm ON pm.propositions_table_id = pt.id
-                    LEFT JOIN source_maison sm ON pm.source_maison_id = sm.id WHERE pt.id = :id";
+                    LEFT JOIN source_maison sm ON pm.source_maison_id = sm.id 
+                    LEFT JOIN chambres_table ct ON ct.propositions_table_id = pt.id 
+                    WHERE pt.id = :id";
             $request = $this->getConnection()->prepare($sql);
             $request->execute(array(':id' => $id));
             $result = $request->fetch();
@@ -149,15 +156,25 @@ class DAOMaison extends AbstractDAO{
             //creation date creation
             $date = new \DateTime();
             $date->setTimestamp(intval($result['date_creation']));
-            
+           
             //création de l'objet maison
-            $maison = new Maison($result['id'], null, $result['prix'],
+            $maison = new Maison($result['id'], null, $result['reference'], 
+                    $result['prix'], $result['prix_conseille'], $result['rendement'],
                     $result['superficie_habitable'], $result['nb_salle_de_bain'], 
-                    $result['cout_travaux'], $result['commentaire'], 
-                    $result['raison_abandon'], $etat, $commune, $adresse, $date);
+                    $result['cout_travaux'], $result['dossier_realise'], 
+                    $result['localisation'], $result['localisation_indice'],
+                    $result['qualite'], $result['qualite_indice'], $result['commentaire'], 
+                    $result['raison_abandon'], $result['show_on_web'], $etat, 
+                    $commune, $adresse, $date);
             $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
             $maison->addSource($source);
             $maison->setContacts($this->readContactsMaison($id));
+            
+            $chambres = [];
+            for($i = 0; $i < $result['nb_chambres']; $i++) {
+                $chambres[] = new Chambre();
+            }
+            $maison->setChambres($chambres);
             
             return $maison;
         } catch (Exception $ex) {

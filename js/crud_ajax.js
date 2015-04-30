@@ -423,17 +423,27 @@ function feedContactForm(data) {
  */
 function feedMaisonForm(data) {
     $("#titre").val(data.titre);
+    $("#reference").val(data.reference);
     $("#rue").val(data.adresse.rue);
     $("#numero").val(data.adresse.numero);
     $("#select_commune").val(data.commune.id);
     $("#select_source").val(data.sources[0].id);
-    $("#reference").val(data.sources[0].reference);
+    $("#reference_source").val(data.sources[0].reference);
     $("#prix").val(data.prix);
+    $("#prix_conseille").val(data.prix_conseille);
     $("#superficie_habitable").val(data.superficie);
+    $("#select_chambres").val(data.nb_chambres);
     $("#select_sdb").val(data.nb_sdb);
+    $("#rendement").val(data.rendement);
     $("#cout_travaux").val(data.cout_travaux);
+    $("input[name=dossier]").val([data.dossier ? '1' : '0']);
+    $("#localisation").val(data.localisation);
+    $("#select_localisation_indice").val(data.localisation_indice);
+    $("#qualite").val(data.qualite);
+    $("#select_qualite_indice").val(data.qualite_indice);
     $("#select_etat").val(data.etat.id);
     $("#select_etat").change();
+    $("input[name=show]").val([data.show ? '1' : '0']);
     $("#remarque").val(data.commentaire);
     $("#raison_abandon").val(data.raison_abandon);
     feedContactsSubForm(data.contacts);
