@@ -1251,7 +1251,8 @@ class Maison implements \JsonSerializable{
     }
     
     public function toString() {
-        return $this->getTitre(self::LANGUAGE_FR) . ' ' . 
-                $this->getCommune()->getLibelle();
+        return $this->getTitre(self::LANGUAGE_FR) . ' ' 
+                . $this->getCommune()->getLibelle() . ' (' 
+                . $this->getEtat()->getLibelle() .')';
     }
 }

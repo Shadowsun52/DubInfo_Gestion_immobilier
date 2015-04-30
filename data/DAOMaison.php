@@ -192,7 +192,8 @@ class DAOMaison extends AbstractDAO{
      */
     public function readList($filter = NULL) {
         try{
-            $sql = "SELECT pt.id, pt.titre_fr, cbt.name FROM propositions_table pt
+            $sql = "SELECT pt.id, pt.titre_fr, cbt.name, e.id as 'id_etat', e.libelle
+                    FROM propositions_table pt LEFT JOIN etat e ON pt.etat_id = e.id
                     LEFT JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id";
             
             if($filter !== NULL) {
@@ -208,6 +209,7 @@ class DAOMaison extends AbstractDAO{
                 $maison = new Maison($result['id']);
                 $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
                 $maison->setCommune(new Commune(null, $result['name']));
+                $maison->setEtat(new Etat($result['id_etat'], $result['libelle']));
                 $maisons[] = $maison;
             }
             return isset( $maisons) ?  $maisons : [];

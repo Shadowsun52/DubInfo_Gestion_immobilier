@@ -251,4 +251,8 @@ class Locataire extends Contact implements \JsonSerializable{
                     'locations' => $this->getLocations()
                 ));
     }
+    
+    public function toString() {
+        return parent::toString() . ' (' . $this->getEtat()->getLibelle() . ')';
+    }
 }

@@ -4,9 +4,12 @@
 <?php
     use DubInfo_gestion_immobilier\model\VisiteLocataire;
     use DubInfo_gestion_immobilier\business\LocataireCRUD;
-    use DubInfo_gestion_immobilier\business\MaisonLocationCRUD;
+    use DubInfo_gestion_immobilier\business\MaisonCRUD;
     use DubInfo_gestion_immobilier\business\UserCRUD;
     
+    define("ETAT_LOCATION", 7);
+    define("ETAT_PROJET", 10);
+    $etatAtShow = [ETAT_LOCATION, ETAT_PROJET];
     //formulaire qui permet de gérer les rencontres avec les investisseurs
     $form_visite_locataire = new Zebra_Form('form_visiteLocataire');
     $form_visite_locataire->language("francais");
@@ -40,10 +43,12 @@
     $date->format('d-m-Y');
 
     //choix de la maison
-    $business_maison = new MaisonLocationCRUD();
+    $business_maison = new MaisonCRUD();
     $list_maison[''] = '- Choisissez une maison -';
     foreach ($business_maison->readList() as $maison) {
-        $list_maison[$maison->getIdMaison()] = $maison->toString();
+        if(in_array($maison->getEtat()->getId(), $etatAtShow)) {
+            $list_maison[$maison->getIdProposition()] = $maison->toString();
+        }
     }
     $form_visite_locataire->add('label','label_maison', 'select_maison', 'Maison');
     $maison = $form_visite_locataire->add('select', 'select_maison');

@@ -143,14 +143,17 @@ class DAOLocataire extends AbstractDAO{
      */
     public function readList($id = NULL) {
         try{
-            $sql = "SELECT id, nom, prenom FROM locataire ORDER BY nom, prenom";
+            $sql = "SELECT l.id, l.nom, l.prenom, e.libelle FROM locataire l
+                    JOIN etat e ON l.etat_id = e.id ORDER BY nom, prenom";
             $request = $this->getConnection()->prepare($sql);
             $request->execute();
             
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
             {
-                $locataires[] = new Locataire($result['id'], 
+                $locataire = new Locataire($result['id'], 
                         $result['nom'], $result['prenom']);
+                $locataire->setEtat(new Etat(null, $result['libelle']));
+                $locataires[] = $locataire;
             }
             return isset( $locataires) ?  $locataires : [];
             

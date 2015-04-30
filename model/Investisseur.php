@@ -286,4 +286,8 @@ class Investisseur extends Contact implements \JsonSerializable{
                     'budget' => $this->getBudget()
                 ));
     }
+    
+    public function toString() {
+        return parent::toString() . ' (' . $this->getEtat()->getLibelle() .')';
+    }
 }

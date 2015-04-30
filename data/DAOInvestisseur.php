@@ -24,14 +24,17 @@ class DAOInvestisseur extends AbstractDAO{
      */
     public function readList($id = NULL) {
         try{
-            $sql = "SELECT id, nom, prenom FROM investisseur ORDER BY nom, prenom";
+            $sql = "SELECT i.id, i.nom, i.prenom, e.libelle FROM investisseur i
+                    JOIN etat e ON i.etat_id = e.id ORDER BY nom, prenom";
             $request = $this->getConnection()->prepare($sql);
             $request->execute();
              
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
             {
-                $investisseurs[] = new Investisseur($result['id'], 
+                $investisseur = new Investisseur($result['id'], 
                         $result['nom'], $result['prenom']);
+                $investisseur->setEtat(new Etat(null, $result['libelle']));
+                $investisseurs[] = $investisseur;
             }
             return isset( $investisseurs) ?  $investisseurs : [];
             
