@@ -2,17 +2,17 @@
 <div id="formulaire">
 <?php
     use DubInfo_gestion_immobilier\model\Commune;
-//    use DubInfo_gestion_immobilier\business\MetierCRUD;
+    use DubInfo_gestion_immobilier\business\CommuneCRUD;
     
     $form_commune = new Zebra_Form('form_commune');
     $form_commune->language("francais");
     
     //création de la liste des métiers
-//    $business = new MetierCRUD();
+    $business = new CommuneCRUD();
     $list_communes[''] = '- Nouveau -';
-//    foreach ($business->readList() as $metier) {
-//        $list_communes[$metier->getId()] = $metier->toString();
-//    }
+    foreach ($business->readList() as $commune) {
+        $list_communes[$commune->getId()] = $commune->toString();
+    }
     
     //liste déroulante avec les investisseurs déjà existant
     $form_commune->add('label','label_id', 'select_id', 'Liste des communes');

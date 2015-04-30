@@ -5,9 +5,9 @@
     use DubInfo_gestion_immobilier\model\Adresse;
     use DubInfo_gestion_immobilier\model\SourceMaison;
     use DubInfo_gestion_immobilier\business\MaisonCRUD;
-    use DubInfo_gestion_immobilier\business\AdresseCRUD;
     use DubInfo_gestion_immobilier\business\SourceMaisonCRUD;
     use DubInfo_gestion_immobilier\business\ContactCRUD;
+    use DubInfo_gestion_immobilier\business\CommuneCRUD;
     
     define('MAX_NB_CHAMBRES', 20);
     //formulaire qui permet de gérer les maisons
@@ -50,11 +50,12 @@
                                     'maxlength' => Adresse::MAX_SIZE_NUMERO
                                 ));
     
-    //communes préférées
-    $business_adresse = new AdresseCRUD();
-    $_list_communes = array_reverse($business_adresse->readCommunesBruxelles(),true);
-    $_list_communes[''] = '- Choisissez une commune -';
-    $list_communes = array_reverse($_list_communes, true);
+    //communes
+    $business_adresse = new CommuneCRUD();
+    $list_communes[''] = '- Choisissez une commune -';
+    foreach ($business_adresse->readList() as $commune) {
+        $list_communes[$commune->getId()] = $commune->toString();
+    }
     
     $form_maison->add('label','label_commune', 'select_commune', 'Communes');
     $communes = $form_maison->add('select', 'select_commune');

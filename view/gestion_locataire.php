@@ -3,9 +3,9 @@
 <?php
     use DubInfo_gestion_immobilier\model\Locataire;
     use DubInfo_gestion_immobilier\model\Adresse;
-    use DubInfo_gestion_immobilier\business\AdresseCRUD;
     use DubInfo_gestion_immobilier\business\LocataireCRUD;
     use DubInfo_gestion_immobilier\business\SourceLocataireCRUD;
+    use DubInfo_gestion_immobilier\business\CommuneCRUD;
     
     /*
      * constante pour déterminé la taille de la liste des communes de bruxelles,
@@ -142,7 +142,10 @@
     ),true);
     
     //communes préférées
-    $business_adresse = new AdresseCRUD();
+    $business_adresse = new CommuneCRUD();
+    foreach ($business_adresse->readList() as $commune) {
+        $list_communes[$commune->getId()] = $commune->toString();
+    }
     $form_locataire->add('label','label_communes', 'select_communes',
             'Communes préferées');
     $communes = $form_locataire->add('select', 'select_communes', null, array(
@@ -150,7 +153,7 @@
                                     'multiple' => 'multiple',
                                     'size' => SIZE_LIST_COMMUNE
                                 ));
-    $communes->add_options($business_adresse->readCommunesBruxelles() ,true);
+    $communes->add_options($list_communes ,true);
     
     //remarque
     $form_locataire->add('label','label_remarque', 'remarque', 'Remarque');

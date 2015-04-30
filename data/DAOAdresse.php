@@ -69,28 +69,6 @@ class DAOAdresse {
     }
     
     /**
-     * Méthode qui retourne la liste des communes de Bruxelles
-     * @return array[string]
-     * @throws PDOException
-     */
-    public function getCommunesBruxelles() {
-        try{
-            $sql = "SELECT * FROM communes_bruxelles_table ORDER BY name";
-            $request = $this->_getConnection()->prepare($sql);
-            $request->execute();
-            
-            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
-            {
-                $communes[$result['id']] = $result['name'];
-            }
-            return isset( $communes) ?  $communes : [];
-            
-        } catch (Exception $ex) {
-            throw new PDOException($ex->getMessage());
-        }
-    }
-    
-    /**
      * Retourne la connexion à la DB
      * @return PDO2
      */
