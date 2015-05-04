@@ -26,7 +26,7 @@ class VisiteMaisonInvestisseurCRUD extends VisiteBusiness{
     public function createObject($data) {
         $maison = new Maison($data['select_maison']);
         $investisseur = new Investisseur($data['select_investisseur']);
-        $date = $this->createDate($data);
+        $date = $this->createDateVisite($data);
         $participants = $this->createParticipants($data);
         
         $visite = new VisiteMaisonInvestisseur($data['select_id'], $date, 

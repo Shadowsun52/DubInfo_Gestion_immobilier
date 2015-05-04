@@ -26,7 +26,7 @@ class VisiteLocataireCRUD extends VisiteBusiness{
     public function createObject($data) {
         $maison = new Maison($data['select_maison']);
         $locataire = new Locataire($data['select_locataire']);
-        $date = $this->createDate($data);
+        $date = $this->createDateVisite($data);
         $participants = $this->createParticipants($data);
 
         if(isset($data['candidat'])) {

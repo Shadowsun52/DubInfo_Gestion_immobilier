@@ -19,8 +19,12 @@ abstract class VisiteBusiness extends AbstractBusiness{
         return $this->getDao()->readList($data['id']);
     }
     
-    protected function createDate($data) {
-        
+    /**
+     * Méthode qui permet de créer la date de la visite
+     * @param array[mixed] $data
+     * @return DateTime
+     */
+    protected function createDateVisite($data) {
        if($data['date_visite'] === '') {
            return null;
        }

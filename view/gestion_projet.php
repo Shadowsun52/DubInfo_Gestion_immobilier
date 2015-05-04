@@ -137,3 +137,6 @@
 
 ?>
 </div>
+<script type="text/javascript">
+    choosenVisiteItemListener("select_investisseur");
+</script>

@@ -7,7 +7,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-abstract class Proposition {
+abstract class Proposition implements \JsonSerializable{
     /**
      *
      * @var int 
@@ -140,5 +140,25 @@ abstract class Proposition {
     public function setInvestisseur($investisseur) {
         $this->_investisseur = CheckTyper::isModel($investisseur, 
                 Investisseur::class, 'investisseur', __CLASS__);
+    }
+    
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'prix_achat' => $this->getPrixAchat(),
+            'investisseur' => $this->getInvestisseur(),
+            'maison' => $this->getMaison(),
+            'etat' => $this->getEtat(),
+            'toString' => $this->toString()
+        ];
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function toString() {
+        return $this->getMaison()->getTitre(Maison::LANGUAGE_FR) . ' (' 
+                . $this->getEtat()->getLibelle() . ')';
     }
 }

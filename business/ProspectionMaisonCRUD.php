@@ -24,7 +24,7 @@ class ProspectionMaisonCRUD extends VisiteBusiness{
      */
     public function createObject($data) {
         $maison = new Maison($data['select_maison']);
-        $date = $this->createDate($data);
+        $date = $this->createDateVisite($data);
         $participants = $this->createParticipants($data);
         
         $visite = new VisiteMaison($data['select_id'], $date, $data['rapport'], 

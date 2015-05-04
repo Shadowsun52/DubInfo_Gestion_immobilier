@@ -23,7 +23,7 @@ class RencontreInvestisseurCRUD extends VisiteBusiness{
      */
     public function createObject($data) {
         $investisseur = new Investisseur($data['select_investisseur']);
-        $date = $this->createDate($data);
+        $date = $this->createDateVisite($data);
         $participants = $this->createParticipants($data);
         
         $visite = new VisiteInvestisseur($data['select_id'], $date, 

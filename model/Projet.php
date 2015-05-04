@@ -323,4 +323,23 @@ class Projet extends Proposition{
         
         $this->_commentaire = $_commentaire;
     }
+    
+    public function jsonSerialize() {
+        return array_merge(parent::jsonSerialize(),
+                array(
+                    'date_compromis' => ($this->getDateSignatureCompromis() == NULL)? NULL :
+                                    $this->getDateSignatureCompromis()->format('d-m-Y'),
+                    'date_acte' => ($this->getDateSignatureActe() == NULL)? NULL :
+                                    $this->getDateSignatureActe()->format('d-m-Y'),
+                    'devis_entrepreneur' => $this->getDevisEntrepreneurConfirmer(),
+                    'selection_materiaux' => $this->getSelectionMateriauxFait(),
+                    'plan_metre' => $this->getPlanMetreFait(),
+                    'date_reception_chantier' => ($this->getDateReceptionChantier() == NULL)? 
+                                    NULL : $this->getDateReceptionChantier()->format('d-m-Y'),
+                    'commande_mobilier' => $this->getCommandeMobilierFait(),
+                    'date_livraison_mobilier' => ($this->getDateLivraisonMobilier() == NULL)? 
+                                    NULL : $this->getDateLivraisonMobilier()->format('d-m-Y'),
+                    'commentaire' => $this->getCommentaire()
+                ));
+    }
 }
