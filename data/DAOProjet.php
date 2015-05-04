@@ -30,34 +30,11 @@ class DAOProjet extends AbstractDAO{
             $request = $this->getConnection()->prepare($sql);
             
             //préparation des dates
-            if($projet->getDateSignatureCompromis()=== NULL) {
-                $compromis = null;
-            }
-            else {
-                $compromis = $projet->getDateSignatureCompromis()->format('Y-m-d H:i:s');
-            }
-            
-            if($projet->getDateSignatureActe()=== NULL) {
-                $acte = null;
-            }
-            else {
-                $acte = $projet->getDateSignatureActe()->format('Y-m-d H:i:s');
-            }
-            
-            if($projet->getDateLivraisonMobilier()=== NULL) {
-                $mobilier = null;
-            }
-            else {
-                $mobilier = $projet->getDateLivraisonMobilier()->format('Y-m-d H:i:s');
-            }
-            
-            if($projet->getDateReceptionChantier()=== NULL) {
-                $chantier = null;
-            }
-            else {
-                $chantier = $projet->getDateReceptionChantier()->format('Y-m-d H:i:s');
-            }
-            
+            $compromis = $this->writeDate($projet->getDateSignatureCompromis());
+            $acte = $this->writeDate($projet->getDateSignatureActe());
+            $mobilier = $this->writeDate($projet->getDateLivraisonMobilier());
+            $chantier = $this->writeDate($projet->getDateReceptionChantier());
+
             $request->execute(array(
                 ':compromis' => $compromis,
                 ':acte' => $acte,
@@ -80,8 +57,39 @@ class DAOProjet extends AbstractDAO{
         
     }
 
+    /**
+     * Fonction qui retourne un projet  par rapport à un id donné
+     * @param int $id
+     * @return Projet
+     * @throws PDOException
+     */
     public function read($id) {
-        
+        try {
+            $sql = "SELECT * FROM projet WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            $maison = new Maison($result['propositions_table_id']);
+            $investisseur = new Investisseur($result['investisseur_id']);
+            $etat = new Etat($result['etat_id']);
+            //création des dates
+            $compromis = $this->readDate($result['date_signature_compromis']);
+            $acte = $this->readDate($result['date_signature_acte']);
+            $date_mobilier = $this->readDate($result['date_livraison_mobilier']);
+            $date_chantier = $this->readDate($result['date_reception_chantier']);
+            
+            //création de projet
+            $projet = new Projet($id, null, $etat, $compromis, $acte, 
+                    $result['plan_metre_fait'], $result['devis_entrepreneur_confirme'], 
+                    $result['selection_materiaux_fait'], $date_chantier, 
+                    $result['commande_mobilier_fait'], $date_mobilier, 
+                    $result['commentaire'], $maison, $investisseur);
+            
+            return $projet;
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
@@ -122,4 +130,31 @@ class DAOProjet extends AbstractDAO{
         
     }
 
+    /**
+     * Méthode pour créer un DateTime à partir de données provenant d'une DB
+     * @param string $date
+     * @return DateTime
+     */
+    protected function readDate($date) {
+        if($date == '') {
+            return null;
+        }
+        else {
+            return new DateTime($date);
+        }
+    }
+    
+    /**
+     * Méthode retournant une date sous format string écrivable dans une DB
+     * @param DateTime $date
+     * @return string
+     */
+    protected function writeDate($date) {
+        if($date === NULL) {
+            return null;
+        }
+        else {
+            return $date->format('Y-m-d H:i:s');
+        }
+    }
 }

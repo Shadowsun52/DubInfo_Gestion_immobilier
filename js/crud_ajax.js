@@ -483,6 +483,20 @@ function feedCommuneForm(data) {
     $("#libelle").val(data.libelle);
 }
 
+function feedProjetForm(data) {
+    $("#select_maison").val(data.maison.id);
+    $("#date_signature_compromis").val(data.date_compromis);
+    $("#date_signature_acte").val(data.date_acte);
+    $("input[name=plan_metre_fait]").val([data.plan_metre ? '1' : '0']);
+    $("input[name=selection_materiaux_fait]").val([data.selection_materiaux ? '1' : '0']);
+    $("input[name=devis_entrepreneur_confirme]").val([data.devis_entrepreneur ? '1' : '0']);
+    $("input[name=commande_mobilier_fait]").val([data.commande_mobilier ? '1' : '0']);
+    $("#date_livraison_mobilier").val(data.date_livraison_mobilier);
+    $("#date_reception_chantier").val(data.date_reception_chantier);
+    $("#select_etat").val(data.etat.id);
+    $("#remarque").val(data.commentaire);
+}
+
 function addChangeEtatListener() {
     $('#select_etat').bind('change', function(e) {
         url_param = getParamsUrl();
