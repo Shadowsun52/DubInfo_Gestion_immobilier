@@ -1,10 +1,42 @@
+body{
+  font-family: arial, "sans-serif";
+  background-color:#CFD5FC;
+  padding:20px 50px
+}
 
 /*Je centre horizontalement le formulaire et son titre*/
 #formulaire, h2
 {
-   margin-left: auto;
-   margin-right: auto;
-   width: 50%; /* largeur obligatoire pour �tre centr� */
+ margin-left: auto;
+ margin-right: auto;
+ width: 50%; /* largeur obligatoire pour �tre centr� */
+}
+
+.row {
+    border-radius: 3px;
+}
+
+.row:first-child {
+    border-radius: 9px 9px 3px 3px;
+}
+
+.row:last-child {
+    border-radius: 3px 3px 9px 9px;
+}
+
+#center {
+    margin-bottom: 20px;
+}
+div.logo{
+  float:left;
+  margin-bottom:20px
+}
+
+header h1{
+  float:right;
+  margin-right:50px;
+  color:#ff6633;
+  font-variant:small-caps;
 }
 
 h2
@@ -13,24 +45,24 @@ h2
 }
 
 .new_contact {
-    margin: 10px 0 10px 20px;
+  margin: 10px 0 10px 20px;
 }
 
 .new_contact div {
-    display: inline-block;
-    margin-left: 5px;
+  display: inline-block;
+  margin-left: 5px;
 }
 
 .Zebra_Form .optional {
-    display: none 
+  display: none 
 }
 
 .cell {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .row .cell:first-child {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .radio {
@@ -40,4 +72,19 @@ h2
 
 .radio label{
     display: inline;
+}
+
+/* Ce qui suit concerne le menu de l'Intranet */
+header .menuIntranet{
+  clear:both;
+  width:60%;
+  margin:0 auto;
+}
+.sm-blue li:first-child{
+  width:19%;
+  text-align:center
+}
+.sm-blue li ul li:first-child{
+  width:auto;
+  text-align:left;
 }

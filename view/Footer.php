@@ -1,5 +1,5 @@
         <footer>
-            Pied de page
+            © Développé par Dubinfo en 2015
         </footer>
     </body>
 <?php

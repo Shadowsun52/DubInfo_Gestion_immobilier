@@ -1,56 +1,83 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <!-- Erreur ici, ne pas mettre de ../ -->
-        <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
-        <link rel="stylesheet" href="librairies/Zebra_date_picker/public/css/default.css">
-        <link rel="stylesheet" href="CSS/styles.css">
-        <script src="js/jquery-2.1.3.min.js"></script>
-        <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
-        <script src="librairies/multiple_select/jquery.multiple.select.js"></script>
-        <link rel="stylesheet" href="librairies/multiple_select/multiple-select.css">
-<?php
+<head>
+    <meta charset="UTF-8">
+    <!-- Erreur ici, ne pas mettre de ../ -->
+    <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
+    <link rel="stylesheet" href="librairies/Zebra_date_picker/public/css/default.css">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
+    <script src="librairies/multiple_select/jquery.multiple.select.js"></script>
+    <link rel="stylesheet" href="librairies/multiple_select/multiple-select.css">
+
+    <!-- Ajout du CSS et du jQuery pour le menu -->
+
+    <link rel="stylesheet" type="text/css" href="CSS/sm-blue.css">
+    <link rel="stylesheet" type="text/css" href="CSS/sm-core-css.css">
+    <script src="js/jquery.smartmenus.js"></script>
+    <script>
+
+        $(document).ready(function($) {
+             $('#main-menu').smartmenus();
+        });
+        </script>
+
+        <!-- Fin de la partie "Menu" -->
+
+    <?php
     if(isset($_GET['action'])) {
-?>
+        ?>
         <script src="js/crud_ajax.js"></script>
         <script src="js/adresse_list.js"></script>
         <script src="js/visite.js"></script>
-<?php
+        
+        
+        <?php
     }
-?>
-        <title>CRM Bestinvestment</title>
-    </head>
-    <body>
-        <header>
-            <h1>Intranet</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Accueil</a></li>
-                    <li>----------------------</li>
-                    <li><a href="index.php?action=gestion&item=maison">Gestion des maison</a></li>
-                    <li><a href="index.php?action=gestion&item=sourceMaison">Gestion des source des maisons</a></li>
-                    <li><a href="index.php?action=gestion&item=contact">Gestion des contacts</a></li>
-                    <li><a href="index.php?action=gestion&item=prospectionMaison">Gestion des prospections de maison</a></li>
-                    <li>----------------------</li>
-                    <li><a href="index.php?action=gestion&item=investisseur">Gestion des investisseurs</a></li>
-                    <li><a href="index.php?action=gestion&item=rencontreInvestisseur">Gestion des rencontres avec les investisseurs</a></li>
-                    <li><a href="index.php?action=gestion&item=visiteMaisonInvestisseur">Gestion des visites de maisons par un investisseur</a></li>
-                    <li>----------------------</li>
-                    <li><a href="index.php?action=gestion&item=locataire">Gestion des locataires</a></li>
-                    <li><a href="index.php?action=gestion&item=sourceLocataire">Gestion des source des locataires</a></li>
-                    <li><a href="index.php?action=gestion&item=visiteLocataire">Gestion des visites pour les locataires</a></li>
-                    <li>----------------------</li>
-                    <li><a href="index.php?action=ajout&item=lettreMission">Gestion des lettres de mission</a></li>
-                    <li><a href="index.php?action=ajout&item=projet">Gestion des projets</a></li>    
-                    <li>----------------------</li>
-                    <li><a href="index.php?action=ajout&item=location">Gestion des Locations</a></li>
-                    <li><a href="index.php?action=ajout&item=payementLoyer">Gestion des payments des loyers</a></li>
-                    <li>----------------------</li>
-                    <li><a href="index.php?action=gestion&item=professionnel">Gestion des professionnels</a></li>
-                    <li><a href="index.php?action=gestion&item=metier">Gestion des métiers</a></li>
-                    <li><a href="index.php?action=gestion&item=commune">Gestion des communes</a></li>
-                    
-                </ul>
-            </nav>
-        </header>
+    ?>
+    <title>CRM Bestinvestment</title>
+</head>
+<body>
+    <header>
+        <!-- Ajout du logo, modification du menu et insertion du module SmartMenus -->
+
+        <div class="logo"><img src="images/logo.png" alt=""> </div>
+        <h1>CRM</h1>
+        <nav class="menuIntranet">
+            <ul id="main-menu"class="sm sm-blue ">
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="index.php?action=gestion&item=maison">Maison</a>
+                    <ul>
+                        <li><a href="index.php?action=gestion&item=sourceMaison">Source des maisons</a></li>
+                        <li><a href="index.php?action=gestion&item=contact">Contacts</a></li>
+                        <li><a href="index.php?action=gestion&item=prospectionMaison">Prospections de maison</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.php?action=gestion&item=investisseur">Investisseurs</a>
+                    <ul>
+                        <li><a href="index.php?action=gestion&item=rencontreInvestisseur">Rencontres avec les investisseurs</a></li>
+                        <li><a href="index.php?action=gestion&item=visiteMaisonInvestisseur">Visites de maisons par un investisseur</a></li>
+                        <li><a href="index.php?action=ajout&item=projet">Projets</a></li>    
+                    </ul>
+                </li>
+                <li><a href="index.php?action=gestion&item=locataire">Locataires</a>
+                    <ul>
+                        <li><a href="index.php?action=gestion&item=sourceLocataire">Source des locataires</a></li>
+                        <li><a href="index.php?action=gestion&item=visiteLocataire">Visites pour les locataires</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.php?action=ajout&item=location">Locations</a>
+                    <ul>
+                        <li><a href="index.php?action=ajout&item=payementLoyer">Payments des loyers</a></li>
+                    </ul>   
+                </li>
+                <li><a href="index.php?action=gestion&item=professionnel">Professionnels</a>
+                    <ul>
+                        <li><a href="index.php?action=gestion&item=metier">Métiers</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="clear"></div>
+    </header>
