@@ -44,10 +44,12 @@ abstract class AbstractBusiness {
     
     /**
      * Fonction qui retourne la liste des objets
+     * @param int $data donnée envoyer avec la requête ajax. 
+     * Peut ne pas être utilisé !
      * @return array[mixed]
      * @throws PDOException
      */
-    public function readList() {
+    public function readList($data = NULL) {
         return $this->getDao()->readList();
         }
         

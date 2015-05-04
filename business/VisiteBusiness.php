@@ -15,7 +15,7 @@ abstract class VisiteBusiness extends AbstractBusiness{
      * @return array[mixed]
      * @throws PDOException
      */
-    public function readList($data) {
+    public function readList($data = NULL) {
         return $this->getDao()->readList($data['id']);
     }
     

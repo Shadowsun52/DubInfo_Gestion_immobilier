@@ -3,6 +3,7 @@ namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\VisiteLocataire;
 use DubInfo_gestion_immobilier\model\Maison;
+use DubInfo_gestion_immobilier\model\Locataire;
 use DubInfo_gestion_immobilier\Exception\PDOException;
 use \DateTime;
 /**
@@ -50,8 +51,43 @@ class DAOVisiteLocataire extends DAOVisite{
         
     }
 
+    /**
+     * Fonction qui retourne une visite d'une maison par un locataire
+     * par rapport à un id donné
+     * @param int $id
+     * @return VisiteLocataire La visite lut dans la base de données
+     * @throws PDOException
+     */
     public function read($id) {
-        
+        try {
+            $sql = "SELECT * FROM visite_locataire WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            //création de l'objet maison
+            $maison = new Maison($result['propositions_table_id']);
+            
+            //création de l'objet locataire
+            $locataire = new Locataire($result['locataire_id']);
+            
+            //création de la date
+            if($result['date'] == '') {
+                $date = null;
+            }
+            else {
+                $date = new DateTime($result['date']);
+            }
+            
+            //création de l'objet visite
+            $visite = new VisiteLocataire($id, $date, $result['rapport'], 
+                    $result['candidat'], $maison, $locataire);
+            $visite->setParticipants($this->readParticipants($id, 'visite_locataire'));
+            
+            return $visite;
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**

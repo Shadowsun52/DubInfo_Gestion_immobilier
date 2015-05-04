@@ -473,6 +473,12 @@ function feedVisiteMaisonInvestisseurForm(data) {
     $("#select_maison").val(data.maison.id);
 }
 
+function feedVisiteLocataireForm(data) {
+    feedVisiteForm(data);
+    $("#select_maison").val(data.maison.id);
+    $("input[name=candidat]").val([data.candidat ? '1' : '0']);
+}
+
 function feedCommuneForm(data) {
     $("#libelle").val(data.libelle);
 }
