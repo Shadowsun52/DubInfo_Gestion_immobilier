@@ -1,9 +1,3 @@
-<style>
-    .check #label_candidat_0 {
-        display: inline;
-        margin: 0 10px;
-    }
-</style>
 <!-- elements are grouped in "rows" -->
 <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
@@ -25,7 +19,15 @@
 <div class="row">
     <!-- things that need to be side-by-side go in "cells" -->
     <div class="cell"><?php echo $label_participants . $select_participants ?></div>
-    <div class="cell check"><?php echo $label_candidat  . $label_candidat_0 . $candidat_0?></div>
+    <div class="cell">
+        <?php echo $label_candidat ?>
+        <div class="radio">
+            <?php echo  $candidat_1 . $label_candidat_1 ?>
+        </div>
+        <div class="radio">
+            <?php echo $candidat_0 . $label_candidat_0 ?>
+        </div>
+    </div>
     <!-- once we're done with "cells" we *must* place a "clear" div -->
     <div class="clear"></div>
 </div>

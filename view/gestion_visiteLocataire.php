@@ -73,7 +73,13 @@
     
     //rapport
     $form_visite_locataire->add('label','label_candidat', 'candidat', 'le locataire est candidat :');
-    $candidat = $form_visite_locataire->add('checkboxes', 'candidat', array('Oui'));
+    $lettre_mission = $form_visite_locataire->add('radios', 'candidat',
+            array(
+                '1'    =>  'Oui',
+                '0'    =>  'Non'
+            ),
+            '', // no default value
+            array('class' => 'radio_class'));
     
     //rapport
     $form_visite_locataire->add('label','label_rapport', 'rapport', 'Rapport');
