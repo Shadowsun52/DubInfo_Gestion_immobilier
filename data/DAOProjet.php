@@ -53,8 +53,19 @@ class DAOProjet extends AbstractDAO{
         }
     }
 
+    /**
+     *  Méthode qui permet la suppression d'un projet
+     * @param int $id Identifiant du projet à supprimer
+     * @throws PDOException
+     */
     public function delete($id) {
-        
+        try {  
+            $sql = "DELETE FROM projet WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
