@@ -47,8 +47,22 @@ class DAOVisiteLocataire extends DAOVisite{
         }
     }
 
+    /**
+     *  Méthode qui permet la suppression d'une visite d'une maison par un locataire
+     * @param int $id Identifiant de la visite à supprimer
+     * @throws PDOException
+     */
     public function delete($id) {
-        
+        try {
+            //suppression des participants
+            $this->deleteParticipants($id,'visite_locataire');
+            
+            $sql = "DELETE FROM visite_locataire WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
@@ -129,8 +143,44 @@ class DAOVisiteLocataire extends DAOVisite{
         }
     }
 
-    public function update($object) {
-        
+    /**
+     * Méthode permettant d'update une visite d'une maison par un locataire dans la DB
+     * @param VisiteLocataire $visite
+     * @throws PDOException
+     */
+    public function update($visite) {
+        try {
+            $sql = "UPDATE visite_locataire SET date = :date, candidat = :candidat, 
+                    rapport = :rapport, propositions_table_id = :maison WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            
+            if($visite->getDate() === NULL) {
+                $date = null;
+            }
+            else {
+                $date = $visite->getDate()->format('Y-m-d H:i:s');
+            }
+            
+            $result = $request->execute(array(
+                ':date' => $date,
+                ':candidat' => $visite->getCandidat(),
+                ':rapport' => $visite->getRapport(),
+                ':maison' => $visite->getMaison()->getIdProposition(),
+                ':id' => $visite->getId()));
+            
+            if($result) {
+                //suppression des participants
+                $this->deleteParticipants($visite->getId(),'visite_locataire');
+                
+                //ajout des nouveaux participants
+                $this->addParticipants($visite, 'visite_locataire');
+            }
+            else {
+                throw new PDOException('Erreur durant l\'update');
+            }
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
 }
