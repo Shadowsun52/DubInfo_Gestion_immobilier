@@ -118,7 +118,6 @@
     $form_projet->add('label','label_etat', 'select_etat', 'Etat');
     $etat = $form_projet->add('select', 'select_etat');
     $etat->add_options(array( 
-    '' => '- Choisissez un etat -',
     '2' => 'Actif',
     '11' => 'Terminé',
     '3' => 'Abandonné'
@@ -131,7 +130,7 @@
                                 ));
     
     //Il ne faut pas oublier d'ajouter le bouton submit
-    $form_projet->add('submit', 'btnsubmit', 'Submit');
+    $form_projet->add('submit', 'btnsubmit', 'Ajouter');
     
     $form_projet->render('view/templates/tpl_projet.php');
 
