@@ -497,6 +497,21 @@ function feedProjetForm(data) {
     $("#remarque").val(data.commentaire);
 }
 
+function feedLocationForm(data) {
+    $("#select_maison").val(data.chambre.maison.id);
+    $("#select_maison").change();
+    $("#select_chambres").val(data.chambre.id);
+    $("#loyer").val(data.loyer);
+    $("#charges").val(data.charges);
+    $("#date_debut").val(data.date_debut);
+    $("#date_fin").val(data.date_fin);
+    $("input[name=bail_signe]").val([data.bail_signe ? '1' : '0']);
+    $("input[name=etat_lieux_signe]").val([data.etat_lieux_signe ? '1' : '0']);
+    $("input[name=charte_signee]").val([data.charte_signee ? '1' : '0']);
+    $("#garantie_total").val(data.garantie_locative_totale);
+    $("#garantie_payee").val(data.garantie_locative_payee);
+}
+
 function addChangeEtatListener() {
     $('#select_etat').bind('change', function(e) {
         url_param = getParamsUrl();

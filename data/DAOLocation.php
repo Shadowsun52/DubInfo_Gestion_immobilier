@@ -3,6 +3,7 @@ namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\Location;
 use DubInfo_gestion_immobilier\model\Locataire;
+use DubInfo_gestion_immobilier\model\Maison;
 use DubInfo_gestion_immobilier\model\Chambre;
 
 /**
@@ -50,8 +51,39 @@ class DAOLocation extends AbstractDAO{
         
     }
 
+    /**
+     * Fonction qui retourne une location  par rapport à un id donné
+     * @param int $id
+     * @return Projet
+     * @throws PDOException
+     */
     public function read($id) {
-        
+        try {
+            $sql = "SELECT l.*, ct.propositions_table_id FROM location l 
+                    JOIN chambres_table ct ON ct.id = l.chambres_table_id
+                    WHERE l.id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            $chambre = new Chambre($result['chambres_table_id']);
+            $chambre->setMaison(new Maison($result['propositions_table_id']));
+            $locataire = new Locataire($result['locataire_id']);
+            
+            //création des dates
+            $date_debut = $this->readDate($result['date_debut']);
+            $date_fin = $this->readDate($result['date_fin']);
+            
+            //création de la location
+            $location = new Location($id, $date_debut, $date_fin, $result['loyer'], 
+                    $result['charges'], $result['bail_signe'], $result['charte_signee'], 
+                    $result['etat_lieux_signe'], $result['garantie_locative_totale'], 
+                    $result['garantie_locative_payee'], $locataire, $chambre);
+            
+            return $location;
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
