@@ -83,6 +83,7 @@ class DAOMaison extends AbstractDAO{
                 $id = $this->getConnection()->lastInsertId();
                 $this->addSource($id, $maison->getSource(0));
                 $this->addContacts($id, $maison->getContacts());
+                $maison->setIdProposition($id);
                 $this->createChambres($maison);
                 $this->addMaisonLocation($maison);
             }
@@ -404,10 +405,15 @@ class DAOMaison extends AbstractDAO{
      * @param Maison $maison
      */
     protected function createChambres($maison) {
-        $sql = "INSERT INTO chambres_table (propositions_table_id) VALUES (:id)";
+        $sql = "INSERT INTO chambres_table (propositions_table_id, numero)
+                VALUES (:id, :numero)";
         $request = $this->getConnection()->prepare($sql);
+        $i = 1;
         foreach ($maison->getChambres() as $chambre) {
-            $request->execute(array(':id' => $maison->getIdProposition()));
+            $request->execute(array(
+                ':id' => $maison->getIdProposition(),
+                ':numero' => $i));
+            $i++;
         }
     }
     

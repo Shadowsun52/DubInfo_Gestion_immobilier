@@ -8,7 +8,7 @@ use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
  *
  * @author Jenicot Alexandre
  */
-class Chambre {
+class Chambre implements \JsonSerializable{
     /**
      *
      * @var int 
@@ -265,5 +265,30 @@ class Chambre {
     public function addLocation($location) {
         $this->_locations[] = CheckTyper::isModel($location, Location::class, 
                 'location', __CLASS__);
+    }
+    
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'numero' => $this->getNumero(),
+            'etage' => $this->getEtage(),
+            'prix' => $this->getPrix(),
+            'charges' => $this->getCharges(),
+            'date_disponible' => ($this->getDateDisponible() == NULL)? NULL 
+                : $this->getDateDisponible()->format('d-m-Y'),
+            'disponible' => $this->getDisponible(),
+            'maison' => $this->getMaison(),
+            'toString' => $this->toString()
+        ];
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function toString() {
+        return 'N° ' . $this->getNumero() 
+                . (($this->getEtage() === NULL)? '' : 'étage ' . $this->getEtage())
+                . (($this->getDisponible())? '(Disponible)' : '(Pas disponible)');
     }
 }

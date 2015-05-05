@@ -10,7 +10,7 @@ use DateTime;
  *
  * @author Jenicot Alexandre
  */
-class Location {
+class Location implements \JsonSerializable{
     /**
      *
      * @var int 
@@ -377,5 +377,38 @@ class Location {
     public function addPaiement($paiement) {
         $this->_sources[] = CheckTyper::isModel($paiement, Paiement::class, 
                 'Paiement', __CLASS__);
+    }
+
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'date_debut' => ($this->getDateDebut() == NULL)? NULL 
+                : $this->getDateDebut()->format('d-m-Y'),
+            'date_fin' => ($this->getDateFin() == NULL)? NULL 
+                : $this->getDateFin()->format('d-m-Y'),
+            'loyer' => $this->getLoyer(),
+            'charges' => $this->getCharges(),
+            'bail_signe' => $this->getBailSigne(),
+            'charte_signee' => $this->getCharteSignee(),
+            'etat_lieux_signe' => $this->getEtatLieuSigne(),
+            'garantie_locative_totale' => $this->getGarantieLocativeTotal(),
+            'garantie_locative_payee' => $this->getGarantieLocativePayee(),
+            'locataire' => $this->getLocataire(),
+            'chambre' => $this->getChambre(),
+            'paiement' => $this->getPaiements(),
+            'toString' => $this->toString()
+        ];
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function toString() {
+        if($this->getDateDebut() === NULL && $this->getDateFin() === NULL) {
+            return "Location (id=" . $this->getId() . ')';
+        }
+        return 'Du ' . (($this->getDateDebut() === NULL)? '...' : $this->getDateDebut()->format('d-m-Y'))
+               . ' au ' . (($this->getDateFin() === NULL)? '...' : $this->getDateFin()->format('d-m-Y'));
     }
 }
