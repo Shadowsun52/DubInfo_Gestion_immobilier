@@ -67,7 +67,7 @@
                         <li><a href="index.php?action=gestion&item=visiteLocataire">Visites pour les locataires</a></li>
                     </ul>
                 </li>
-                <li><a href="index.php?action=ajout&item=location">Locations</a>
+                <li><a href="index.php?action=gestion&item=location">Locations</a>
                     <ul>
                         <li><a href="index.php?action=ajout&item=payementLoyer">Payments des loyers</a></li>
                     </ul>   
