@@ -103,14 +103,14 @@ class Location implements \JsonSerializable{
      * @param double $garantie_locative_payee
      * @param Locataire $locataire
      * @param Chambre $chambre
-     * @param array[Paiement] $paiement
+     * @param array[Paiement] $paiements
      * @throws BadTypeException
      */
     public function __construct($id = NULL, $date_debut = NULL, $date_fin = NULL,
             $loyer = NULL, $charges = NULL, $bail_signe = NULL, $charte_signee = NULL, 
             $etat_lieux_signe = NULL, $garantie_locative_totale = NULL,
             $garantie_locative_payee = NULL, $locataire = NULL, $chambre = NULL, 
-            $paiement = NULL) {
+            $paiements = NULL) {
         $this->setId($id);
         $this->setDateDebut($date_debut);
         $this->setDateFin($date_fin);
@@ -122,7 +122,7 @@ class Location implements \JsonSerializable{
         $this->setGarantieLocativeTotal($garantie_locative_totale);
         $this->setGarantieLocativePayee($garantie_locative_payee);
         $this->setLocataire($locataire);
-        $this->setPaiement($paiement);
+        $this->setPaiements($paiements);
         $this->setChambre($chambre);
     }
     
