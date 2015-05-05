@@ -47,8 +47,19 @@ class DAOLocation extends AbstractDAO{
         }
     }
 
+    /**
+     *  Méthode qui permet la suppression d'une location
+     * @param int $id Identifiant de la location à supprimer
+     * @throws PDOException
+     */
     public function delete($id) {
-        
+        try {  
+            $sql = "DELETE FROM location WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
