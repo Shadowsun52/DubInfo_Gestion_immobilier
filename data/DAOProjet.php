@@ -137,8 +137,46 @@ class DAOProjet extends AbstractDAO{
         }
     }
 
-    public function update($object) {
-        
+    /**
+     * Méthode permettant d'update un projet dans la DB
+     * @param Projet $projet
+     * @throws PDOException
+     */
+    public function update($projet) {
+        try {
+            $sql = "UPDATE projet SET date_signature_compromis = :compromis, 
+                    date_signature_acte = :acte, plan_metre_fait = :plan_metre, 
+                    devis_entrepreneur_confirme = :devis_entrepreneur, 
+                    selection_materiaux_fait = :selection_materiaux, 
+                    date_reception_chantier = :date_chantier,
+                    commande_mobilier_fait = :commande_mobilier, 
+                    date_livraison_mobilier = :date_mobilier, 
+                    propositions_table_id = :maison, etat_id = :etat, 
+                    commentaire = :commentaire WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            
+            //préparation des dates
+            $compromis = $this->writeDate($projet->getDateSignatureCompromis());
+            $acte = $this->writeDate($projet->getDateSignatureActe());
+            $mobilier = $this->writeDate($projet->getDateLivraisonMobilier());
+            $chantier = $this->writeDate($projet->getDateReceptionChantier());
+
+            $request->execute(array(
+                ':compromis' => $compromis,
+                ':acte' => $acte,
+                ':plan_metre' => $projet->getPlanMetreFait(),
+                ':devis_entrepreneur' => $projet->getDevisEntrepreneurConfirmer(),
+                ':selection_materiaux' => $projet->getSelectionMateriauxFait(),
+                ':date_chantier' => $chantier,
+                ':commande_mobilier' => $projet->getCommandeMobilierFait(),
+                ':date_mobilier' => $mobilier,
+                ':maison' => $projet->getMaison()->getIdProposition(),
+                ':etat' => $projet->getEtat()->getId(),
+                ':commentaire' => $projet->getCommentaire(),
+                ':id' => $projet->getId()));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
