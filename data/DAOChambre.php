@@ -35,12 +35,7 @@ class DAOChambre extends AbstractDAO{
                     $result['maison_id']);
 
             //création de la date disponible
-            if($result['date_disponibilite'] == '') {
-                $date = null;
-            }
-            else {
-                $date = new DateTime($result['date_disponibilite']);
-            }
+            $date = $this->readDate($result['date_disponibilite']);
 
             //création de la chambres
             $chambre = new Chambre($id, $result['numero'], $result['etage'], 

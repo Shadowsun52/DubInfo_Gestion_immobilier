@@ -25,12 +25,7 @@ class DAOVisiteMaisonInvest extends DAOVisite{
                     VALUES (:date, :rapport, :investisseur, :maison)";
             $request = $this->getConnection()->prepare($sql);
             
-            if($visite->getDate() === NULL) {
-                $date = null;
-            }
-            else {
-                $date = $visite->getDate()->format('Y-m-d H:i:s');
-            }
+            $date = $this->writeDate($visite->getDate());
             
             $request->execute(array(
                 ':date' => $date,
@@ -89,12 +84,7 @@ class DAOVisiteMaisonInvest extends DAOVisite{
             $investisseur = new Investisseur($result['investisseur_id']);
             
             //création de la date
-            if($result['date'] == '') {
-                $date = null;
-            }
-            else {
-                $date = new DateTime($result['date']);
-            }
+            $date = $this->readDate($result['date']);
             
             //création de l'objet visite
             $visite = new VisiteMaisonInvestisseur($id, $date, 
@@ -126,12 +116,7 @@ class DAOVisiteMaisonInvest extends DAOVisite{
             
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
             {
-                 if($result['date'] == '') {
-                    $date = null;
-                }
-                else {
-                    $date = new DateTime($result['date']);
-                }
+                $date = $this->readDate($result['date']);
                 
                 $maison = new Maison();
                 $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
@@ -159,12 +144,7 @@ class DAOVisiteMaisonInvest extends DAOVisite{
                     rapport = :rapport, propositions_table_id = :maison WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);
             
-            if($visite->getDate() === NULL) {
-                $date = null;
-            }
-            else {
-                $date = $visite->getDate()->format('Y-m-d H:i:s');
-            }
+            $date = $this->writeDate($visite->getDate());
             
             $result = $request->execute(array(
                 ':date' => $date,

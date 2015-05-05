@@ -178,32 +178,4 @@ class DAOProjet extends AbstractDAO{
             throw new PDOException($ex->getMessage());
         }
     }
-
-    /**
-     * Méthode pour créer un DateTime à partir de données provenant d'une DB
-     * @param string $date
-     * @return DateTime
-     */
-    protected function readDate($date) {
-        if($date == '') {
-            return null;
-        }
-        else {
-            return new DateTime($date);
-        }
-    }
-    
-    /**
-     * Méthode retournant une date sous format string écrivable dans une DB
-     * @param DateTime $date
-     * @return string
-     */
-    protected function writeDate($date) {
-        if($date === NULL) {
-            return null;
-        }
-        else {
-            return $date->format('Y-m-d H:i:s');
-        }
-    }
 }

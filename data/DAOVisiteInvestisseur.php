@@ -23,12 +23,7 @@ class DAOVisiteInvestisseur extends DAOVisite{
                     investisseur_id) VALUES (:endroit, :date, :rapport, :investisseur)";
             $request = $this->getConnection()->prepare($sql);
             
-            if($visite->getDate() === NULL) {
-                $date = null;
-            }
-            else {
-                $date = $visite->getDate()->format('Y-m-d H:i:s');
-            }
+            $date = $this->writeDate($visite->getDate());
             
             $request->execute(array(
                 ':endroit' => $visite->getEndroit(),
@@ -83,12 +78,7 @@ class DAOVisiteInvestisseur extends DAOVisite{
             $investisseur = new Investisseur($result['investisseur_id']);
             
             //création de la date
-            if($result['date'] == '') {
-                $date = null;
-            }
-            else {
-                $date = new DateTime($result['date']);
-            }
+            $date = $this->readDate($result['date']);
             
             //création de l'objet visite
             $visite = new VisiteInvestisseur($result['id'], $date, 
@@ -118,12 +108,7 @@ class DAOVisiteInvestisseur extends DAOVisite{
             
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
             {
-                 if($result['date'] == '') {
-                    $date = null;
-                }
-                else {
-                    $date = new DateTime($result['date']);
-                }
+                $date = $this->readDate($result['date']);
                 
                 $rencontres[] = new VisiteInvestisseur($result['id'], $date, 
                         $result['endroit']);
@@ -146,12 +131,7 @@ class DAOVisiteInvestisseur extends DAOVisite{
                     date = :date, rapport = :rapport WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);
             
-            if($visite->getDate() === NULL) {
-                $date = null;
-            }
-            else {
-                $date = $visite->getDate()->format('Y-m-d H:i:s');
-            }
+            $date = $this->writeDate($visite->getDate());
             
             $result = $request->execute(array(
                 ':endroit' => $visite->getEndroit(),

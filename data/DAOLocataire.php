@@ -32,12 +32,7 @@ class DAOLocataire extends AbstractDAO{
                     :date, :source, :etat)";
             $request = $this->getConnection()->prepare($sql);
             
-            if($locataire->getDateEmmenagement() === NULL) {
-                $date = null;
-            }
-            else {
-                $date = $locataire->getDateEmmenagement()->format('Y-m-d H:i:s');
-            }
+            $date = $this->writeDate($locataire->getDateEmmenagement());
             
             $request->execute(array(
                 ':nom' => $locataire->getNom(),
@@ -112,12 +107,7 @@ class DAOLocataire extends AbstractDAO{
                     $result['source_locataire_id'], $result['source']);
             
             //creation date emmenagement
-            if($result['date_emmenagement'] == '') {
-                $date = null;
-            }
-            else {
-                $date = new DateTime($result['date_emmenagement']);
-            }
+            $date = $this->readDate($result['date_emmenagement']);
             
             //création de l'objet Locataire
             $locataire = new Locataire($result['id'], $result['nom'], 
@@ -180,12 +170,7 @@ class DAOLocataire extends AbstractDAO{
                     etat_id = :etat WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);
             
-            if($locataire->getDateEmmenagement() === NULL) {
-                $date = null;
-            }
-            else {
-                $date = $locataire->getDateEmmenagement()->format('Y-m-d H:i:s');
-            }
+            $date = $this->writeDate($locataire->getDateEmmenagement());
             
             $result = $request->execute(array(
                 ':nom' => $locataire->getNom(),
