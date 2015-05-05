@@ -31,7 +31,6 @@ function loadChambresForHouse(id_maison) {
     $.ajax({
         'url': 'controller/gestion_ajax.php',
         'type': 'post',
-        //on retour le type de l'item et le contenu du form
         'data': 'action=readList&item=chambre&id=' + id_maison,
         'dataType': 'json',
         success: function(retour_php)
@@ -66,3 +65,34 @@ function disabledSelectChambres() {
     $('#select_chambres').addClass("disabled");
     $('#label_chambres').addClass("disabled");
 }
+
+/**
+ * Ajout d'un écouteur d'événement pour la liste des chambres afin de récuperer 
+ * le prix et les charges
+ */
+$('#select_chambres').bind('change', function(e) {
+    id_chambre = $('#select_chambres').val();
+
+    if(id_chambre !== '') {
+        $.ajax({
+        'url': 'controller/gestion_ajax.php',
+        'type': 'post',
+        'data': 'action=read&item=chambre&id=' + id_chambre,
+        'dataType': 'json',
+        success: function(retour_php)
+        {
+            if(retour_php.erreur === undefined) {
+                $('#loyer').val(retour_php.prix);
+                $('#charges').val(retour_php.charges);
+            }
+            else {
+                alert(retour_php.erreur);
+            }
+        },
+        error: function(retour_php)
+        {
+            alert("Erreur avec la communication serveur.");
+        }
+    });
+    }
+});

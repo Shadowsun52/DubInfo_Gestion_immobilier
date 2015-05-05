@@ -2,6 +2,8 @@
 namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\Chambre;
+use DubInfo_gestion_immobilier\model\Maison;
+use DateTime;
 /**
  * Description of DAOChambre
  *
@@ -16,8 +18,39 @@ class DAOChambre extends AbstractDAO{
         return ['erreur' => 'Suppression pas implémentée'];
     }
 
+    /**
+     * Fonction qui retourne une chambre  par rapport à un id donné
+     * @param int $id
+     * @return Chambre
+     * @throws PDOException
+     */
     public function read($id) {
-        
+        try {
+            $sql = "SELECT * FROM chambres_table WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            $maison = new Maison($result['propositions_table_id'], 
+                    $result['maison_id']);
+
+            //création de la date disponible
+            if($result['date_disponibilite'] == '') {
+                $date = null;
+            }
+            else {
+                $date = new DateTime($result['date_disponibilite']);
+            }
+
+            //création de la chambres
+            $chambre = new Chambre($id, $result['numero'], $result['etage'], 
+                    $result['prix'], $result['charges'], $date, 
+                    $result['disponible'], $maison);
+
+            return $chambre;
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
