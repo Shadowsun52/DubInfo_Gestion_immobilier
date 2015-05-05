@@ -4,6 +4,7 @@ namespace DubInfo_gestion_immobilier\model;
 use DubInfo_gestion_immobilier\Exception\StringAttributeTooLong;
 use DubInfo_gestion_immobilier\Exception\BadTypeException;
 use DubInfo_gestion_immobilier\Exception\ReadOusideArrayException;
+use DateTime;
 /**
  * Description of Location
  *
@@ -42,6 +43,36 @@ class Location {
     
     /**
      *
+     * @var boolean 
+     */
+    private $_bail_signe;
+    
+    /**
+     *
+     * @var boolean 
+     */
+    private $_etat_lieux_signe;
+    
+    /**
+     *
+     * @var boolean 
+     */
+    private $_charte_signee;
+    
+    /**
+     *
+     * @var double 
+     */
+    private $_garantie_locative_totale;
+    
+    /**
+     *
+     * @var double 
+     */
+    private $_garantie_locative_payee;
+    
+    /**
+     *
      * @var Locataire 
      */
     private $_locataire;
@@ -65,17 +96,31 @@ class Location {
      * @param DateTime $date_fin
      * @param double $loyer
      * @param double $charges
+     * @param boolean $bail_signe
+     * @param boolean $charte_signee
+     * @param boolean $etat_lieux_signe
+     * @param double $garantie_locative_totale
+     * @param double $garantie_locative_payee
      * @param Locataire $locataire
+     * @param Chambre $chambre
      * @param array[Paiement] $paiement
      * @throws BadTypeException
      */
     public function __construct($id = NULL, $date_debut = NULL, $date_fin = NULL,
-            $loyer = NULL, $charges = NULL, $locataire = NULL, $chambre = NULL, $paiement = NULL) {
+            $loyer = NULL, $charges = NULL, $bail_signe = NULL, $charte_signee = NULL, 
+            $etat_lieux_signe = NULL, $garantie_locative_totale = NULL,
+            $garantie_locative_payee = NULL, $locataire = NULL, $chambre = NULL, 
+            $paiement = NULL) {
         $this->setId($id);
         $this->setDateDebut($date_debut);
         $this->setDateFin($date_fin);
         $this->setLoyer($loyer);
         $this->setCharges($charges);
+        $this->setBailSigne($bail_signe);
+        $this->setCharteSignee($charte_signee);
+        $this->setEtatLieuSigne($etat_lieux_signe);
+        $this->setGarantieLocativeTotal($garantie_locative_totale);
+        $this->setGarantieLocativePayee($garantie_locative_payee);
         $this->setLocataire($locataire);
         $this->setPaiement($paiement);
         $this->setChambre($chambre);
@@ -165,6 +210,95 @@ class Location {
      */
     public function setCharges($charges) {
         $this->_charges = CheckTyper::isDouble($charges, 'charges', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function getBailSigne() {
+        return $this->_bail_signe;
+    }
+    
+    /**
+     * 
+     * @param boolean $bail_signe
+     * @throws BadTypeException
+     */
+    public function setBailSigne($bail_signe) {
+        $this->_bail_signe = CheckTyper::isBoolean($bail_signe, 'bail signé', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function getEtatLieuSigne() {
+        return $this->_etat_lieux_signe;
+    }
+    
+    /**
+     * 
+     * @param boolean $etat_lieux_signe
+     * @throws BadTypeException
+     */
+    public function setEtatLieuSigne($etat_lieux_signe) {
+        $this->_etat_lieux_signe = CheckTyper::isBoolean($etat_lieux_signe, 
+                'état lieux signé', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function getCharteSignee() {
+        return $this->_charte_signee;
+    }
+    
+    /**
+     * 
+     * @param boolean $charte_signee
+     * @throws BadTypeException
+     */
+    public function setCharteSignee($charte_signee) {
+        $this->_charte_signee = CheckTyper::isBoolean($charte_signee, 
+                'charte signée', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return double
+     */
+    public function getGarantieLocativeTotal() {
+        return $this->_garantie_locative_totale;
+    }
+    
+    /**
+     * 
+     * @param double $garantie_locative_total
+     * @throws BadTypeException
+     */
+    public function setGarantieLocativeTotal($garantie_locative_total) {
+        $this->_garantie_locative_totale = CheckTyper::isDouble(
+                $garantie_locative_total, 'garantie locative totale', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return double
+     */
+    public function getGarantieLocativePayee() {
+        return $this->_garantie_locative_payee;
+    }
+    
+    /**
+     * 
+     * @param double $garantie_locative_payee
+     * @throws BadTypeException
+     */
+    public function setGarantieLocativePayee($garantie_locative_payee) {
+        $this->_garantie_locative_payee = CheckTyper::isDouble(
+                $garantie_locative_payee, 'garantie locative payee', __CLASS__);
     }
     
     /**
