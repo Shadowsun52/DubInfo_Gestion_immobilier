@@ -157,3 +157,4 @@
 <script type="text/javascript">
     choosenVisiteItemListener("select_locataire");
 </script>
+<script type="text/javascript" src="./js/location.js"></script>
