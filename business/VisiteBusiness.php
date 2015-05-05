@@ -8,16 +8,7 @@ use DateTime;
  *
  * @author Jenicot Alexandre
  */
-abstract class VisiteBusiness extends AbstractBusiness{
-    /**
-     * Fonction qui retourne la liste des objets pour un certain choix
-     * @param int $data donnée envoyer avec la requête ajax
-     * @return array[mixed]
-     * @throws PDOException
-     */
-    public function readList($data = NULL) {
-        return $this->getDao()->readList($data['id']);
-    }
+abstract class VisiteBusiness extends FilterBusiness{  
     
     /**
      * Méthode qui permet de créer la date de la visite

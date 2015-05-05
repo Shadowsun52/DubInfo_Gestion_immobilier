@@ -9,20 +9,10 @@ use DubInfo_gestion_immobilier\model\Chambre;
  *
  * @author Jenicot Alexandre
  */
-class ChambreCRUD extends AbstractBusiness{
+class ChambreCRUD extends FilterBusiness{
     
     public function __construct() {
         parent::__construct(new DAOChambre(), 'chambre', self::GENRE_FEMININ);
-    }
-    
-    /**
-     * Fonction qui retourne la liste des objets pour un certain choix
-     * @param int $data donnée envoyer avec la requête ajax
-     * @return array[mixed]
-     * @throws PDOException
-     */
-    public function readList($data = NULL) {
-        return $this->getDao()->readList($data['id']);
     }
     
     public function createObject($data) {

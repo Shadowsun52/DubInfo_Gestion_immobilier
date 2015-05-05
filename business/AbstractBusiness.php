@@ -2,6 +2,7 @@
 namespace DubInfo_gestion_immobilier\business;
 
 use DubInfo_gestion_immobilier\data\AbstractDAO;
+use DateTime;
 /**
  * Description of AbstractBusiness
  *
@@ -165,6 +166,18 @@ abstract class AbstractBusiness {
                     "e avec succès.";
         }
     }
+    
+    /**
+     * Méthode qui permet de créer une date provenant de donnée du formulaire
+     * @param string $input_date
+     * @return DateTime
+     */
+    protected function createDate($input_date) {
+       if($input_date === '') {
+           return null;
+       }
+       return new DateTime($input_date);
+   }
     
     /**
      * 

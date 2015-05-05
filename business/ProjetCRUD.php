@@ -6,26 +6,15 @@ use DubInfo_gestion_immobilier\model\Projet;
 use DubInfo_gestion_immobilier\model\Investisseur;
 use DubInfo_gestion_immobilier\model\Maison;
 use DubInfo_gestion_immobilier\model\Etat;
-use DateTime;
 /**
  * Description of ProjetCRUD
  *
  * @author Jenicot Alexandre
  */
-class ProjetCRUD extends AbstractBusiness{
+class ProjetCRUD extends FilterBusiness{
     
     public function __construct() {
         parent::__construct(new DAOProjet(), 'projet');
-    }
-    
-    /**
-     * Fonction qui retourne la liste des objets pour un certain choix
-     * @param int $data donnée envoyer avec la requête ajax
-     * @return array[mixed]
-     * @throws PDOException
-     */
-    public function readList($data = NULL) {
-        return $this->getDao()->readList($data['id']);
     }
     
     /**
@@ -52,16 +41,4 @@ class ProjetCRUD extends AbstractBusiness{
                 $data['remarque'], $maison, $investisseur);
         return $projet;
     }
-    
-    /**
-     * Méthode qui permet de créer une date provenant de donnée du formulaire
-     * @param string $input_date
-     * @return DateTime
-     */
-    protected function createDate($input_date) {
-       if($input_date === '') {
-           return null;
-       }
-       return new DateTime($input_date);
-   }
 }
