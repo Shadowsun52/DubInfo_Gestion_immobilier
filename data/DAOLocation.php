@@ -126,8 +126,41 @@ class DAOLocation extends AbstractDAO{
         }
     }
 
-    public function update($object) {
-        
+    /**
+     * Méthode permettant d'update une location dans la DB
+     * @param Location $location
+     * @throws PDOException
+     */
+    public function update($location) {
+        try {
+            $sql = "UPDATE location SET date_debut = :date_debut, date_fin = :date_fin,
+                    loyer = :loyer, charges = :charges, bail_signe = :bail, 
+                    etat_lieux_signe = :etat_lieux, charte_signee = :charte,
+                    garantie_locative_totale = :garantie_totale,
+                    garantie_locative_payee = :garantie_payee, locataire_id = :locataire,
+                    chambres_table_id = :chambre WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            
+            //préparation des dates
+            $date_debut = $this->writeDate($location->getDateDebut());
+            $date_fin = $this->writeDate($location->getDateFin());
+
+            $request->execute(array(
+                ':date_debut' => $date_debut,
+                ':date_fin' => $date_fin,
+                ':loyer' => $location->getLoyer(),
+                ':charges' => $location->getCharges(),
+                ':bail' => $location->getBailSigne(),
+                ':etat_lieux' => $location->getEtatLieuSigne(),
+                ':charte' => $location->getCharteSignee(),
+                ':garantie_totale' => $location->getGarantieLocativeTotal(),
+                ':garantie_payee' => $location->getGarantieLocativePayee(),
+                ':locataire' => $location->getLocataire()->getId(),
+                ':chambre' => $location->getChambre()->getId(),
+                ':id' => $location->getId()));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
 }
