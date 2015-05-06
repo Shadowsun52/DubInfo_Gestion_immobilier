@@ -69,7 +69,7 @@
                 </li>
                 <li><a href="index.php?action=gestion&item=location">Locations</a>
                     <ul>
-                        <li><a href="index.php?action=ajout&item=payementLoyer">Payments des loyers</a></li>
+                        <li><a href="index.php?action=gestion&item=paiementLoyer">Paiements des loyers</a></li>
                     </ul>   
                 </li>
                 <li><a href="index.php?action=gestion&item=professionnel">Professionnels</a>
