@@ -2,6 +2,7 @@
 <div id="formulaire">
 <?php
     use DubInfo_gestion_immobilier\business\LocataireCRUD;
+    use DubInfo_gestion_immobilier\model\Paiement;
     //formulaire qui permet de gérer le paiement des loyers
     define('MIN_YEAR', 2013);
     
@@ -36,23 +37,11 @@
                                         ));
     $id->add_options(array('' => '- Nouveau -') ,TRUE);
     
+    $list_mois[''] = '- Choisissez un mois -';
+    $list_mois = array_merge($list_mois, Paiement::getNomsMois());
     $form_paiement_loyer->add('label','label_sel_mois', 'select_mois', 'Mois');
     $mois = $form_paiement_loyer->add('select', 'select_mois');
-    $mois->add_options(array(
-        ''  => '- Choisissez un mois -',
-        '1' => 'janvier',
-        '2 '=> 'février',
-        '3' => 'mars',
-        '4' => 'avril',
-        '5' => 'mai',
-        '6' => 'juin',
-        '7' => 'juillet',
-        '8' => 'août',
-        '9' => 'septembre',
-        '10' => 'octobre',
-        '11' => 'novembre',
-        '12' => 'décembre'
-    ),true);
+    $mois->add_options($list_mois, true);
     $mois->set_rule(array(
         'required' => array('error', 'Le choix du mois est requis!')
     ));

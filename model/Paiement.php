@@ -39,6 +39,13 @@ class Paiement implements \JsonSerializable{
     private $_location;
     
     /**
+     *
+     * @var array[string] 
+     */
+    static private $_noms_mois = ['janvier', 'février', 'mars', 'avril', 'mai', 
+        'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+
+    /**
      * 
      * @param int $id
      * @param int $mois
@@ -78,7 +85,7 @@ class Paiement implements \JsonSerializable{
      * @return int
      */
     public function getMois() {
-        return $this->_id;
+        return $this->_mois;
     }
     
     /**
@@ -142,6 +149,22 @@ class Paiement implements \JsonSerializable{
                 'location', __CLASS__);
     }
     
+    /**
+     * 
+     * @return array[string]
+     */
+    static public function getNomsMois() {
+        return self::$_noms_mois;
+    }
+    
+    /**
+     * 
+     * @param int $nb Numéro du mois (0 = janvier, etc)
+     */
+    static public function getNomMois($nb) {
+        return self::$_noms_mois[$nb];
+    }
+        
     public function jsonSerialize() {
         return [
             'id' => $this->getId(),
@@ -157,7 +180,7 @@ class Paiement implements \JsonSerializable{
      * @return string
      */
     public function toString() {
-        return $this->getMois() . ' ' . $this->getAnnee();
+        return self::getNomMois($this->getMois()) . ' ' . $this->getAnnee();
     }
 
 }

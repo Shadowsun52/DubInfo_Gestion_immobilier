@@ -8,8 +8,26 @@ use DubInfo_gestion_immobilier\model\Paiement;
  * @author Jenicot Alexandre
  */
 class DAOPaiement extends AbstractDAO{
-    public function add($object) {
-        
+    /**
+     * Méthode permettant d'ajouter un paiement dans la DB
+     * @param Paiement $paiement
+     * @throws PDOException
+     */
+    public function add($paiement) {
+        try {
+            $sql = "INSERT INTO paiement_loyer (mois, annee, loyer_paye, 
+                    location_id) VALUES (:mois, :annee, :loyer_paye, :location)";
+            $request = $this->getConnection()->prepare($sql);
+
+            $request->execute(array(
+                ':mois' => $paiement->getMois(),
+                ':annee' => $paiement->getAnnee(),
+                ':loyer_paye' => $paiement->getLoyerPaye(),
+                ':location' => $paiement->getLocation()->getId()));  
+            
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     public function delete($id) {
