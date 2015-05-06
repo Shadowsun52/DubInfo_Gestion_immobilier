@@ -96,8 +96,25 @@ class DAOPaiement extends AbstractDAO{
         }
     }
 
-    public function update($object) {
-        
+    /**
+     * Méthode permettant d'update un paiement dans la DB
+     * @param Paiement $paiement
+     * @throws PDOException
+     */
+    public function update($paiement) {
+        try {
+            $sql = "UPDATE paiement_loyer SET mois = :mois, annee = :annee,
+                    loyer_paye = :loyer_paye WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+           
+            $request->execute(array(
+                ':mois' => $paiement->getMois(),
+                ':annee' => $paiement->getAnnee(),
+                ':loyer_paye' => $paiement->getLoyerPaye(),
+                ':id' => $paiement->getId()));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
 }
