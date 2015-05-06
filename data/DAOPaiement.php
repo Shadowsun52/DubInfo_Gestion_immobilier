@@ -30,8 +30,19 @@ class DAOPaiement extends AbstractDAO{
         }
     }
 
+    /**
+     *  Méthode qui permet la suppression d'un paiement
+     * @param int $id Identifiant du paiement à supprimer
+     * @throws PDOException
+     */
     public function delete($id) {
-        
+        try {  
+            $sql = "DELETE FROM paiement_loyer WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**
