@@ -139,8 +139,10 @@ function cleanForm(item) {
     if($(".select_sub_item").length) {
         //on vide le formulaire sauf le select principale
         id_selected = $(".select_sub_item").val();
+        id_optional = $(".select_sub_item_2").val();
         $('#form_' + item)[0].reset();
         $(".select_sub_item").val(id_selected);
+        $(".select_sub_item_2").val(id_optional);
     }
     else {
         //on vide le formulaire

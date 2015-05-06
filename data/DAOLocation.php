@@ -101,9 +101,8 @@ class DAOLocation extends AbstractDAO{
     /**
      * Fonction qui lit toute les locations d'un locataire donné pour les
      * mettres dans une listes
-     * on récupere uniquement l'id, la date de debut et la date de fin
      * @param int $id l'identifiant du locataire
-     * @return array[Projet]
+     * @return array[Location]
      * @throws PDOException
      */
     public function readList($id = NULL) {

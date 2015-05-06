@@ -1,3 +1,4 @@
+$('#select_locataire').addClass('select_sub_item_2');
 /**
  * Ajout d'un écouteur d'événement pour la liste de maison afin de génerer 
  * la liste des chambres
