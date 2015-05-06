@@ -1,6 +1,7 @@
 <?php
 namespace DubInfo_gestion_immobilier\model;
 
+use DubInfo_gestion_immobilier\model\Location;
 use DubInfo_gestion_immobilier\Exception\BadTypeException;
 
 /**
@@ -32,19 +33,27 @@ class Paiement implements \JsonSerializable{
     private $_loyer_paye;
     
     /**
+     *
+     * @var Location
+     */
+    private $_location;
+    
+    /**
      * 
      * @param int $id
      * @param int $mois
      * @param int $annee
      * @param double $loyer_paye
+     * @param Location $location 
      * @throws BadTypeException
      */
     public function __construct($id = NULL, $mois = NULL, $annee = NULL, 
-            $loyer_paye = NULL) {
+            $loyer_paye = NULL, $location = NULL) {
         $this->setId($id);
         $this->setMois($mois);
         $this->setAnnee($annee);
         $this->setLoyerPayer($loyer_paye);
+        $this->setLocation($location);
     }
     
     /**
@@ -113,6 +122,24 @@ class Paiement implements \JsonSerializable{
      */
     public function setLoyerPayer($loyer_paye) {
         $this->_loyer_paye = CheckTyper::isDouble($loyer_paye, 'loyer payé', __CLASS__);
+    }
+    
+    /**
+     * 
+     * @return Location
+     */
+    public function getLocation() {
+        return $this->_location;
+    }
+    
+    /**
+     * 
+     * @param Location $location
+     * @throws BadTypeException
+     */
+    public function setLocation($location) {
+        $this->_location = CheckTyper::isModel($location, Location::class, 
+                'location', __CLASS__);
     }
     
     public function jsonSerialize() {
