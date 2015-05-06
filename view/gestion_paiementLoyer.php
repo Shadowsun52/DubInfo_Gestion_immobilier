@@ -25,7 +25,7 @@
     $location = $form_paiement_loyer->add('select', 'select_location', null, array(
                                             'disabled' => 'disabled'
                                         ));
-    $location->add_options(array('' => '- Choisissez une Location -'), true);
+    $location->add_options(array('' => '- Choisissez une location -'), true);
     $location->set_rule(array(
         'required'      =>  array('error', 'Le choix de la location est requis!')
     ));
@@ -94,3 +94,4 @@
 <script type="text/javascript">
     choosenVisiteItemListener("select_location");
 </script>
+<script type="text/javascript" src="./js/paiement.js"></script>

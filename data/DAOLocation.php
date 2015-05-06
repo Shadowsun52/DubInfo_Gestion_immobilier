@@ -4,6 +4,7 @@ namespace DubInfo_gestion_immobilier\data;
 use DubInfo_gestion_immobilier\model\Location;
 use DubInfo_gestion_immobilier\model\Locataire;
 use DubInfo_gestion_immobilier\model\Maison;
+use DubInfo_gestion_immobilier\model\Commune;
 use DubInfo_gestion_immobilier\model\Chambre;
 
 /**
@@ -108,8 +109,12 @@ class DAOLocation extends AbstractDAO{
     public function readList($id = NULL) {
         try{
             
-            $sql = "SELECT id, date_debut, date_fin FROM location 
-                    WHERE locataire_id = :id ORDER BY date_debut, date_fin";
+            $sql = "SELECT l.id, l.date_debut, l.date_fin, pt.titre_fr, cbt.name
+                    FROM location l 
+                    JOIN chambres_table ct ON l.chambres_table_id = ct.id
+                    JOIN propositions_table pt ON ct.propositions_table_id = pt.id
+                    JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id
+                    WHERE l.locataire_id = :id ORDER BY l.date_debut, l.date_fin";
             $request = $this->getConnection()->prepare($sql);
             $request->execute(array(':id' => $id));
             
@@ -117,7 +122,18 @@ class DAOLocation extends AbstractDAO{
             {
                 $date_debut = $this->readDate($result['date_debut']);
                 $date_fin = $this->readDate($result['date_fin']);
-                $locations[] = new Location($result['id'], $date_debut, $date_fin);
+                
+                //création donnée sur la maison
+                $commune = new Commune(null, $result['name']);
+                $maison = new Maison();
+                $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
+                $maison->setCommune($commune);
+                $chambre = new Chambre();
+                $chambre->setMaison($maison);
+                
+                $location = new Location($result['id'], $date_debut, $date_fin);
+                $location->setChambre($chambre);
+                $locations[] = $location;
             }
             return isset( $locations) ?  $locations : [];
             

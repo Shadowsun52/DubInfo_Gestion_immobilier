@@ -28,7 +28,6 @@ function activeSelectChambres() {
  * @param {int} id_maison L'identifiant de la maison
  */
 function loadChambresForHouse(id_maison) {
-    console.log(1);
     $.ajax({
         'url': 'controller/gestion_ajax.php',
         'type': 'post',
