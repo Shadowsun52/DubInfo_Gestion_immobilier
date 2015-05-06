@@ -34,8 +34,27 @@ class DAOPaiement extends AbstractDAO{
         
     }
 
+    /**
+     * Fonction qui retourne un paiement par rapport à un id donné
+     * @param int $id
+     * @return Paiement
+     * @throws PDOException
+     */
     public function read($id) {
-        
+        try {
+            $sql = "SELECT * FROM paiement_loyer WHERE id = :id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute(array(':id' => $id));
+            $result = $request->fetch();
+            
+            //création de la location
+            $paiement = new Paiement($id, $result['mois'], $result['annee'], 
+                    $result['loyer_paye']);
+            
+            return $paiement;
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 
     /**

@@ -39,7 +39,7 @@
     
     $list_mois[''] = '- Choisissez un mois -';
     $list_mois = array_merge($list_mois, Paiement::getNomsMois());
-    $form_paiement_loyer->add('label','label_sel_mois', 'select_mois', 'Mois');
+    $form_paiement_loyer->add('label','label_mois', 'select_mois', 'Mois');
     $mois = $form_paiement_loyer->add('select', 'select_mois');
     $mois->add_options($list_mois, true);
     $mois->set_rule(array(
@@ -50,7 +50,7 @@
     for ($year = MIN_YEAR; $year <= (date('Y')+1); $year++) {
         $list_years[$year] = $year;
     }
-    $form_paiement_loyer->add('label','label_sel_annee', 'select_annee', 'Année');
+    $form_paiement_loyer->add('label','label_annee', 'select_annee', 'Année');
     $annee = $form_paiement_loyer->add('select', 'select_annee');
     $annee->add_options($list_years, true);
     $annee->set_rule(array(
@@ -76,7 +76,7 @@
     
     $form_paiement_loyer->add('submit', 'btnsubmit', 'Ajouter');
     
-    $form_paiement_loyer->render();
+    $form_paiement_loyer->render('view/templates/tpl_paiement.php');
 
 ?>
 </div>

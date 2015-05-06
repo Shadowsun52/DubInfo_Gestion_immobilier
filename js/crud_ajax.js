@@ -514,6 +514,12 @@ function feedLocationForm(data) {
     $("#garantie_payee").val(data.garantie_locative_payee);
 }
 
+function feedPaiementLoyerForm(data) {
+    $("#select_mois").val(data.mois);
+    $("#select_annee").val(data.annee);
+    $("#loyer").val(data.loyer_paye);
+}
+
 function addChangeEtatListener() {
     $('#select_etat').bind('change', function(e) {
         url_param = getParamsUrl();
