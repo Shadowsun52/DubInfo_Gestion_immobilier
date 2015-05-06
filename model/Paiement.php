@@ -8,7 +8,7 @@ use DubInfo_gestion_immobilier\Exception\BadTypeException;
  *
  * @author Jenicot Alexandre
  */
-class Paiement {
+class Paiement implements \JsonSerializable{
     
     /**
      * @var int 
@@ -26,16 +26,25 @@ class Paiement {
     private $_annee;
     
     /**
+     *
+     * @var double
+     */
+    private $_loyer_paye;
+    
+    /**
      * 
      * @param int $id
      * @param int $mois
      * @param int $annee
+     * @param double $loyer_paye
      * @throws BadTypeException
      */
-    public function __construct($id = NULL, $mois = NULL, $annee = NULL) {
+    public function __construct($id = NULL, $mois = NULL, $annee = NULL, 
+            $loyer_paye = NULL) {
         $this->setId($id);
         $this->setMois($mois);
         $this->setAnnee($annee);
+        $this->setLoyerPayer($loyer_paye);
     }
     
     /**
@@ -88,4 +97,40 @@ class Paiement {
     public function setAnnee($annee) {
         $this->_annee = CheckTyper::isInteger($annee, 'annee', __CLASS__);
     }
+
+    /**
+     * 
+     * @return double
+     */
+    public function getLoyerPaye() {
+        return $this->_loyer_paye;
+    }
+    
+    /**
+     * 
+     * @param double $loyer_paye
+     * @throws BadTypeException
+     */
+    public function setLoyerPayer($loyer_paye) {
+        $this->_loyer_paye = CheckTyper::isDouble($loyer_paye, 'loyer payé', __CLASS__);
+    }
+    
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'mois' => $this->getMois(),
+            'annee' => $this->getAnnee(),
+            'loyer_paye' => $this->getLoyerPaye(),
+            'toString' => $this->toString()
+        ];
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function toString() {
+        return $this->getMois() . ' ' . $this->getAnnee();
+    }
+
 }
