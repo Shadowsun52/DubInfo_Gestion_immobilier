@@ -178,7 +178,45 @@ class DAOLocation extends AbstractDAO{
         }
     }
 
+    /**
+     * Méthode qui retourne tous les locations de la DB
+     * @return array[Location]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée'];
+        try {
+            $sql = "SELECT l.*, ct.numero, ct.etage, pt.id as 'id_maison', 
+                pt.titre_fr, laire.nom, laire.prenom FROM location l 
+                JOIN chambres_table ct ON ct.id = l.chambres_table_id
+                JOIN propositions_table pt ON pt.id = ct.propositions_table_id
+                JOIN locataire laire ON laire.id = l.locataire_id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                $chambre = new Chambre($result['chambres_table_id'], 
+                        $result['numero'], $result['etage']);
+                $chambre->setMaison(new Maison($result['id_maison']));
+                $chambre->getMaison()->addTitre(Maison::LANGUAGE_FR, 
+                        $result['titre_fr']);
+                $locataire = new Locataire($result['locataire_id'], 
+                        $result['nom'], $result['prenom']);
+                
+                //création des dates
+                $date_debut = $this->readDate($result['date_debut']);
+                $date_fin = $this->readDate($result['date_fin']);
+
+                //création de la location
+                $locations[] = new Location($result['id'], $date_debut, $date_fin,
+                        $result['loyer'], $result['charges'], $result['bail_signe'], 
+                        $result['charte_signee'], $result['etat_lieux_signe'], 
+                        $result['garantie_locative_totale'], 
+                        $result['garantie_locative_payee'], $locataire, $chambre);
+            }
+
+            return isset( $locations) ?  $locations : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 }

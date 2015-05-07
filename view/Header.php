@@ -69,12 +69,13 @@
                     <ul>
                         <li><a href="index.php?action=gestion&item=sourceLocataire">Source des locataires</a></li>
                         <li><a href="index.php?action=gestion&item=visiteLocataire">Visites pour les locataires</a></li>
-                        <li><a href="index.php?action=liste&item=locataire">Liste des locataires</a></li>
+                        <li class="separator_list"><a href="index.php?action=liste&item=locataire">Liste des locataires</a></li>
                     </ul>
                 </li>
                 <li><a href="index.php?action=gestion&item=location">Locations</a>
                     <ul>
                         <li><a href="index.php?action=gestion&item=paiementLoyer">Paiements des loyers</a></li>
+                        <li class="separator_list"><a href="index.php?action=liste&item=location">Liste des locations</a></li>
                     </ul>   
                 </li>
                 <li><a href="index.php?action=gestion&item=professionnel">Professionnels</a>
