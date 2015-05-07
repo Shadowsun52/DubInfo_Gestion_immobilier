@@ -98,6 +98,37 @@ h2
 #table_of_item .number {
     text-align: center;
 }
+
+#filter {
+    margin-bottom: 20px;
+}
+
+#filter div {
+    display: inline-block;
+    margin: 5px 10px 0 0;
+    vertical-align: top;
+    font-size: 1.1em;
+}
+#filter div p {
+    margin: 0 0 3px 0;
+}
+
+.low_size{
+    font-size: 0.9em ;
+}
+
+.search {
+    background: url("../librairies/Zebra_Form-2.9.5/public/css/textbox-background.gif") 
+        repeat-x scroll center top #fff;
+}
+
+.filter_option {
+    /*display: block;*/
+    padding: 6px 5px;
+    border: 1px solid #999;
+    border-radius: 4px;
+}
+
 /* Ce qui suit concerne le menu de l'Intranet */
 header .menuIntranet{
   clear:both;
