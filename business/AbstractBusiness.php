@@ -79,6 +79,10 @@ abstract class AbstractBusiness {
         return array('success' => false, 'error' => $error); 
     }
     
+    /**
+     * Méthode qui interroge la couche data pour récuperer tous les objets 
+     * @return array[]
+     */
     public function readAll() {
         try {
             return $this->getDao()->readAll();

@@ -251,7 +251,41 @@ class DAOLocataire extends AbstractDAO{
         $request->execute(array(':id' => $id));
     }
     
+    /**
+     * Méthode qui retourne tous les locataires de la DB
+     * @return array[Locataire]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée'];
+        try {
+            $sql = "SELECT l.*, e.libelle as 'etat' FROM locataire l 
+                    LEFT JOIN etat e ON l.etat_id = e.id ORDER BY nom, prenom";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                //création de l'objet adresse
+                $ville = new Ville(null, $result['adresse_code_postal'], 
+                        $result['adresse_ville'], $result['adresse_pays']);
+                $adresse = new Adresse($result['adresse_rue'],$result['adresse_numero'], 
+                        $result['adresse_boite'], $ville);
+            
+                //création de l'état
+                $etat = new Etat($result['etat_id'], $result['etat']);
+            
+                //creation date emmenagement
+                $date = $this->readDate($result['date_emmenagement']);
+            
+                //création de l'objet Locataire
+                $locataires[] = new Locataire($result['id'], $result['nom'], 
+                        $result['prenom'], $result['num_telephone'], $result['num_gsm'], 
+                        $result['mail'], $result['budget'], $date, 
+                        $result['commentaire'], $etat, $adresse);
+            }
+
+            return isset( $locataires) ?  $locataires : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 }
