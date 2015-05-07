@@ -115,6 +115,10 @@ class DAOMetier extends AbstractDAO{
         }
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
+    
     /**
      * Permet de vérifier si un metier n'est pas lié par une Foreign key avant 
      * sa suppression. 

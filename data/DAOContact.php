@@ -156,4 +156,8 @@ class DAOContact extends AbstractDAO{
             throw new PDOException($ex->getMessage());
         }
     }
+    
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
 }

@@ -297,6 +297,10 @@ class DAOMaison extends AbstractDAO{
         }
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
+    
 //<editor-fold defaultstate="collapsed" desc="Gestion source & contacts">
     /**
      * Méthode qui ajoute un lien entre une source et une maison dans la DB

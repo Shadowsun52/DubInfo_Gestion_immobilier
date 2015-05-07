@@ -79,6 +79,15 @@ abstract class AbstractBusiness {
         return array('success' => false, 'error' => $error); 
     }
     
+    public function readAll() {
+        try {
+            return $this->getDao()->readAll();
+        } catch (Exception $ex) {
+            $error = "Une erreur a été rencontrée lors de la lecture dans la base de données" ;
+            return array('success' => false, 'error' => $error);
+        }
+    }
+    
     /**
      * Méthode qui reçois les données d'un formulaire et le convertir en objet 
      * l'envoyer à la couche data pour une insert dans la DB

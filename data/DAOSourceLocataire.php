@@ -108,6 +108,10 @@ class DAOSourceLocataire extends AbstractDAO{
         }
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
+    
     /**
      * Permet de vérifier si une source locataire n'est pas lié par 
      * une Foreign key avant sa suppression. 

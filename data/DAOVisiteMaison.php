@@ -147,4 +147,7 @@ class DAOVisiteMaison extends DAOVisite{
         }
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
 }

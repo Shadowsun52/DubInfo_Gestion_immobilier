@@ -117,4 +117,7 @@ class DAOPaiement extends AbstractDAO{
         }
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
 }

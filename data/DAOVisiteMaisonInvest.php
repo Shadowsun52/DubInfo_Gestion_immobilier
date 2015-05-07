@@ -166,4 +166,8 @@ class DAOVisiteMaisonInvest extends DAOVisite{
             throw new PDOException($ex->getMessage());
         }
     }
+    
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
 }

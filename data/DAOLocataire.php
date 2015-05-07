@@ -250,4 +250,8 @@ class DAOLocataire extends AbstractDAO{
         $request = $this->getConnection()->prepare($sql);
         $request->execute(array(':id' => $id));
     }
+    
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
 }

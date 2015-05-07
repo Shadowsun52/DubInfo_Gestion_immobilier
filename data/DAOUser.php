@@ -52,4 +52,7 @@ class DAOUser extends AbstractDAO{
         throw new Exception("Action pas implémentée");
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
 }

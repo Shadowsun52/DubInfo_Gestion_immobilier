@@ -82,4 +82,7 @@ class DAOChambre extends AbstractDAO{
         return ['erreur' => 'Mise à jour pas implémentée'];
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée']; 
+    }
 }

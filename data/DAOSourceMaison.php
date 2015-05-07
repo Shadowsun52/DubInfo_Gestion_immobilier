@@ -107,6 +107,10 @@ class DAOSourceMaison extends AbstractDAO{
         }
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
+    
     /**
      * Permet de vérifier si une source maison n'est pas lié par 
      * une Foreign key avant sa suppression. 

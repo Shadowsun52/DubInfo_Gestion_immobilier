@@ -24,6 +24,8 @@ abstract class AbstractDAO {
     
     public abstract function delete($id);
     
+    public abstract function readAll();
+
     /**
      * Méthode pour créer un DateTime à partir de données provenant d'une DB
      * @param string $date la date lut dans la DB

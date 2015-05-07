@@ -135,6 +135,10 @@ class DAOMaisonLocation extends AbstractDAO{
         }
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
+    
     /**
      * Méthode qui permet de lié les chambres à la table maison 
      * (utile pour le site déjà existant)

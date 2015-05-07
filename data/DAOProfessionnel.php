@@ -165,4 +165,7 @@ class DAOProfessionnel extends AbstractDAO{
         }
     }
 
+    public function readAll() {
+        return ['erreur' => 'readAll pas implémentée'];
+    }
 }
