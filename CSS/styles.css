@@ -74,6 +74,30 @@ h2
     display: inline;
 }
 
+/*tableau liste*/
+#table_of_item {
+    margin: 0 auto;
+    width: 85%;
+}
+
+#table_of_item table {
+    margin: 5px auto;
+    border-collapse:collapse;
+}
+
+#table_of_item table td {
+    padding: 6px;
+    min-width: 50px;
+    border: 1px solid #f6f6f6;
+}
+
+#table_of_item table th:hover {
+    cursor:  pointer;
+}
+
+#table_of_item .number {
+    text-align: center;
+}
 /* Ce qui suit concerne le menu de l'Intranet */
 header .menuIntranet{
   clear:both;

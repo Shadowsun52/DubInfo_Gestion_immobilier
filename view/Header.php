@@ -2,7 +2,6 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <!-- Erreur ici, ne pas mettre de ../ -->
     <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
     <link rel="stylesheet" href="librairies/Zebra_date_picker/public/css/default.css">
     <link rel="stylesheet" href="CSS/styles.css">
@@ -27,13 +26,18 @@
 
     <?php
     if(isset($_GET['action'])) {
-        ?>
-        <script src="js/crud_ajax.js"></script>
-        <script src="js/adresse_list.js"></script>
-        <script src="js/visite.js"></script>
-        
-        
-        <?php
+        if($_GET['action'] === 'gestion') {
+            ?>
+            <script src="js/crud_ajax.js"></script>
+            <script src="js/adresse_list.js"></script>
+            <script src="js/visite.js"></script>
+            <?php
+        }
+        elseif ($_GET['action'] === 'liste') {
+            ?>
+            <script src="http://listjs.com/no-cdn/list.js"></script>
+            <?php
+        }
     }
     ?>
     <title>CRM Bestinvestment</title>
@@ -65,6 +69,7 @@
                     <ul>
                         <li><a href="index.php?action=gestion&item=sourceLocataire">Source des locataires</a></li>
                         <li><a href="index.php?action=gestion&item=visiteLocataire">Visites pour les locataires</a></li>
+                        <li><a href="index.php?action=liste&item=locataire">Liste des locataires</a></li>
                     </ul>
                 </li>
                 <li><a href="index.php?action=gestion&item=location">Locations</a>
