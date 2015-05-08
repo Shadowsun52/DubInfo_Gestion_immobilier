@@ -61,7 +61,7 @@
                 echo '<td class="num_tel">' . $locataire->getNumTelephone() . '</td>';
                 echo '<td class="num_gsm">' . $locataire->getNumGsm() . '</td>';
                 echo '<td class="mail">' . $locataire->getMail() . '</td>';
-                echo '<td class="budget number">' . $locataire->getBudget() . '</td>';
+                echo '<td class="budget center">' . $locataire->getBudget() . '</td>';
                 echo '<td class="remarques">' . $locataire->getCommentaire() . '</td>';
                 echo '</tr>';
             }

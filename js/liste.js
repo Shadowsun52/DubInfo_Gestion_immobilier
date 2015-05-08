@@ -68,6 +68,9 @@ function initValueNames() {
     switch (url_param['item']) {
         case 'locataire':
             return ['nom', 'etat', 'num_tel', 'num_gsm', 'mail', 'budget', 'remarques'];
+        case 'location':
+            return ['locataire', 'maison', 'chambre', 'bail', 'etat_lieu', 'charte',
+                'garantie_totale', 'garantie_payee'];
         default:
             return [];    
     }
