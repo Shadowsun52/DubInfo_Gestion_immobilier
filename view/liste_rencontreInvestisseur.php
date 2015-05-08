@@ -22,20 +22,22 @@
     
         <tbody  class="list">
         <?php
-//            //On remplie le tableau avec les rencontres investisseurs
-//            $business = new RencontreInvestisseurCRUD();
-//            
-//            foreach ($business->readAll() as $rencontre) {
-//                echo '<tr>';
-//                echo '<td class="nom">' . $rencontre->getInvestisseur()->getNom() . ' ' 
-//                        . $rencontre->getInvestisseur()->getPrenom() . '</td>';
-//                echo '<td class="etat">' . $rencontre->getInvestisseur()
-//                        ->getEtat()->getLibelle() . '</td>';
-//                echo '<td class="mail">' . $rencontre->getMail() . '</td>';
-//                echo '<td class="budget center">' . $rencontre->getInvestisseur->getBudget() . '</td>';
-//                echo '<td class="remarques">' . $rencontre->getCommentaire() . '</td>';
-//                echo '</tr>';
-//            }
+            //On remplie le tableau avec les rencontres investisseurs
+            $business = new RencontreInvestisseurCRUD();
+            
+            foreach ($business->readAll() as $rencontre) {
+                echo '<tr>';
+                echo '<td class="nom">' . $rencontre->getInvestisseur()->getNom() . ' ' 
+                        . $rencontre->getInvestisseur()->getPrenom() . '</td>';
+                echo '<td class="etat">' . $rencontre->getInvestisseur()
+                        ->getEtat()->getLibelle() . '</td>';
+                echo '<td class="date center">' 
+                    . $rencontre->getDate()->format('Y/m/d') . '</td>';
+                echo '<td class="budget center">' 
+                    . $rencontre->getInvestisseur()->getBudget() . '</td>';
+                echo '<td class="rapport">' . $rencontre->getRapport() . '</td>';
+                echo '</tr>';
+            }
         ?>
         </tbody>
     </table>

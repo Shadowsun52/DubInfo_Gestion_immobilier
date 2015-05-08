@@ -4,6 +4,7 @@ namespace DubInfo_gestion_immobilier\data;
 use DubInfo_gestion_immobilier\model\VisiteInvestisseur;
 use DubInfo_gestion_immobilier\model\Investisseur;
 use DubInfo_gestion_immobilier\Exception\PDOException;
+use DubInfo_gestion_immobilier\model\Etat;
 use DateTime;
 /**
  * Description of DAOVisiteInvestisseur
@@ -156,7 +157,39 @@ class DAOVisiteInvestisseur extends DAOVisite{
         }
     }
     
+    /**
+     * Méthode qui retourne tous les rencontres investisseurs de la DB
+     * @return array[VisiteInvestisseur]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée'];
+        try {
+            $sql = "SELECT ri.*, i.nom, i.prenom, i.budget, i.etat_id, e.libelle
+                    FROM rencontre_investisseur ri
+                    JOIN investisseur i ON ri.investisseur_id = i.id
+                    JOIN etat e ON i.etat_id = e.id ORDER BY i.nom, i.prenom";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                //création de l'objet investisseur
+                $investisseur = new Investisseur($result['investisseur_id'], 
+                        $result['nom'], $result['prenom']);
+                $investisseur->setBudget($result['budget']);
+                $investisseur->setEtat(new Etat($result['etat_id'], 
+                        $result['libelle']));
+
+                //création de la date
+                $date = $this->readDate($result['date']);
+
+                //création de l'objet visite
+                $visites[] = new VisiteInvestisseur($result['id'], $date, 
+                        $result['endroit'], $result['rapport'], $investisseur);
+            }
+
+            return isset( $visites) ?  $visites : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 }
