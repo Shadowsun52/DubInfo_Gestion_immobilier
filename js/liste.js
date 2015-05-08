@@ -22,6 +22,35 @@ $('#select_etat').change(function () {
 
 /**
  * Méthodes qui ajoute des listener pour gérer un filtre permettant de savoir 
+ * si un champs est oui ou non
+ * @param {string} field_name le nom du champs 
+ */
+function addIsYesOrNoFilter(field_name) {
+    $('input[name="'+ field_name + '"]').change(function () {
+        var value_accepted = [];
+        if($('input[name="'+ field_name + '"][value="oui"]').is(':checked')) {
+            value_accepted.push('Oui');
+        }
+        if($('input[name="'+ field_name + '"][value="non"]').is(':checked')) {
+            value_accepted.push('Non');
+        }
+        if(value_accepted.length === 0) {
+            value_accepted = ['Oui', 'Non'];
+        }
+        
+        // filter items in the list
+        itemList.filter(function (item) {
+            if ($.inArray(item.values()[field_name], value_accepted ) !== -1) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    });
+}
+
+/**
+ * Méthodes qui ajoute des listener pour gérer un filtre permettant de savoir 
  * si tout est payé (en comparant 2 champs)
  * @param {string} field_name le nom du champs contenant la valeur payée
  * @param {string} field_total le nom du champs contenant la valeur totale

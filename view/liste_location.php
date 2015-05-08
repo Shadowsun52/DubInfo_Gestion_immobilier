@@ -19,14 +19,43 @@
             </p> 
         </div>
         <div>
+            <p><label>Bail signé ? : </label></p>
+            <p>
+                <span class="low_size">Oui </span>
+                <input type="checkbox" name="bail" value="oui" class="filter_option"/>
+                <span class="low_size">Non </span> 
+                <input type="checkbox" name="bail" value="non" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Etat des lieu signé ? : </label></p>
+            <p>
+                <span class="low_size">Oui </span>
+                <input type="checkbox" name="etat_lieu" value="oui" 
+                       class="filter_option"/>
+                <span class="low_size">Non </span> 
+                <input type="checkbox" name="etat_lieu" value="non" 
+                       class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Charte signée ? : </label></p>
+            <p>
+                <span class="low_size">Oui </span>
+                <input type="checkbox" name="charte" value="oui" class="filter_option"/>
+                <span class="low_size">Non </span> 
+                <input type="checkbox" name="charte" value="non" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
             <p><label>Garantie totalement payée : </label></p>
             <p>
                 <span class="low_size">Oui </span>
                 <input type="checkbox" name="garantie_payee" value="oui"
-                       class="filter_option radio_garantie_paye"/>
+                       class="filter_option"/>
                 <span class="low_size">Non </span> 
                 <input type="checkbox" name="garantie_payee" value="non" 
-                       class="filter_option radio_garantie_paye"/>
+                       class="filter_option"/>
             </p> 
         </div>
     </div>
@@ -79,4 +108,7 @@
 <script type="text/javascript">
     addBorneFilter("garantie_totale");
     addAllIsPaid("garantie_payee", "garantie_totale");
+    addIsYesOrNoFilter("bail");
+    addIsYesOrNoFilter("etat_lieu");
+    addIsYesOrNoFilter("charte");
 </script>
