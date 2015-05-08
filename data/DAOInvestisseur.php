@@ -206,7 +206,7 @@ class DAOInvestisseur extends AbstractDAO{
     public function readAll() {
         try {
             $sql = "SELECT i.*, e.libelle FROM investisseur i 
-                    JOIN etat e ON i.etat_id = e.id";
+                    JOIN etat e ON i.etat_id = e.id ORDER BY nom, prenom";
             $request = $this->getConnection()->prepare($sql);
             $request->execute();
             

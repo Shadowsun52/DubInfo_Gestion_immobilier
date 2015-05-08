@@ -146,6 +146,7 @@ function addBorneFilter(field_name) {
 function initValueNames() {
     url_param = getParamsUrl();
     switch (url_param['item']) {
+        case 'investisseur':
         case 'locataire':
             return ['nom', 'etat', 'num_tel', 'num_gsm', 'mail', 'budget', 'remarques'];
         case 'location':

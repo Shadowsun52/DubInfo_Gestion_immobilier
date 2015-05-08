@@ -188,7 +188,8 @@ class DAOLocation extends AbstractDAO{
                 pt.titre_fr, laire.nom, laire.prenom FROM location l 
                 JOIN chambres_table ct ON ct.id = l.chambres_table_id
                 JOIN propositions_table pt ON pt.id = ct.propositions_table_id
-                JOIN locataire laire ON laire.id = l.locataire_id";
+                JOIN locataire laire ON laire.id = l.locataire_id 
+                ORDER BY laire.nom, laire.prenom";
             $request = $this->getConnection()->prepare($sql);
             $request->execute();
             
