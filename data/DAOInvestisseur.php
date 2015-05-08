@@ -199,7 +199,39 @@ class DAOInvestisseur extends AbstractDAO{
         }
     }
     
+    /**
+     * Méthode qui retourne tous les investisseurs  de la DB
+     * @return array[Investisseur]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée'];
+        try {
+            $sql = "SELECT i.*, e.libelle FROM investisseur i 
+                    JOIN etat e ON i.etat_id = e.id";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                //création de l'objet adresse
+            $ville = new Ville(null, $result['adresse_code_postal'], 
+                    $result['adresse_ville'], $result['adresse_pays']);
+            $adresse = new Adresse($result['adresse_rue'], 
+                    $result['adresse_numero'], $result['adresse_boite'], $ville);
+            
+            //création de l'objet etat
+            $etat = new Etat($result['etat_id'], $result['libelle']);
+            
+            //création de l'objet investisseur
+            $investisseurs[] = new Investisseur($result['id'], $result['nom'], 
+                    $result['prenom'], $result['num_telephone'], 
+                    $result['num_gsm'], $result['mail'], $adresse, $etat, 
+                    $result['num_tva'], $result['commentaire'], 
+                    $result['lettre_de_mission'], $result['budget']);
+            }
+
+            return isset( $investisseurs) ?  $investisseurs : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 }
