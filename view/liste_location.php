@@ -6,11 +6,28 @@
 <div id="table_of_item">
     <div id="filter">
         <div>
-            
-        </div>
-        <div>
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
+        </div>
+        <div>
+            <p><label>Garantie à payer : </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_garantie_totale" type="number" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_garantie_totale" type="number" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Garantie totalement payée : </label></p>
+            <p>
+                <span class="low_size">Oui </span>
+                <input type="checkbox" name="garantie_payee" value="oui"
+                       class="filter_option radio_garantie_paye"/>
+                <span class="low_size">Non </span> 
+                <input type="checkbox" name="garantie_payee" value="non" 
+                       class="filter_option radio_garantie_paye"/>
+            </p> 
         </div>
     </div>
     <table id="locataire-list">
@@ -60,5 +77,6 @@
 </div>
 <script src="./js/liste.js"></script>
 <script type="text/javascript">
-//    addBorneFilter("budget");
+    addBorneFilter("garantie_totale");
+    addAllIsPaid("garantie_payee", "garantie_totale");
 </script>

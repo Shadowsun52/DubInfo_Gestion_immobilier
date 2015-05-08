@@ -5,9 +5,6 @@
 <div id="table_of_item">
     <div id="filter">
         <div>
-            
-        </div>
-        <div>
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
         </div>

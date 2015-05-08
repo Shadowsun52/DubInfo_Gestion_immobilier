@@ -20,42 +20,93 @@ $('#select_etat').change(function () {
     });
 });
 
+/**
+ * Méthodes qui ajoute des listener pour gérer un filtre permettant de savoir 
+ * si tout est payé (en comparant 2 champs)
+ * @param {string} field_name le nom du champs contenant la valeur payée
+ * @param {string} field_total le nom du champs contenant la valeur totale
+ */
+function addAllIsPaid(field_name, field_total) {
+    $('input[name="'+ field_name + '"]').change(function () {
+        //on regarde qu'elle check sont coché oui, non ou les deux
+        var value_accepted = "all";
+        if($('input[name="'+ field_name + '"][value="oui"]').is(':checked')) {
+            value_accepted = "oui";
+        }
+        if($('input[name="'+ field_name + '"][value="non"]').is(':checked')) {
+            if(value_accepted === "oui") {
+                value_accepted = "all";
+            }
+            else {
+               value_accepted = "non"; 
+            } 
+        }
+        
+        // filter items in the list
+        itemList.filter(function (item) {
+            if(value_accepted === 'all') {
+                return true;
+            }
+            else {
+                if(value_accepted === 'oui') {
+                    response = true;
+                }
+                else {
+                    response = false;
+                }
+                
+                if (parseInt(item.values()[field_name]) >= item.values()[field_total]) {
+                    return response;
+                } else {
+                    return !response;
+                }
+            }
+        });
+    });
+}
+
+/**
+ * Méthodes qui ajoute des listener pour gérer un filtre min - max
+ * @param {string} field_name le nom des champs auquel attacher les listeners
+ */
 function addBorneFilter(field_name) {
     $('#min_' + field_name).change(function () {
-    var selection = this.value; 
+        var selection = this.value; 
 
-    // filter items in the list
-    itemList.filter(function (item) {
-        if(selection === ''){
-            return true;
-        } else {
-            if (item.values()[field_name] !== '' 
-                    && item.values()[field_name] >= selection) {
+        // filter items in the list
+        itemList.filter(function (item) {
+            if(selection === ''){
                 return true;
             } else {
-                return false;
+                selection = parseInt(selection);
+                if (item.values()[field_name] !== '' 
+                        && item.values()[field_name] >= selection) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        }
+        });
     });
-});
 
-$('#max_' + field_name).change(function () {
-    var selection = this.value; 
+    $('#max_' + field_name).change(function () {
+        var selection = this.value; 
 
-    // filter items in the list
-    itemList.filter(function (item) {
-        if(selection === ''){
-            return true;
-        } else {
-            if (item.values()[field_name] !== '' 
-                    &&item.values()[field_name] <= selection) {
+        // filter items in the list
+        itemList.filter(function (item) {
+            if(selection === ''){
                 return true;
             } else {
-                return false;
+                selection = parseInt(selection);
+                if (item.values()[field_name] !== '' 
+                        &&item.values()[field_name] <= selection) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        }
+        });
     });
-});
 }
 
 /**
