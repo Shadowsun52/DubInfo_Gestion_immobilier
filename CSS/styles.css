@@ -77,9 +77,9 @@ h2
 /*tableau liste*/
 #table_of_item {
     margin: 0 auto;
-    width: 85%;
+    width: 95%;
 }
-
+/*
 #table_of_item table {
     margin: 5px auto;
     border-collapse:collapse;
@@ -123,11 +123,11 @@ h2
 }
 
 .filter_option {
-    /*display: block;*/
+    display: block;
     padding: 6px 5px;
     border: 1px solid #999;
     border-radius: 4px;
-}
+}*/
 
 /* Ce qui suit concerne le menu de l'Intranet */
 header .menuIntranet{
