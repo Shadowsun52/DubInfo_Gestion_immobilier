@@ -152,6 +152,8 @@ function initValueNames() {
         case 'location':
             return ['locataire', 'maison', 'chambre', 'bail', 'etat_lieu', 'charte',
                 'garantie_totale', 'garantie_payee'];
+        case 'rencontreInvestisseur':
+            return ['nom', 'etat', 'date', 'budget', 'rapport'];
         default:
             return [];    
     }
