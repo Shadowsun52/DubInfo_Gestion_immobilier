@@ -60,9 +60,15 @@ function initListenerFilter(item_name) {
  */
 function checkFilter(item_name, values) {
     switch (item_name) {
+        case 'investisseur':
         case 'locataire' : 
             return filterEtat(values) && filterBorne("budget", values);
-            break;
+        case 'location' :
+            return filterBorne("garantie_totale", values) 
+                    && filterYesNo("bail", values) 
+                    && filterYesNo("charte", values)
+                    && filterYesNo("etat_lieu", values)
+                    && filterAllIsPaid("garantie_payee", "garantie_totale", values);
         default:
             return true;
     }
@@ -93,10 +99,10 @@ function filterEtat(values) {
 function filterBorne(field_name, values) {
     //les champs vide sont remplacé par 0
     if(values[field_name] === '') {
-        valeur = 0;
+        var valeur = 0;
     }
     else {
-        valeur = parseFloat(values[field_name]);
+        var valeur = parseFloat(values[field_name]);
     }
     
     //on vérifie que la condition sur la valeur minimum est respectée
@@ -122,77 +128,58 @@ function filterBorne(field_name, values) {
 }
 
 /**
- * Méthodes qui ajoute des listener pour gérer un filtre permettant de savoir 
- * si un champs est oui ou non
- * @param {string} field_name le nom du champs 
+ * Fonction qui vérifie que une valeur (oui/non) est dans le ou les bons état choisi
+ * @param {string} field_name le nom du champs/valeurs à tester
+ * @param {type} values les valeurs de l'item testé
+ * @returns {Boolean}
  */
-function addIsYesOrNoFilter(field_name) {
-    $('input[name="'+ field_name + '"]').change(function () {
-        var value_accepted = [];
-        if($('input[name="'+ field_name + '"][value="oui"]').is(':checked')) {
-            value_accepted.push('Oui');
-        }
-        if($('input[name="'+ field_name + '"][value="non"]').is(':checked')) {
-            value_accepted.push('Non');
-        }
-        if(value_accepted.length === 0) {
-            value_accepted = ['Oui', 'Non'];
-        }
-        
-        // filter items in the list
-        itemList.filter(function (item) {
-            if ($.inArray(item.values()[field_name], value_accepted ) !== -1) {
-                return true;
-            } else {
-                return false;
-            }
-        });
-    });
+function filterYesNo(field_name, values) {
+    var value_accepted = [];
+    if($('input[name="'+ field_name + '"][value="oui"]').is(':checked')) {
+        value_accepted.push('Oui');
+    }
+    if($('input[name="'+ field_name + '"][value="non"]').is(':checked')) {
+        value_accepted.push('Non');
+    }
+    if(value_accepted.length === 0) {
+        value_accepted = ['Oui', 'Non'];
+    }
+    
+    return $.inArray(values[field_name], value_accepted ) !== -1;
 }
 
-/**
- * Méthodes qui ajoute des listener pour gérer un filtre permettant de savoir 
- * si tout est payé (en comparant 2 champs)
- * @param {string} field_name le nom du champs contenant la valeur payée
- * @param {string} field_total le nom du champs contenant la valeur totale
- */
-function addAllIsPaid(field_name, field_total) {
-    $('input[name="'+ field_name + '"]').change(function () {
-        //on regarde qu'elle check sont coché oui, non ou les deux
-        var value_accepted = "all";
-        if($('input[name="'+ field_name + '"][value="oui"]').is(':checked')) {
-            value_accepted = "oui";
+
+function filterAllIsPaid(field_name, field_total, values) {
+    var value_accepted = "all";
+    if($('input[name="'+ field_name + '"][value="oui"]').is(':checked')) {
+        value_accepted = "oui";
+    }
+    if($('input[name="'+ field_name + '"][value="non"]').is(':checked')) {
+        if(value_accepted === "oui") {
+            value_accepted = "all";
         }
-        if($('input[name="'+ field_name + '"][value="non"]').is(':checked')) {
-            if(value_accepted === "oui") {
-                value_accepted = "all";
-            }
-            else {
-               value_accepted = "non"; 
-            } 
+        else {
+           value_accepted = "non"; 
+        } 
+    }
+    
+    if(value_accepted === 'all') {
+        return true;
+    }
+    else {
+        if(value_accepted === 'oui') {
+            response = true;
         }
-        
-        // filter items in the list
-        itemList.filter(function (item) {
-            if(value_accepted === 'all') {
-                return true;
-            }
-            else {
-                if(value_accepted === 'oui') {
-                    response = true;
-                }
-                else {
-                    response = false;
-                }
-                
-                if (parseInt(item.values()[field_name]) >= item.values()[field_total]) {
-                    return response;
-                } else {
-                    return !response;
-                }
-            }
-        });
-    });
+        else {
+            response = false;
+        }
+
+        if (parseInt(values[field_name]) >= values[field_total]) {
+            return response;
+        } else {
+            return !response;
+        }
+    }
 }
 
 // read a current page's GET URL variables and return them as an associative array.

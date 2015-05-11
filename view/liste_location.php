@@ -105,10 +105,3 @@
     </table>
 </div>
 <script src="./js/liste.js"></script>
-<script type="text/javascript">
-    addBorneFilter("garantie_totale");
-    addAllIsPaid("garantie_payee", "garantie_totale");
-    addIsYesOrNoFilter("bail");
-    addIsYesOrNoFilter("etat_lieu");
-    addIsYesOrNoFilter("charte");
-</script>

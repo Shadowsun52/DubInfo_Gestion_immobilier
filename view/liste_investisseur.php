@@ -66,6 +66,3 @@
     </table>
 </div>
 <script src="./js/liste.js"></script>
-<script type="text/javascript">
-    addBorneFilter("budget");
-</script>
