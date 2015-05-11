@@ -31,6 +31,9 @@ function initValueNames(item_name) {
                 'garantie_totale', 'garantie_payee'];
         case 'rencontreInvestisseur':
             return ['nom', 'etat', 'date', 'budget', 'rapport'];
+        case 'paiementLoyer':
+            return ['maison', 'chambre', 'locataire', 'loyer', 'loyer_paye', 
+                'mois', 'anneee'];
         default:
             return [];    
     }

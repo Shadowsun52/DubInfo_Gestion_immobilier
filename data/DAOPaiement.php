@@ -134,7 +134,7 @@ class DAOPaiement extends AbstractDAO{
                     JOIN locataire laire ON l.locataire_id = laire.id
                     JOIN chambres_table ct ON l.chambres_table_id = ct.id
                     JOIN propositions_table pt ON ct.propositions_table_id = pt.id
-                    ORDER BY pt.titre_fr, ct.numero, laire.nom, laire.prenom";
+                    ORDER BY pt.titre_fr, ct.numero, annee, mois";
             $request = $this->getConnection()->prepare($sql);
             $request->execute();
             

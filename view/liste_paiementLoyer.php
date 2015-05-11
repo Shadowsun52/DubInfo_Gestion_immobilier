@@ -1,5 +1,7 @@
 <?php
     use DubInfo_gestion_immobilier\business\PaiementLoyerCRUD;
+    use DubInfo_gestion_immobilier\model\Maison;
+    use DubInfo_gestion_immobilier\model\Paiement;
 ?>
 <h2>Liste des rencontres avec les investisseurs</h2>
 <div id="table_of_item">
@@ -42,22 +44,30 @@
     
         <tbody  class="list">
         <?php
-//            //On remplie le tableau avec les rencontres investisseurs
-//            $business = new RencontreInvestisseurCRUD();
-//            
-//            foreach ($business->readAll() as $rencontre) {
-//                echo '<tr>';
-//                echo '<td class="nom">' . $rencontre->getInvestisseur()->getNom() . ' ' 
-//                        . $rencontre->getInvestisseur()->getPrenom() . '</td>';
-//                echo '<td class="etat">' . $rencontre->getInvestisseur()
-//                        ->getEtat()->getLibelle() . '</td>';
-//                echo '<td class="date center">' 
-//                    . $rencontre->getDate()->format('Y/m/d') . '</td>';
-//                echo '<td class="budget center">' 
-//                    . $rencontre->getInvestisseur()->getBudget() . '</td>';
-//                echo '<td class="rapport">' . $rencontre->getRapport() . '</td>';
-//                echo '</tr>';
-//            }
+            //On remplie le tableau avec les paiements
+            $business = new PaiementLoyerCRUD();
+            
+            foreach ($business->readAll() as $paiement) {
+                echo '<tr>';
+                echo '<td class="nom">' . $paiement->getLocation()->getChambre()
+                        ->getMaison()->getTitre(Maison::LANGUAGE_FR) . '</td>';
+                echo '<td class="chambre">' . $paiement->getLocation()->getChambre()
+                        ->getNumero() . (($paiement->getLocation()->getChambre()
+                        ->getEtage() === NULL) ? '' :
+                        ' (' . $paiement->getLocation()->getChambre()
+                                ->getEtage(). ')'). '</td>';
+                echo '<td class="locataire">' . $paiement->getLocation()
+                        ->getLocataire()->getNom() . ' ' . 
+                        $paiement->getLocation()->getLocataire()->getPrenom() . '</td>';
+                echo '<td class="loyer center">' 
+                    . $paiement->getLocation()->getLoyer() . '</td>';
+                echo '<td class="loyer_paye center">' 
+                    . $paiement->getLoyerPaye() . '</td>';
+                echo '<td class="mois center">' 
+                    . Paiement::getNomMois($paiement->getMois()) . '</td>';
+                echo '<td class="annee center">' . $paiement->getAnnee() . '</td>';
+                echo '</tr>';          
+            }
         ?>
         </tbody>
     </table>
