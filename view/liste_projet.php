@@ -28,8 +28,8 @@
                 <th class="sort" data-sort="nom">Nom</th>
                 <th class="sort" data-sort="etat">Etat</th>
                 <th class="sort" data-sort="maison">Maison</th>
-                <th class="sort" data-sort="compromis">Compromis</th>
-                <th class="sort" data-sort="acte">Acte</th>
+                <th class="sort" data-sort="compromis">Date compromis</th>
+                <th class="sort" data-sort="acte">Date acte</th>
                 <th class="sort" data-sort="plan_metre">Plan metré</th>
                 <th class="sort" data-sort="devis">Devis entrepreneur</th>
                 <th class="sort" data-sort="selection_materiaux">Sélection matériaux</th>

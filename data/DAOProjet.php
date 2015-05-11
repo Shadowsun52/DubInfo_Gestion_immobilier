@@ -179,7 +179,49 @@ class DAOProjet extends AbstractDAO{
         }
     }
     
+    /**
+     * Méthode qui retourne tous les projets de la DB
+     * @return array[Projet]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée'];
+        try {
+            $sql = "SELECT p.*, i.nom, i.prenom, i.etat_id as 'etat_invest',
+                    e.libelle, pt.titre_fr FROM projet p
+                    JOIN investisseur i ON p.investisseur_id = i.id
+                    JOIN etat e ON i.etat_id = e.id
+                    JOIN propositions_table pt ON p.propositions_table_id = pt.id
+                    ORDER BY i.nom, i.prenom, pt.titre_fr";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                $maison = new Maison($result['propositions_table_id']);
+                $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
+                
+                $investisseur = new Investisseur($result['investisseur_id'], 
+                        $result['nom'], $result['prenom']);
+                $investisseur->setEtat(new Etat($result['etat_invest'], 
+                        $result['libelle']));
+                $etat = new Etat($result['etat_id']);
+                
+                //création des dates
+                $compromis = $this->readDate($result['date_signature_compromis']);
+                $acte = $this->readDate($result['date_signature_acte']);
+                $date_mobilier = $this->readDate($result['date_livraison_mobilier']);
+                $date_chantier = $this->readDate($result['date_reception_chantier']);
+            
+                //création de l'objet projet
+                $projets[] = new Projet($result['id'], null, $etat, $compromis, $acte, 
+                        $result['plan_metre_fait'], $result['devis_entrepreneur_confirme'], 
+                        $result['selection_materiaux_fait'], $date_chantier, 
+                        $result['commande_mobilier_fait'], $date_mobilier, 
+                        $result['commentaire'], $maison, $investisseur);
+            }
+
+            return isset( $projets) ?  $projets : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 }
