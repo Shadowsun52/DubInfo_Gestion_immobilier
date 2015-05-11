@@ -167,7 +167,42 @@ class DAOVisiteMaisonInvest extends DAOVisite{
         }
     }
     
+    /**
+     * Méthode qui retourne tous les visites de maison par un investisseur
+     * @return array[VisiteMaisonInvestisseur]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée'];
+        try {
+            $sql = "SELECT vim.*, i.nom, i.prenom, i.etat_id, e.libelle, 
+                    pt.titre_fr FROM visite_invest_maison vim
+                    JOIN investisseur i ON vim.investisseur_id = i.id
+                    JOIN etat e ON i.etat_id = e.id
+                    JOIN propositions_table pt ON vim.propositions_table_id = pt.id
+                    ORDER BY i.nom, i.prenom, vim.date";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                 //création de l'objet maison
+                $maison = new Maison($result['propositions_table_id']);
+                $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
+
+                //création de l'object investisseur
+                $investisseur = new Investisseur($result['investisseur_id'], 
+                        $result['nom'], $result['prenom']);
+
+                //création de la date
+                $date = $this->readDate($result['date']);
+            
+                //création de l'objet VisiteMaisonInvestisseur
+                $visites[] = new VisiteMaisonInvestisseur($result['id'], $date, 
+                        $result['rapport'], $maison, $investisseur);
+            }
+
+            return isset( $visites) ?  $visites : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 }
