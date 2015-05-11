@@ -20,28 +20,6 @@
                 </select>
             </p>
         </div>
-  <?php
-//            //ajout de date picker pour gérer la date
-//            $form_date = new Zebra_Form('form_date');
-//            $form_date->language("francais");
-//            //datepicker
-//            $label_date = $form_date->add('label','label_date', '', 'Date :');
-//            $min_date = $form_date->add('date', 'min_date', null, array(
-//                "class" => "filter_option"
-//            ));
-//            $min_date->set_rule(array(
-//                    'date' =>  array('error', 'La date est invalide!'),
-//            ));
-//            $min_date->format('Y/m/d');
-//            $max_date = $form_date->add('date', 'max_date', null, array(
-//                "class" => "filter_option"
-//            ));
-//            $max_date->set_rule(array(
-//                    'date' =>  array('error', 'La date est invalide!'),
-//            ));
-//            $max_date->format('Y/m/d');
-//            $form_date->render('view/templates/tpl_date.php');
-       ?>
         <div>
             <p><label>Date : </label></p>
             <p>
