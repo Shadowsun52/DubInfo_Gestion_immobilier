@@ -2,11 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
-    <link rel="stylesheet" href="librairies/Zebra_date_picker/public/css/default.css">
     <link rel="stylesheet" href="CSS/styles.css">
     <script src="js/jquery-2.1.3.min.js"></script>
-    <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
     <script src="librairies/multiple_select/jquery.multiple.select.js"></script>
     <link rel="stylesheet" href="librairies/multiple_select/multiple-select.css">
 
@@ -28,6 +25,8 @@
     if(isset($_GET['action'])) {
         if($_GET['action'] === 'gestion') {
             ?>
+            <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
+            <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
             <script src="js/crud_ajax.js"></script>
             <script src="js/adresse_list.js"></script>
             <script src="js/visite.js"></script>
@@ -35,7 +34,9 @@
         }
         elseif ($_GET['action'] === 'liste') {
             ?>
-            <script src="http://listjs.com/no-cdn/list.js"></script>
+            <link rel="stylesheet" href="librairies/Zebra_date_picker/public/css/default.css">
+            <script src="./librairies/list_js/list.js"></script>
+            <script src="librairies/Zebra_date_picker/public/javascript/zebra_datepicker.js"></script>
             <?php
         }
     }

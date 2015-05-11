@@ -103,18 +103,20 @@ h2
     margin-bottom: 20px;
 }
 
-#filter div {
+#filter div{
     display: inline-block;
     margin: 5px 10px 0 0;
     vertical-align: top;
     font-size: 1.1em;
 }
+
 #filter div p {
     margin: 0 0 3px 0;
 }
 
 .low_size{
-    font-size: 0.9em ;
+    display: inline;
+    font-size: 0.9em;
 }
 
 .search {

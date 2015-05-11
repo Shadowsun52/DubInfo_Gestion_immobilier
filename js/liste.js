@@ -12,6 +12,7 @@ function initFilter() {
     };
     itemList = new List('table_of_item', options);
     initListenerFilter(url_param['item']);
+    initDatePicker(url_param['item']);
 }
 
 /**
@@ -41,14 +42,62 @@ function initValueNames(item_name) {
  */
 function initListenerFilter(item_name) {
     $(".filter_option").change(function () {
-        itemList.filter(function (item) {
-            if(checkFilter(item_name, item.values())) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        });
+        listenerFilter(item_name);
+    });
+}
+
+/**
+ * Fonction qui initialise les datepickers et leur listener en fonction de l'item
+ * de la page
+ * @param {string} item_name le nom de l'item de la liste
+ */
+function initDatePicker(item_name) {
+    switch (item_name) {
+        case 'rencontreInvestisseur' :
+            addDatePicker(item_name, "date");
+            break;
+    }
+}
+
+/**
+ * Fonction qui ajout les listes min et max pour les date selon un nom de champ donné
+ * @param {string} item_name le nom de l'item de la liste
+ * @param {string} field_name le nom du champ de la valeur
+ */
+function addDatePicker(item_name, field_name) {
+    $("#min_" + field_name).Zebra_DatePicker({ 
+        format: 'Y/m/d',
+        onSelect: function() {
+           listenerFilter(item_name);
+        },
+        onClear: function() {
+           listenerFilter(item_name);
+        }
+    });
+    
+    $("#max_" + field_name).Zebra_DatePicker({ 
+        format: 'Y/m/d',
+        onSelect: function() {
+           listenerFilter(item_name);
+        },
+        onClear: function() {
+           listenerFilter(item_name);
+        }
+    });
+}
+
+/**
+ * Fonction à appeler sur les listeners pour les filtres
+ * @param {string} item_name le nom de l'item de la liste
+ */
+function listenerFilter(item_name) {
+    itemList.filter(function (item) {
+        if(checkFilter(item_name, item.values())) {
+            return true;
+        }
+        else {
+            return false;
+        }
     });
 }
 
@@ -69,6 +118,9 @@ function checkFilter(item_name, values) {
                     && filterYesNo("charte", values)
                     && filterYesNo("etat_lieu", values)
                     && filterAllIsPaid("garantie_payee", "garantie_totale", values);
+        case 'rencontreInvestisseur' :
+            return filterEtat(values) && filterBorne("budget", values) 
+                    && filterBorneDate("date", values);
         default:
             return true;
     }
@@ -180,6 +232,39 @@ function filterAllIsPaid(field_name, field_total, values) {
             return !response;
         }
     }
+}
+
+/**
+ * Fonction qui vérifie que une valeur date de l'item est comprise entre 
+ * deux borne de filtre
+ * @param {string} field_name le nom du champs/valeurs à tester
+ * @param {type} values les valeurs de l'item testé
+ * @returns {Boolean}
+ */
+function filterBorneDate(field_name, values) {
+    //les champs vide sont remplacé par 0
+    if(values[field_name] === '') {
+        return false;
+    }
+    
+    //on vérifie que la condition sur la valeur minimum est respectée
+    min_borne = $('#min_' + field_name).val();
+    
+    if(min_borne === ''){
+        result = true;
+    } else {
+        result = values[field_name] >= min_borne;
+    }
+    
+    //si la condition sur le minimum est passé on test celle sur le maximum
+    if(result) {
+        max_borne = $('#max_' + field_name).val();
+        if(max_borne !== ''){
+            return values[field_name] <= max_borne;
+        }
+    }
+    
+    return result;
 }
 
 // read a current page's GET URL variables and return them as an associative array.
