@@ -36,6 +36,9 @@ function initValueNames(item_name) {
                 'mois', 'annee'];
         case 'visiteMaisonInvestisseur': 
             return ['nom', 'etat', 'maison', 'date', 'rapport'];
+        case 'projet':
+            return ['nom', 'etat', 'maison', 'compromis', 'acte', 'plan_metre',
+                'devis', 'selection_materiaux', 'remarque'];
         default:
             return [];    
     }
