@@ -33,7 +33,7 @@ function initValueNames(item_name) {
             return ['nom', 'etat', 'date', 'budget', 'rapport'];
         case 'paiementLoyer':
             return ['maison', 'chambre', 'locataire', 'loyer', 'loyer_paye', 
-                'mois', 'anneee'];
+                'mois', 'annee'];
         default:
             return [];    
     }
@@ -114,7 +114,7 @@ function checkFilter(item_name, values) {
     switch (item_name) {
         case 'investisseur':
         case 'locataire' : 
-            return filterEtat(values) && filterBorne("budget", values);
+            return filterSelect("etat", values) && filterBorne("budget", values);
         case 'location' :
             return filterBorne("garantie_totale", values) 
                     && filterYesNo("bail", values) 
@@ -122,8 +122,12 @@ function checkFilter(item_name, values) {
                     && filterYesNo("etat_lieu", values)
                     && filterAllIsPaid("garantie_payee", "garantie_totale", values);
         case 'rencontreInvestisseur' :
-            return filterEtat(values) && filterBorne("budget", values) 
+            return filterSelect("etat", values) && filterBorne("budget", values) 
                     && filterBorneDate("date", values);
+        case 'paiementLoyer' :
+            return filterSelect("mois", values) && filterSelect("annee", values)
+                    && filterBorne("loyer", values) 
+                    && filterAllIsPaid("loyer_paye", "loyer", values);
         default:
             return true;
     }
@@ -131,16 +135,17 @@ function checkFilter(item_name, values) {
 
 /**
  * Fonction qui vérifie si l'item correspond au filtre sur l'état
+ * @param {string} field_name le nom du champs/valeurs à tester
  * @param {type} values les valeurs de l'item testé
  * @returns {boolean}
  */
-function filterEtat(values) {
-    etat_selected = $("#select_etat").val();
-    if(etat_selected === '') {
+function filterSelect(field_name, values) {
+    selection = $("#select_" + field_name).val();
+    if(selection === '') {
         return true;
     }
     else {
-        return (values.etat === etat_selected);
+        return (values[field_name] === selection);
     }
 }
 

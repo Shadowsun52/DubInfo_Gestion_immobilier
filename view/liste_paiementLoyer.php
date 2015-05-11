@@ -2,6 +2,8 @@
     use DubInfo_gestion_immobilier\business\PaiementLoyerCRUD;
     use DubInfo_gestion_immobilier\model\Maison;
     use DubInfo_gestion_immobilier\model\Paiement;
+    
+    define('MIN_YEAR', 2013);
 ?>
 <h2>Liste des rencontres avec les investisseurs</h2>
 <div id="table_of_item">
@@ -10,25 +12,53 @@
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
         </div>
-<!--        <div>
-            <p><label>Date : </label></p>
+        <div>
+            <p><label>Mois : </label></p>
+            <p>
+                <select id="select_mois" class="filter_option">
+                    <option value="">- Filtrer les mois -</option>
+                <?php
+                    foreach (Paiement::getNomsMois() as $mois) {
+                        echo '<option value="'. $mois .'">' . $mois . '</option>';
+                    }
+                ?>
+                </select>
+            </p>
+        </div>
+        <div>
+            <p><label>Année : </label></p>
+            <p>
+                <select id="select_annee" class="filter_option">
+                    <option value="">- Filtrer les années -</option>
+                <?php
+                    for ($year = MIN_YEAR; $year <= (date('Y')+1); $year++) {
+                        echo '<option value="'. $year .'">' . $year . '</option>';
+                    }
+                ?>
+                </select>
+            </p>
+        </div>
+        <div>
+            <p><label>Loyer : </label></p>
             <p>
                 <span class="low_size">min: </span>
-                <input id="min_date" type="text" class="filter_option"/>
+                <input id="min_loyer" type="number" class="filter_option"/>
                 <span class="low_size">max: </span> 
-                <input id="max_date" type="text" class="filter_option"/>
+                <input id="max_loyer" type="number" class="filter_option"/>
             </p> 
         </div>
         <div>
-            <p><label>Budget : </label></p>
+            <p><label>loyer payé : </label></p>
             <p>
-                <span class="low_size">min: </span>
-                <input id="min_budget" type="number" class="filter_option"/>
-                <span class="low_size">max: </span> 
-                <input id="max_budget" type="number" class="filter_option"/>
+                <span class="low_size">Oui </span>
+                <input type="checkbox" name="loyer_paye" value="oui"
+                       class="filter_option"/>
+                <span class="low_size">Non </span> 
+                <input type="checkbox" name="loyer_paye" value="non" 
+                       class="filter_option"/>
             </p> 
         </div>
-    </div>-->
+    </div>
     <table id="liste">
         <thead>
             <tr>
@@ -38,7 +68,7 @@
                 <th class="sort" data-sort="loyer">Loyer</th>
                 <th class="sort" data-sort="Loyer_paye">Loyer payé</th>
                 <th class="sort" data-sort="mois">Mois</th>
-                <th class="sort" data-sort="année">Année</th>
+                <th class="sort" data-sort="annee">Année</th>
             </tr>
         </thead>
     
