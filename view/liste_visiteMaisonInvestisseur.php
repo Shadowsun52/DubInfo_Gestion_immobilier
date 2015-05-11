@@ -9,7 +9,7 @@
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
         </div>
-<!--        <div>
+        <div>
             <p><label>Etat : </label></p>
             <p>
                 <select id="select_etat" class="filter_option">
@@ -29,7 +29,7 @@
                 <span class="low_size">max: </span> 
                 <input id="max_date" type="text" class="filter_option"/>
             </p> 
-        </div>-->
+        </div>
     </div>
     <table id="liste">
         <thead>

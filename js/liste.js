@@ -58,6 +58,7 @@ function initListenerFilter(item_name) {
  */
 function initDatePicker(item_name) {
     switch (item_name) {
+        case 'visiteMaisonInvestisseur' :
         case 'rencontreInvestisseur' :
             addDatePicker(item_name, "date");
             break;
@@ -130,6 +131,8 @@ function checkFilter(item_name, values) {
             return filterSelect("mois", values) && filterSelect("annee", values)
                     && filterBorne("loyer", values) 
                     && filterAllIsPaid("loyer_paye", "loyer", values);
+        case 'visiteMaisonInvestisseur' :
+            return filterSelect("etat", values) && filterBorneDate("date", values);
         default:
             return true;
     }
