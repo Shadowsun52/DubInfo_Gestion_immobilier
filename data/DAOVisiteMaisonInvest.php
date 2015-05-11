@@ -4,6 +4,7 @@ namespace DubInfo_gestion_immobilier\data;
 use DubInfo_gestion_immobilier\model\VisiteMaisonInvestisseur;
 use DubInfo_gestion_immobilier\model\Maison;
 use DubInfo_gestion_immobilier\model\Investisseur;
+use DubInfo_gestion_immobilier\model\Etat;
 use DubInfo_gestion_immobilier\Exception\PDOException;
 use \DateTime;
 /**
@@ -189,8 +190,10 @@ class DAOVisiteMaisonInvest extends DAOVisite{
                 $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
 
                 //création de l'object investisseur
+                $etat = new Etat($result['etat_id'], $result['libelle']);
                 $investisseur = new Investisseur($result['investisseur_id'], 
                         $result['nom'], $result['prenom']);
+                $investisseur->setEtat($etat);
 
                 //création de la date
                 $date = $this->readDate($result['date']);

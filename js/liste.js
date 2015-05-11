@@ -34,6 +34,8 @@ function initValueNames(item_name) {
         case 'paiementLoyer':
             return ['maison', 'chambre', 'locataire', 'loyer', 'loyer_paye', 
                 'mois', 'annee'];
+        case 'visiteMaisonInvestisseur': 
+            return ['nom', 'etat', 'maison', 'date', 'rapport'];
         default:
             return [];    
     }

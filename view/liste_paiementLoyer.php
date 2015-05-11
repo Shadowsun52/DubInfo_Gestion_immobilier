@@ -79,7 +79,7 @@
             
             foreach ($business->readAll() as $paiement) {
                 echo '<tr>';
-                echo '<td class="nom">' . $paiement->getLocation()->getChambre()
+                echo '<td class="maison">' . $paiement->getLocation()->getChambre()
                         ->getMaison()->getTitre(Maison::LANGUAGE_FR) . '</td>';
                 echo '<td class="chambre">' . $paiement->getLocation()->getChambre()
                         ->getNumero() . (($paiement->getLocation()->getChambre()

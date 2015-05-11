@@ -1,5 +1,6 @@
 <?php
     use DubInfo_gestion_immobilier\business\VisiteMaisonInvestisseurCRUD;
+    use DubInfo_gestion_immobilier\model\Maison;
 ?>
 <h2>Liste des visites de maison par un investisseur</h2>
 <div id="table_of_item">
@@ -43,22 +44,22 @@
     
         <tbody  class="list">
         <?php
-//            //On remplie le tableau avec les rencontres investisseurs
-//            $business = new RencontreInvestisseurCRUD();
-//            
-//            foreach ($business->readAll() as $rencontre) {
-//                echo '<tr>';
-//                echo '<td class="nom">' . $rencontre->getInvestisseur()->getNom() . ' ' 
-//                        . $rencontre->getInvestisseur()->getPrenom() . '</td>';
-//                echo '<td class="etat">' . $rencontre->getInvestisseur()
-//                        ->getEtat()->getLibelle() . '</td>';
-//                echo '<td class="date center">' 
-//                    . $rencontre->getDate()->format('Y/m/d') . '</td>';
-//                echo '<td class="budget center">' 
-//                    . $rencontre->getInvestisseur()->getBudget() . '</td>';
-//                echo '<td class="rapport">' . $rencontre->getRapport() . '</td>';
-//                echo '</tr>';
-//            }
+            //On remplie le tableau avec les rencontres investisseurs
+            $business = new VisiteMaisonInvestisseurCRUD();
+            
+            foreach ($business->readAll() as $visite) {
+                echo '<tr>';
+                echo '<td class="nom">' . $visite->getInvestisseur()->getNom() . ' ' 
+                        . $visite->getInvestisseur()->getPrenom() . '</td>';
+                echo '<td class="etat">' . $visite->getInvestisseur()
+                        ->getEtat()->getLibelle() . '</td>';
+                echo '<td class="maison">' . $visite->getMaison()
+                        ->getTitre(Maison::LANGUAGE_FR) . '</td>';
+                echo '<td class="date center">' 
+                    . $visite->getDate()->format('Y/m/d') . '</td>';
+                echo '<td class="rapport">' . $visite->getRapport() . '</td>';
+                echo '</tr>';
+            }
         ?>
         </tbody>
     </table>
