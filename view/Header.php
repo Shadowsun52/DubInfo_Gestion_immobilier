@@ -79,7 +79,7 @@
                     <ul>
                         <li><a href="index.php?action=gestion&item=paiementLoyer">Paiements des loyers</a></li>
                         <li class="separator_list"><a href="index.php?action=liste&item=location">Liste des locations</a></li>
-                        <li><a href="index.php?action=liste&item=paiementLoyer">Liste des paiements des loyers</a></li>
+                        <li><a href="index.php?action=liste&item=paiementLoyer">Liste des paiements de loyer</a></li>
                     </ul>   
                 </li>
                 <li><a href="index.php?action=gestion&item=professionnel">Professionnels</a>

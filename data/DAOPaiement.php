@@ -2,6 +2,10 @@
 namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\Paiement;
+use DubInfo_gestion_immobilier\model\Locataire;
+use DubInfo_gestion_immobilier\model\Location;
+use DubInfo_gestion_immobilier\model\Chambre;
+use DubInfo_gestion_immobilier\model\Maison;
 /**
  * Description of DAOPaiement
  *
@@ -58,7 +62,7 @@ class DAOPaiement extends AbstractDAO{
             $request->execute(array(':id' => $id));
             $result = $request->fetch();
             
-            //création de la location
+            //création du paiment
             $paiement = new Paiement($id, $result['mois'], $result['annee'], 
                     $result['loyer_paye']);
             
@@ -117,7 +121,46 @@ class DAOPaiement extends AbstractDAO{
         }
     }
 
+    /**
+     * Méthode qui retourne tous les paiements de loyer de la DB
+     * @return array[Paiement]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée'];
+        try {
+            $sql = "SELECT pl.*, l.loyer, l.locataire_id, laire.nom, 
+                    laire.prenom, l.chambres_table_id,  ct.numero, ct.etage, 
+                    ct.propositions_table_id, pt.titre_fr FROM paiement_loyer pl
+                    JOIN location l ON pl.location_id = l.id
+                    JOIN locataire laire ON l.locataire_id = laire.id
+                    JOIN chambres_table ct ON l.chambres_table_id = ct.id
+                    JOIN propositions_table pt ON ct.propositions_table_id = pt.id
+                    ORDER BY pt.titre_fr, ct.numero, laire.nom, laire.prenom";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                $locataire = new Locataire($result['locataire_id'], 
+                        $result['nom'], $result['prenom']);
+                
+                $maison = new Maison($result['propositions_table_id']);
+                $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
+                $chambre = new Chambre($result['chambres_table_id'], 
+                        $result['numero'], $result['etage']);
+                $chambre->setMaison($maison);
+                $location = new Location($result['location_id']);
+                $location->setLoyer($result['loyer']);
+                $location->setLocataire($locataire);
+                $location->setChambre($chambre);
+
+                //création de l'objet paiement
+                $paiements[] = new Paiement($result['id'], $result['mois'], 
+                        $result['annee'], $result['loyer_paye'], $location);
+            }
+
+            return isset( $paiements) ?  $paiements : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 }
