@@ -8,27 +8,6 @@
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
         </div>
-        <div>
-            <p><label>Etat : </label></p>
-            <p>
-                <select id="select_etat" class="filter_option">
-                    <option value="">- Filtrer les états -</option>
-                    <option value="Potentiel">Potentiel</option>
-                    <option value="Actif">Actif</option>
-                    <option value="Propriétaire">Propriétaire</option>
-                    <option value="Abandonné">Abandonné</option>
-                </select>
-            </p>
-        </div>
-        <div>
-            <p><label>Budget : </label></p>
-            <p>
-                <span class="low_size">min: </span>
-                <input id="min_budget" type="number" class="filter_option"/>
-                <span class="low_size">max: </span> 
-                <input id="max_budget" type="number" class="filter_option"/>
-            </p> 
-        </div>
     </div>
     <table id="locataire-list">
         <thead>

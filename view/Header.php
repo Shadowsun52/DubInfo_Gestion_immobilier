@@ -22,7 +22,7 @@
         });
         </script>
 
-        <!-- Fin de la partie "Menu" -->
+    <!-- Fin de la partie "Menu" -->
 
     <?php
     if(isset($_GET['action'])) {
@@ -35,10 +35,7 @@
         }
         elseif ($_GET['action'] === 'liste') {
             ?>
-            <link rel="stylesheet" type="text/css" 
-                  href="./librairies/DataTables-1.10.7/media/css/jquery.dataTables.min.css">
-            <script src="./librairies/DataTables-1.10.7/media/js/jquery.dataTables.min.js"></script>
-            <script src="js/jquery.dataTables.columnFilter.js"></script>
+            <script src="http://listjs.com/no-cdn/list.js"></script>
             <?php
         }
     }

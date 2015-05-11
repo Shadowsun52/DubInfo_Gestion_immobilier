@@ -4,14 +4,7 @@
 <h2>Liste des Locataires</h2>
 <div id="table_of_item">
     <div id="filter">
-        <p id="nom_Filter"></p>
-        <p id="etat_Filter"></p>
-        <p id="tel_Filter"></p>
-        <p id="gsm_Filter"></p>
-        <p id="mail_Filter"></p>
-        <p id="budget_Filter"></p>
-        <p id="remarque_Filter"></p>
-<!--        <div>
+        <div>
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
         </div>
@@ -36,33 +29,21 @@
                 <span class="low_size">max: </span> 
                 <input id="max_budget" type="number" class="filter_option"/>
             </p> 
-        </div>-->
+        </div>
     </div>
-    <table id="example" class="display">
+    <table id="locataire-list">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Etat</th>
-                <th>Téléphone</th>
-                <th>Gsm</th>
-                <th>Mail</th>
-                <th>Budget</th>
-                <th>Remarques</th>
+                <th class="sort" data-sort="nom">Nom</th>
+                <th class="sort" data-sort="etat">Etat</th>
+                <th class="sort" data-sort="num_tel">Téléphone</th>
+                <th class="sort" data-sort="num_gsm">Gsm</th>
+                <th class="sort" data-sort="mail">Mail</th>
+                <th class="sort" data-sort="budget">Budget</th>
+                <th class="sort" data-sort="remarques">Remarques</th>
             </tr>
         </thead>
-        
-        <tfoot>
-            <tr>
-                <th >Nom</th>
-                <th >Etat</th>
-                <th >Téléphone</th>
-                <th >Gsm</th>
-                <th >Mail</th>
-                <th >Budget</th>
-                <th >Remarques</th>
-            </tr>
-        </tfoot>
-        
+    
         <tbody  class="list">
         <?php
             //On remplie le tableau avec les locataires
@@ -85,25 +66,4 @@
         </tbody>
     </table>
 </div>
-<script type="text/javascript">
-    $(document).ready( function () {
-		$('#example').dataTable( {
-                    'paging': false,
-                    'language': {
-                        "zeroRecords": "Rien n'a été trouvé",
-                        "info": "Résultats affichés _END_ sur _MAX_",
-                        "infoFiltered": "",
-                        "search": "Recherche:",
-                        "emptyTable": "Aucune données dans le tableau"
-                    }
-                }).columnFilter({
-                    aoColumns: [
-                        { sSelector: "#nom_Filter", type: "text" }
-                    ]
-                });
-    });
-</script>
-<!--<script src="./js/liste.js"></script>
-<script type="text/javascript">
-    addBorneFilter("budget");
-</script>-->
+<script src="./js/liste.js"></script>
