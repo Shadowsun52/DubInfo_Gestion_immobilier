@@ -66,6 +66,7 @@
                         <li><a href="index.php?action=gestion&item=projet">Projets</a></li>    
                         <li class="separator_list"><a href="index.php?action=liste&item=investisseur">Liste des investisseurs</a></li>
                         <li><a href="index.php?action=liste&item=rencontreInvestisseur">Liste des rencontres avec les investisseurs</a></li>
+                        <li><a href="index.php?action=liste&item=visiteMaisonInvestisseur">liste des Visites de maisons par un investisseur</a></li>
                     </ul>
                 </li>
                 <li><a href="index.php?action=gestion&item=locataire">Locataires</a>

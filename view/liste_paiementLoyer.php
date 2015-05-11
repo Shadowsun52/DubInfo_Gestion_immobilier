@@ -5,7 +5,7 @@
     
     define('MIN_YEAR', 2013);
 ?>
-<h2>Liste des rencontres avec les investisseurs</h2>
+<h2>Liste des paiements de loyer</h2>
 <div id="table_of_item">
     <div id="filter">
         <div>
