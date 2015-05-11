@@ -39,22 +39,32 @@
     
         <tbody  class="list">
         <?php
-//            //On remplie le tableau avec les rencontres investisseurs
-//            $business = new VisiteMaisonInvestisseurCRUD();
-//            
-//            foreach ($business->readAll() as $visite) {
-//                echo '<tr>';
-//                echo '<td class="nom">' . $visite->getInvestisseur()->getNom() . ' ' 
-//                        . $visite->getInvestisseur()->getPrenom() . '</td>';
-//                echo '<td class="etat">' . $visite->getInvestisseur()
-//                        ->getEtat()->getLibelle() . '</td>';
-//                echo '<td class="maison">' . $visite->getMaison()
-//                        ->getTitre(Maison::LANGUAGE_FR) . '</td>';
-//                echo '<td class="date center">' 
-//                    . $visite->getDate()->format('Y/m/d') . '</td>';
-//                echo '<td class="rapport">' . $visite->getRapport() . '</td>';
-//                echo '</tr>';
-//            }
+            //On remplie le tableau avec les rencontres investisseurs
+            $business = new ProjetCRUD();
+            
+            foreach ($business->readAll() as $projet) {
+                echo '<tr>';
+                echo '<td class="nom">' . $projet->getInvestisseur()->getNom() . ' ' 
+                        . $projet->getInvestisseur()->getPrenom() . '</td>';
+                echo '<td class="etat">' . $projet->getInvestisseur()
+                        ->getEtat()->getLibelle() . '</td>';
+                echo '<td class="maison">' . $projet->getMaison()
+                        ->getTitre(Maison::LANGUAGE_FR) . '</td>';
+                echo '<td class="compromis center">' 
+                    . $projet->getDateSignatureCompromis()->format('Y/m/d') . '</td>';
+                echo '<td class="acte center">' 
+                    . $projet->getDateSignatureActe()->format('Y/m/d') . '</td>';
+                echo '<td class="plan_metre center">' 
+                        . (($projet->getPlanMetreFait()) ? 'Oui' : 'Non') . '</td>';
+                echo '<td class="devis center">' 
+                        . (($projet->getDevisEntrepreneurConfirmer()) ? 'Oui' : 'Non') 
+                        . '</td>';
+                echo '<td class="selection_materiaux center">' 
+                        . (($projet->getSelectionMateriauxFait()) ? 'Oui' : 'Non') 
+                        . '</td>';
+                echo '<td class="remarques">' . $projet->getCommentaire() . '</td>';
+                echo '</tr>';
+            }
         ?>
         </tbody>
     </table>

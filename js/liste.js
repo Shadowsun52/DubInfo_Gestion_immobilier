@@ -38,7 +38,7 @@ function initValueNames(item_name) {
             return ['nom', 'etat', 'maison', 'date', 'rapport'];
         case 'projet':
             return ['nom', 'etat', 'maison', 'compromis', 'acte', 'plan_metre',
-                'devis', 'selection_materiaux', 'remarque'];
+                'devis', 'selection_materiaux', 'remarques'];
         default:
             return [];    
     }
