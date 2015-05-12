@@ -304,7 +304,7 @@ class DAOMaison extends AbstractDAO{
     public function readAll() {
         try {
             $sql = "SELECT pt.*, e.libelle as 'etat', cbt.name as 'commune', 
-                    ct.id, count(ct.id) as 'nb_chambres' FROM propositions_table pt
+                    count(ct.id) as 'nb_chambres' FROM propositions_table pt
                     JOIN etat e ON pt.etat_id = e.id
                     LEFT JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id
                     LEFT JOIN chambres_table ct ON ct.propositions_table_id = pt.id

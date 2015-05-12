@@ -42,29 +42,64 @@
                 <th class="sort" data-sort="localisation">localisation</th>
                 <th class="sort" data-sort="localisation_indice">localisation indice</th>
                 <th class="sort" data-sort="qualite">Qualité</th>
-                <th class="sort" data-sort="qualite indice">Qualité indice</th>
-                
+                <th class="sort" data-sort="qualite_indice">Qualité indice</th>
+                <th class="sort" data-sort="remarques">Remarques</th>
             </tr>
         </thead>
     
         <tbody  class="list">
         <?php
-//            //On remplie le tableau avec les rencontres investisseurs
-//            $business = new VisiteMaisonInvestisseurCRUD();
-//            
-//            foreach ($business->readAll() as $visite) {
-//                echo '<tr>';
-//                echo '<td class="nom">' . $visite->getInvestisseur()->getNom() . ' ' 
-//                        . $visite->getInvestisseur()->getPrenom() . '</td>';
-//                echo '<td class="etat">' . $visite->getInvestisseur()
-//                        ->getEtat()->getLibelle() . '</td>';
-//                echo '<td class="maison">' . $visite->getMaison()
-//                        ->getTitre(Maison::LANGUAGE_FR) . '</td>';
-//                echo '<td class="date center">' 
-//                    . $visite->getDate()->format('Y/m/d') . '</td>';
-//                echo '<td class="rapport">' . $visite->getRapport() . '</td>';
-//                echo '</tr>';
-//            }
+            //On remplie le tableau avec les rencontres investisseurs
+            $business = new MaisonCRUD();
+            
+            foreach ($business->readAll() as $maison) {
+                echo '<tr>';
+                echo '<td class="titre">' 
+                    . $maison->getTitre(Maison::LANGUAGE_FR) . '</td>';
+                echo '<td class="etat">'. $maison->getEtat()->getLibelle() 
+                        . '</td>';
+                echo '<td class="rue">'. $maison->getAdresse()->getRue() 
+                        . '</td>';
+                echo '<td class="numero">'. $maison->getAdresse()->getNumero() 
+                        . '</td>';
+                echo '<td class="commune">'. $maison->getCommune()->getLibelle() 
+                        . '</td>';
+                $contacts = "";
+                for($i = 0; $i < count($maison->getContacts()); $i++) {
+                    if($i > 0) {
+                        $contacts .= "</br>";
+                    }
+                    $contact = $maison->getContact($i);
+                    $contacts .=  $contact->getNom() . ' ' . $contact->getPrenom();
+                }
+                echo '<td class="contact">' . $contacts . '</td>';
+                echo '<td class="prix center">' . $maison->getPrix() . '</td>';
+                echo '<td class="prix_conseille center">' 
+                    . $maison->getPrixConseille() . '</td>';
+                echo '<td class="prix_m2 center">' 
+                    . $maison->getPrixMetreCarre() . '</td>';
+                echo '<td class="cout_travaux center">' 
+                    . $maison->getCoutTravaux() . '</td>';
+                echo '<td class="cout_total center">'. ($maison->getCoutTravaux()
+                        + $maison->getPrixConseille()) . '</td>';
+                echo '<td class="chambres center">'
+                    . count($maison->getChambres()) . '</td>';
+                echo '<td class="sdb center">' 
+                    . $maison->getNbSalleDeBain() . '</td>';
+                echo '<td class="rendement center">' 
+                    . $maison->getRendement() . '</td>';
+                echo '<td class="localisation">' 
+                    . $maison->getLocalisation() . '</td>';
+                echo '<td class="localisation_indice center">' 
+                    . $maison->getLocalisationIndice() . '</td>';
+                echo '<td class="qualite">' 
+                    . $maison->getQualite() . '</td>';
+                echo '<td class="qualite_indice center">' 
+                    . $maison->getQualiteIndice() . '</td>';
+                echo '<td class="remarques center">' 
+                    . $maison->getCommentaire() . '</td>';
+                echo '</tr>';
+            }
         ?>
         </tbody>
     </table>

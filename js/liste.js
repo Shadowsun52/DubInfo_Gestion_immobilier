@@ -39,6 +39,11 @@ function initValueNames(item_name) {
         case 'projet':
             return ['nom', 'etat', 'maison', 'compromis', 'acte', 'plan_metre',
                 'devis', 'selection_materiaux', 'remarques'];
+        case 'maison':
+            return ['titre', 'etat', 'rue', 'numero', 'commune', 'contact', 
+                'prix', 'prix_conseille', 'prix_m2', 'cout_travaux', 'cout_total', 
+                'chambres', 'sdb', 'rendement', 'localisation', 
+                'localisation_indice', 'qualite', 'qualite_indice', 'remarques'];
         default:
             return [];    
     }
