@@ -58,6 +58,7 @@
                         <li><a href="index.php?action=gestion&item=contact">Contacts</a></li>
                         <li><a href="index.php?action=gestion&item=prospectionMaison">Prospections de maison</a></li>
                         <li class="separator_list"><a href="index.php?action=liste&item=maison">Liste des maisons</a></li>
+                        <li><a href="index.php?action=liste&item=chambre">Liste des chambres</a></li>
                     </ul>
                 </li>
                 <li><a href="index.php?action=gestion&item=investisseur">Investisseurs</a>
