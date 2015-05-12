@@ -65,6 +65,10 @@ function initDatePicker(item_name) {
         case 'rencontreInvestisseur' :
             addDatePicker(item_name, "date");
             break;
+        case 'projet' :
+            addDatePicker(item_name, "compromis");
+            addDatePicker(item_name, "acte");
+            break;
     }
 }
 
@@ -136,6 +140,11 @@ function checkFilter(item_name, values) {
                     && filterAllIsPaid("loyer_paye", "loyer", values);
         case 'visiteMaisonInvestisseur' :
             return filterSelect("etat", values) && filterBorneDate("date", values);
+        case 'projet':
+            return filterSelect("etat", values) && filterBorneDate("compromis", values)
+                    && filterBorneDate("acte", values) 
+                    && filterYesNo("plan_metre", values) && filterYesNo("devis", values) 
+                    && filterYesNo("selection_materiaux", values);
         default:
             return true;
     }

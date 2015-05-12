@@ -9,7 +9,7 @@
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
         </div>
-<!--        <div>
+        <div>
             <p><label>Etat : </label></p>
             <p>
                 <select id="select_etat" class="filter_option">
@@ -20,7 +20,56 @@
                     <option value="Abandonné">Abandonné</option>
                 </select>
             </p>
-        </div>-->
+        </div>
+        <div>
+            <p><label>Date compromis: </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_compromis" type="text" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_compromis" type="text" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Date acte: </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_acte" type="text" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_acte" type="text" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Plan métré fait ? : </label></p>
+            <p>
+                <span class="low_size">Oui </span>
+                <input type="checkbox" name="plan_metre" value="oui" 
+                       class="filter_option"/>
+                <span class="low_size">Non </span> 
+                <input type="checkbox" name="plan_metre" value="non" 
+                       class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Devis entrepreneur fait ? : </label></p>
+            <p>
+                <span class="low_size">Oui </span>
+                <input type="checkbox" name="devis" value="oui" class="filter_option"/>
+                <span class="low_size">Non </span> 
+                <input type="checkbox" name="devis" value="non" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Sélection matériaux faite ? : </label></p>
+            <p>
+                <span class="low_size">Oui </span>
+                <input type="checkbox" name="selection_materiaux" value="oui" 
+                       class="filter_option"/>
+                <span class="low_size">Non </span> 
+                <input type="checkbox" name="selection_materiaux" value="non" 
+                       class="filter_option"/>
+            </p> 
+        </div>
     </div>
     <table id="liste">
         <thead>
@@ -30,7 +79,7 @@
                 <th class="sort" data-sort="maison">Maison</th>
                 <th class="sort" data-sort="compromis">Date compromis</th>
                 <th class="sort" data-sort="acte">Date acte</th>
-                <th class="sort" data-sort="plan_metre">Plan metré</th>
+                <th class="sort" data-sort="plan_metre">Plan métré</th>
                 <th class="sort" data-sort="devis">Devis entrepreneur</th>
                 <th class="sort" data-sort="selection_materiaux">Sélection matériaux</th>
                 <th class="sort" data-sort="remarques">Remarques</th>
