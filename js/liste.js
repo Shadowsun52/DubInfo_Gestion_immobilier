@@ -160,6 +160,8 @@ function checkFilter(item_name, values) {
                     && filterSelect("qualite_indice", values) 
                     && filterBorne("rendement", values) 
                     && filterBorne("prix_conseille", values);
+        case 'chambre' :
+            return filterBorne("prix", values) && filterBorne("charges", values);
         default:
             return true;
     }

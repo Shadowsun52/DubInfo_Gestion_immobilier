@@ -9,6 +9,24 @@
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
         </div>
+        <div>
+            <p><label>Prix : </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_prix" type="number" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_prix" type="number" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Charges : </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_charges" type="number" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_charges" type="number" class="filter_option"/>
+            </p> 
+        </div>
     </div>
     <table id="locataire-list">
         <thead>
