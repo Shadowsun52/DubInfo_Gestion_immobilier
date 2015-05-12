@@ -82,7 +82,36 @@ class DAOChambre extends AbstractDAO{
         return ['erreur' => 'Mise à jour pas implémentée'];
     }
 
+    /**
+     * Méthode qui retourne tous les chambres de la DB
+     * @return array[Chambre]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée']; 
+        try {
+            $sql = "SELECT ct.*, pt.titre_fr, pt.commentaire FROM chambres_table ct
+                    JOIN propositions_table pt ON ct.propositions_table_id = pt.id
+                    ORDER BY pt.titre_fr, ct.numero";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                $maison = new Maison($result['propositions_table_id'], 
+                        $result['maison_id']);
+                $maison->setCommentaire($result['commentaire']);
+
+                //création de la date disponible
+                $date = $this->readDate($result['date_disponibilite']);
+                
+                //création de l'objet chambre
+                $chambres[] = new Chambre($result['id'], $result['numero'], 
+                        $result['etage'], $result['prix'], $result['charges'], 
+                        $date, $result['disponible'], $maison);
+            }
+
+            return isset( $chambres) ?  $chambres : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
 }
