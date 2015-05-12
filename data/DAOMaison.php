@@ -297,8 +297,60 @@ class DAOMaison extends AbstractDAO{
         }
     }
 
+    /**
+     * Méthode qui retourne tous les maisons de la DB
+     * @return array[Maison]
+     */
     public function readAll() {
-        return ['erreur' => 'readAll pas implémentée'];
+        try {
+            $sql = "SELECT pt.*, e.libelle as 'etat', cbt.name as 'commune', 
+                    ct.id, count(ct.id) as 'nb_chambres' FROM propositions_table pt
+                    JOIN etat e ON pt.etat_id = e.id
+                    LEFT JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id
+                    LEFT JOIN chambres_table ct ON ct.propositions_table_id = pt.id
+                    GROUP BY pt.id ORDER BY pt.titre_fr";
+            $request = $this->getConnection()->prepare($sql);
+            $request->execute();
+            
+            foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
+            {
+                //création de l'objet adresse
+                $adresse = new Adresse($result['adresse_rue'], $result['adresse_numero']);
+                $commune = new Commune($result['commune_id'], $result['commune']);
+
+                //création de la source
+                $etat = new Etat($result['etat_id'], $result['etat']);
+
+                //creation date creation
+                $date = new \DateTime();
+                $date->setTimestamp(intval($result['date_creation']));
+
+                //création de l'objet maison
+                $maison = new Maison($result['id'], null, $result['reference'], 
+                        $result['prix'], $result['prix_conseille'], $result['rendement'],
+                        $result['superficie_habitable'], $result['nb_salle_de_bain'], 
+                        $result['cout_travaux'], $result['dossier_realise'], 
+                        $result['localisation'], $result['localisation_indice'],
+                        $result['qualite'], $result['qualite_indice'], $result['commentaire'], 
+                        $result['raison_abandon'], $result['show_on_web'], $etat, 
+                        $commune, $adresse, $date);
+                $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
+                $maison->setContacts($this->readContactsMaison($result['id']));
+
+                $chambres = [];
+                for($i = 0; $i < $result['nb_chambres']; $i++) {
+                    $chambres[] = new Chambre();
+                }
+                $maison->setChambres($chambres);
+            
+                //création de l'objet Locataire
+                $maisons[] = $maison;
+            }
+
+            return isset( $maisons) ?  $maisons : [];
+        } catch (Exception $ex) {
+            throw new PDOException($ex->getMessage());
+        }
     }
     
 //<editor-fold defaultstate="collapsed" desc="Gestion source & contacts">
