@@ -98,6 +98,7 @@ class DAOChambre extends AbstractDAO{
             {
                 $maison = new Maison($result['propositions_table_id'], 
                         $result['maison_id']);
+                $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
                 $maison->setCommentaire($result['commentaire']);
 
                 //création de la date disponible

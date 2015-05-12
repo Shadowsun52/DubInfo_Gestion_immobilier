@@ -81,7 +81,7 @@
                 echo '<tr>';
                 echo '<td class="maison">' . $paiement->getLocation()->getChambre()
                         ->getMaison()->getTitre(Maison::LANGUAGE_FR) . '</td>';
-                echo '<td class="chambre">' . $paiement->getLocation()->getChambre()
+                echo '<td class="chambre">N°' . $paiement->getLocation()->getChambre()
                         ->getNumero() . (($paiement->getLocation()->getChambre()
                         ->getEtage() === NULL) ? '' :
                         ' (' . $paiement->getLocation()->getChambre()

@@ -13,7 +13,7 @@
     <table id="locataire-list">
         <thead>
             <tr>
-                <th class="sort" data-sort="titre">Maison</th>
+                <th class="sort" data-sort="maison">Maison</th>
                 <th class="sort" data-sort="chambre">Chambre</th>
                 <th class="sort" data-sort="prix">Prix</th>
                 <th class="sort" data-sort="charges">Charges</th>
@@ -24,19 +24,25 @@
     
         <tbody  class="list">
         <?php
-//            //On remplie le tableau avec les locations
-//            $business = new LocationCRUD();
-//            
-//            foreach ($business->readAll() as $location) {
-//                echo '<tr>';
-//                echo '<td class="maison">' . $location->getChambre()->getMaison()
-//                        ->getTitre(Maison::LANGUAGE_FR) . '</td>';
-//                echo '<td class="chambre">' . $location->getChambre()->getNumero()
-//                        . (($location->getChambre()->getEtage() === NULL) ? '' :
-//                        ' (' . $location->getChambre()->getEtage(). ')') 
-//                        . '</td>';
-//                echo '</tr>';
-//            }
+            //On remplie le tableau avec les locations
+            $business = new ChambreCRUD();
+            
+            foreach ($business->readAll() as $chambre) {
+                echo '<tr>';
+                echo '<td class="maison">' . $chambre->getMaison()
+                        ->getTitre(Maison::LANGUAGE_FR) . '</td>';
+                echo '<td class="chambre">N°' . $chambre->getNumero()
+                        . (($chambre->getEtage() === NULL) ? '' :
+                        ' (' . $chambre->getEtage(). ')') . '</td>';
+                echo '<td class="prix center">' . $chambre->getPrix() . '</td>';
+                echo '<td class="charges center">' . $chambre->getCharges() 
+                        . '</td>';
+                echo '<td class="prix_charges center">' 
+                        . ($chambre->getPrix() + $chambre->getCharges()) . '</td>';
+                echo '<td class="remarques">' 
+                        . $chambre->getMaison()->getCommentaire() . '</td>';
+                echo '</tr>';
+            }
         ?>
         </tbody>
     </table>

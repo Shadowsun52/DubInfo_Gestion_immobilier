@@ -84,7 +84,7 @@
                         . ' ' . $location->getLocataire()->getPrenom() . '</td>';
                 echo '<td class="maison">' . $location->getChambre()->getMaison()
                         ->getTitre(Maison::LANGUAGE_FR) . '</td>';
-                echo '<td class="chambre">' . $location->getChambre()->getNumero()
+                echo '<td class="chambre">N°' . $location->getChambre()->getNumero()
                         . (($location->getChambre()->getEtage() === NULL) ? '' :
                         ' (' . $location->getChambre()->getEtage(). ')') 
                         . '</td>';

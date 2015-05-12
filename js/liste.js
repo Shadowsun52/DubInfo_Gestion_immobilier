@@ -44,6 +44,9 @@ function initValueNames(item_name) {
                 'prix', 'prix_conseille', 'prix_m2', 'cout_travaux', 'cout_total', 
                 'chambres', 'sdb', 'rendement', 'localisation', 
                 'localisation_indice', 'qualite', 'qualite_indice', 'remarques'];
+        case 'chambre':
+            return ['maison', 'chambre', 'prix', 'charges', 'prix_charges',
+                'remarques'];
         default:
             return [];    
     }
