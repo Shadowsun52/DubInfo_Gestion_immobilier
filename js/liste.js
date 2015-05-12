@@ -150,6 +150,13 @@ function checkFilter(item_name, values) {
                     && filterBorneDate("acte", values) 
                     && filterYesNo("plan_metre", values) && filterYesNo("devis", values) 
                     && filterYesNo("selection_materiaux", values);
+        case 'maison' :
+            return filterSelect("etat", values) && filterSelect("commune", values)
+                    && filterSelect("chambres", values) && filterSelect("sdb", values)
+                    && filterSelect("localisation_indice", values) 
+                    && filterSelect("qualite_indice", values) 
+                    && filterBorne("rendement", values) 
+                    && filterBorne("prix_conseille", values);
         default:
             return true;
     }

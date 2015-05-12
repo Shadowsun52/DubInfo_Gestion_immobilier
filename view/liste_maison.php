@@ -1,5 +1,6 @@
 <?php
     use DubInfo_gestion_immobilier\business\MaisonCRUD;
+    use DubInfo_gestion_immobilier\business\CommuneCRUD;
     use DubInfo_gestion_immobilier\model\Maison;
 ?>
 <h2>Liste des visites de maison par un investisseur</h2>
@@ -9,7 +10,7 @@
             <p><label>Recherche : </label></p>
             <p><input class="search filter_option"/></p>
         </div>
-<!--        <div>
+        <div>
             <p><label>Etat : </label></p>
             <p>
                 <select id="select_etat" class="filter_option">
@@ -20,7 +21,92 @@
                     <option value="Abandonné">Abandonné</option>
                 </select>
             </p>
-        </div>-->
+        </div>
+        <div>
+            <p><label>Commune : </label></p>
+            <p>
+                <select id="select_commune" class="filter_option">
+                    <option value="">- Filtrer les Communes -</option>
+                <?php
+                    $business_commune = new CommuneCRUD();
+                    foreach ($business_commune->readList() as $commune) {
+                        echo '<option value="'. $commune->getLibelle() .'">' 
+                                . $commune->getLibelle() . '</option>';
+                    }
+                ?>
+                </select>
+            </p>
+        </div>
+        <div>
+            <p><label>Prix conseillé : </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_prix_conseille" type="number" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_prix_conseille" type="number" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Nombre chambres : </label></p>
+            <p>
+                <select id="select_chambres" class="filter_option">
+                    <option value="">- Filtrer les chambres -</option>
+                <?php
+                    for ($i = 0; $i <= 20 ; $i++) {
+                        echo '<option value="'. $i .'">' . $i . '</option>';
+                    }
+                ?>
+                </select>
+            </p>
+        </div>
+        <div>
+            <p><label>Nombre Salle de bains : </label></p>
+            <p>
+                <select id="select_sdb" class="filter_option">
+                    <option value="">- Filtrer les sdb -</option>
+                <?php
+                    for ($i = 1; $i <= 5 ; $i++) {
+                        echo '<option value="'. $i .'">' . $i . '</option>';
+                    }
+                ?>
+                </select>
+            </p>
+        </div>
+        <div>
+            <p><label>Rendement : </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_rendement" type="number" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_rendement" type="number" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Indice localisation : </label></p>
+            <p>
+                <select id="select_localisation_indice" class="filter_option">
+                    <option value="">- Filtrer la localisation -</option>
+                <?php
+                    for ($i = 0; $i <= 3 ; $i++) {
+                        echo '<option value="'. $i .'">' . $i . '</option>';
+                    }
+                ?>
+                </select>
+            </p>
+        </div>
+        <div>
+            <p><label>Indice Qualité : </label></p>
+            <p>
+                <select id="select_qualite_indice" class="filter_option">
+                    <option value="">- Filtrer la qualité -</option>
+                <?php
+                    for ($i = 0; $i <= 3 ; $i++) {
+                        echo '<option value="'. $i .'">' . $i . '</option>';
+                    }
+                ?>
+                </select>
+            </p>
+        </div>
     </div>
     <table id="liste">
         <thead>
