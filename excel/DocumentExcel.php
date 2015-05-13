@@ -10,7 +10,7 @@ class DocumentExcel {
     /* 
      * chemin d'access pour le dossier ou est stocké les documents excels
      */
-    const SAVE_PATH = "../document_excel/";
+    const SAVE_PATH = "./document_excel/";
 
     /**
      * Tableau des type d'item gérer pour la création d'un fichier excel
@@ -38,10 +38,11 @@ class DocumentExcel {
     
     /**
      * 
-     * @param int $type_item Type de l'item voulu
+     * @param string $type_item Type de l'item voulu
+     * @param array[mixed] $data Donnée à écrire dans le document Excel
      * @throws Exception
      */
-    public function __construct($type_item) {
+    public function __construct($type_item, $data) {
         $this->setTypeItem($type_item);
         $this->setSheetExcel($this->createSheetExcel($data));
     }
@@ -77,7 +78,7 @@ class DocumentExcel {
      * @return SheetExcel
      */
     protected function createSheetExcel($data){
-        $name_classe = "SheetExcel_" . $this->getTypeItem();
+        $name_classe = __NAMESPACE__ . "\SheetExcel_" . $this->getTypeItem();
         
         return new $name_classe($data);
     }
@@ -109,7 +110,7 @@ class DocumentExcel {
     
     protected function saveDocument() {
         $writer = new \PHPExcel_Writer_Excel2007($this->getExcelDoc());
-        $writer->save(self::SAVE_PATH . $this->getTypeItem() .'.xlsx');
+        $writer->save('.' . self::SAVE_PATH . $this->getTypeItem() .'.xlsx');
     }
 //</editor-fold>
 

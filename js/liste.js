@@ -340,7 +340,12 @@ $("#generate_excel").click(function () {
         dataType: 'json',
         success: function(data)
         {
-            alert("ok");
+            if(data.success) {
+                alert(data.link);
+            }
+            else {
+                alert(data.erreur)
+            }
         },
         error: function(data)
         {

@@ -6,7 +6,7 @@ namespace DubInfo_gestion_immobilier\excel;
  * @author Alexandre
  */
 abstract class SheetExcel {
-    const FIRST_LINE = 6;
+    const FIRST_LINE = 1;
     const SPACE_WITH_TITLE = 2;
     const HEIGHT_TITLE_QUESTION = 30;
    
@@ -97,7 +97,7 @@ abstract class SheetExcel {
      * 
      * @param array[mixed] $data data utilisées pour remplir la feuille Excel
      */
-    public function __construct($data=NULL) {
+    public function __construct($data) {
         $this->setData($data);
     }
   
