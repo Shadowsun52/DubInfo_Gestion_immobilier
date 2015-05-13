@@ -140,6 +140,10 @@ h2
     font-style: italic;
     cursor: pointer;
 }
+
+#doc_excel {
+    margin: 10px 0 0 5px;
+}
 /* Ce qui suit concerne le menu de l'Intranet */
 header .menuIntranet{
   clear:both;

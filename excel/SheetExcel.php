@@ -1,5 +1,6 @@
 <?php
 namespace DubInfo_gestion_immobilier\excel;
+use DateTime;
 /**
  * Description of SheetExcel
  *
@@ -83,7 +84,7 @@ abstract class SheetExcel {
      * @return Worksheet
      */
     public function createSheet($excel_doc) {
-        $this->setSheet(new \PHPExcel_Worksheet($excel_doc, $this->getSheetName()));
+        $this->setSheet(new \PHPExcel_Worksheet($excel_doc, 'bestInvestment'));
         $excel_doc->addSheet($this->getSheet());
         $this->writeSheet();
         $this->protectWorksheet();
@@ -103,7 +104,14 @@ abstract class SheetExcel {
     /**
      * Ecrit le nom du document dans le fichier excel
      */
-    protected abstract function writeTitle();
+    protected function writeTitle() {
+        $today = new DateTime();
+        $title = $this->getDocTitle() . " (générée le " 
+                . $today->format('d/m/Y'). ")";
+        $this->setStyleTitle();
+        $this->getSheet()->setCellValue(
+                'A'.$this->moveCurrentLine(self::SPACE_WITH_TITLE),$title);
+    }
     
     /**
      * Méthode qui écrit les entêtes des tableaux
@@ -254,15 +262,15 @@ abstract class SheetExcel {
     }
     
     /**
-     * 
-     * @return string Nom de la feuille excel
-     */
-    public abstract function getSheetName();
-    
-    /**
      * Fonction qui retourne le nom des colonnes de la table
      * @return array[string]
      */
     public abstract function getNameColumns();
+    
+    /**
+     * Fonction qui retourne la partie personnalisé du titre du document
+     * @return string 
+     */
+    public abstract function getDocTitle();
 //</editor-fold>
 }

@@ -1,6 +1,5 @@
 <?php
 namespace DubInfo_gestion_immobilier\excel;
-use DateTime;
 /**
  * Description of SheetExcel_locataire
  *
@@ -8,26 +7,13 @@ use DateTime;
  */
 class SheetExcel_locataire extends SheetExcel{
     protected function setColWidth() {
-        
-    }
-
-    /**
-     * 
-     * @return string Nom de la feuille excel
-     */
-    public function getSheetName() {
-        return "liste_locataires";
-    }
-
-    /**
-     * Ecrit le nom du document dans le fichier excel
-     */
-    protected function writeTitle() {
-        $today = new DateTime();
-        $title = "Liste des locataires (générée le " . $today->format('d/m/Y'). ")";
-        $this->setStyleTitle();
-        $this->getSheet()->setCellValue(
-                'A'.$this->moveCurrentLine(self::SPACE_WITH_TITLE),$title);
+        $this->getSheet()->getColumnDimension('A')->setWidth(20);
+        $this->getSheet()->getColumnDimension('B')->setWidth(20);
+        $this->getSheet()->getColumnDimension('C')->setWidth(15);
+        $this->getSheet()->getColumnDimension('D')->setWidth(15);
+        $this->getSheet()->getColumnDimension('E')->setWidth(30);
+        $this->getSheet()->getColumnDimension('F')->setWidth(10);
+        $this->getSheet()->getColumnDimension('G')->setWidth(45);
     }
 
     /**
@@ -36,6 +22,14 @@ class SheetExcel_locataire extends SheetExcel{
      */
     public function getNameColumns() {
         return ['nom', 'Etat', 'Téléphone', 'Gsm', 'Mail', 'Budget', 'Remarques'];
+    }
+
+    /**
+     * Fonction qui retourne la partie personnalisé du titre du document
+     * @return string 
+     */
+    public function getDocTitle() {
+        return 'Liste des locataires';
     }
 
 }
