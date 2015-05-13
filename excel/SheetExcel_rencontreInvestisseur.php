@@ -2,11 +2,11 @@
 namespace DubInfo_gestion_immobilier\excel;
 
 /**
- * Description of SheetExcel_investisseur
+ * Description of SheetExcel_rencontreInvestisseur
  *
  * @author Jenicot Alexandre
  */
-class SheetExcel_investisseur extends SheetExcel{
+class SheetExcel_rencontreInvestisseur extends SheetExcel{
     
     /**
      * Méthode pour définir la taille des colonnes
@@ -14,11 +14,9 @@ class SheetExcel_investisseur extends SheetExcel{
     protected function setColWidth() {
         $this->getSheet()->getColumnDimension('A')->setWidth(20);
         $this->getSheet()->getColumnDimension('B')->setWidth(20);
-        $this->getSheet()->getColumnDimension('C')->setWidth(15);
-        $this->getSheet()->getColumnDimension('D')->setWidth(15);
-        $this->getSheet()->getColumnDimension('E')->setWidth(35);
-        $this->getSheet()->getColumnDimension('F')->setWidth(10);
-        $this->getSheet()->getColumnDimension('G')->setWidth(45);
+        $this->getSheet()->getColumnDimension('C')->setWidth(20);
+        $this->getSheet()->getColumnDimension('D')->setWidth(10);
+        $this->getSheet()->getColumnDimension('E')->setWidth(45);
     }
 
     /**
@@ -26,7 +24,7 @@ class SheetExcel_investisseur extends SheetExcel{
      * @return array[string]
      */
     public function getNameColumns() {
-        return ['Nom', 'Etat', 'Téléphone', 'Gsm', 'Mail', 'Budget', 'Remarques'];
+        return ['Nom', 'Etat', 'Date rencontre', 'Budget', 'Rapport'];
     }
 
     /**
@@ -34,6 +32,7 @@ class SheetExcel_investisseur extends SheetExcel{
      * @return string 
      */
     public function getDocTitle() {
-        return 'Liste des investisseurs';
+        return 'Liste des rencontres avec un investisseur';
     }
+    
 }

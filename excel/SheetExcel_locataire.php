@@ -25,7 +25,7 @@ class SheetExcel_locataire extends SheetExcel{
      * @return array[string]
      */
     public function getNameColumns() {
-        return ['nom', 'Etat', 'Téléphone', 'Gsm', 'Mail', 'Budget', 'Remarques'];
+        return ['Nom', 'Etat', 'Téléphone', 'Gsm', 'Mail', 'Budget', 'Remarques'];
     }
 
     /**
