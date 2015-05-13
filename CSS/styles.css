@@ -131,6 +131,15 @@ h2
     border-radius: 4px;
 }
 
+#generate_excel {
+    text-decoration: underline;
+    color: green;
+}
+
+#generate_excel:hover {
+    font-style: italic;
+    cursor: pointer;
+}
 /* Ce qui suit concerne le menu de l'Intranet */
 header .menuIntranet{
   clear:both;

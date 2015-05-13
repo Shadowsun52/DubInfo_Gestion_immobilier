@@ -326,6 +326,10 @@ function getParamsUrl() {
 initFilter();
 
 $("#generate_excel").click(function () {
+    //on affiche l'ajax-loader
+    $("#doc_excel").append('<img src="./images/ajax-loader.gif" alt="ajax loader"/>');
+    
+    //récupération des données
     url_param = getParamsUrl();
     var data = Array();
     $.each(itemList.visibleItems, function(idx, cont)
@@ -333,6 +337,7 @@ $("#generate_excel").click(function () {
         data.push(cont.values()); 
     });
     
+    //appel de la génération du document excel via AJAX
     $.ajax({
         type: 'post',
         url: 'controller/excel_ajax.php',
@@ -340,15 +345,20 @@ $("#generate_excel").click(function () {
         dataType: 'json',
         success: function(data)
         {
+            $("#doc_excel").empty();
             if(data.success) {
-                alert(data.link);
+                $("#doc_excel").append('<a href="' + data.link + '">\n\
+                    <img src="./images/excel.png" alt="lien excel"/></a>');
+                alert("Fichier excel générer avec succès");
             }
             else {
-                alert(data.erreur)
+                alert(data.erreur);
             }
         },
         error: function(data)
         {
+            $("#doc_excel").html()
+            $("#doc_excel").empty();
             alert("Erreur avec la communication serveur.");
         } 
     });
