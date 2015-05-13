@@ -6,6 +6,10 @@ namespace DubInfo_gestion_immobilier\excel;
  * @author Jenicot Alexandre
  */
 class SheetExcel_locataire extends SheetExcel{
+    
+    /**
+     * Méthode pour définir la taille des colonnes
+     */
     protected function setColWidth() {
         $this->getSheet()->getColumnDimension('A')->setWidth(20);
         $this->getSheet()->getColumnDimension('B')->setWidth(20);

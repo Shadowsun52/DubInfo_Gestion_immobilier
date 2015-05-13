@@ -79,7 +79,7 @@ class DocumentExcel {
      */
     protected function createSheetExcel($data){
         $name_classe = __NAMESPACE__ . "\SheetExcel_" . $this->getTypeItem();
-        
+
         return new $name_classe($data);
     }
     
