@@ -74,10 +74,10 @@ class DocumentExcel {
      * Méthode Qui créer l'object php d'une feuille excel correspondant au type
      * de l'item
      * @param type $data Données à lié à la sheetExcel
-     * @return mixed
+     * @return SheetExcel
      */
     protected function createSheetExcel($data){
-        $name_classe = "SheetExcel" . $this->getTypeItem();
+        $name_classe = "SheetExcel_" . $this->getTypeItem();
         
         return new $name_classe($data);
     }

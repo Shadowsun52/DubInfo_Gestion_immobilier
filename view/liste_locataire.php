@@ -65,5 +65,6 @@
         ?>
         </tbody>
     </table>
+    <button id="generate_excel">Générer excel</button>
 </div>
 <script src="./js/liste.js"></script>

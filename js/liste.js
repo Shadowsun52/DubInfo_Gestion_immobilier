@@ -324,3 +324,27 @@ function getParamsUrl() {
 };
 
 initFilter();
+
+$("#generate_excel").click(function () {
+    url_param = getParamsUrl();
+    var data = Array();
+    $.each(itemList.visibleItems, function(idx, cont)
+    {
+        data.push(cont.values()); 
+    });
+    
+    $.ajax({
+        type: 'post',
+        url: 'controller/excel_ajax.php',
+        data: "item=" + url_param['item'] + "&data=" + JSON.stringify(data),
+        dataType: 'json',
+        success: function(data)
+        {
+            alert("ok");
+        },
+        error: function(data)
+        {
+            alert("Erreur avec la communication serveur.");
+        } 
+    });
+});
