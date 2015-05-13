@@ -11,6 +11,6 @@
     session_start();
     
     //ajout des librairies
-//    require_once 'phpExcel/PHPExcel.php';
+    require_once './librairies/phpExcel/PHPExcel.php';
     require_once './librairies/Zebra_Form-2.9.5/Zebra_Form.php';
     
