@@ -11,14 +11,6 @@ class SheetExcel_locataire extends SheetExcel{
         
     }
 
-    protected function writeDataTable() {
-        
-    }
-
-    protected function writeHeaderTable() {
-        
-    }
-
     /**
      * 
      * @return string Nom de la feuille excel
@@ -32,10 +24,18 @@ class SheetExcel_locataire extends SheetExcel{
      */
     protected function writeTitle() {
         $today = new DateTime();
-        $title = "Liste des locataires générée le " . $today->format('d/m/Y');
+        $title = "Liste des locataires (générée le " . $today->format('d/m/Y'). ")";
         $this->setStyleTitle();
         $this->getSheet()->setCellValue(
                 'A'.$this->moveCurrentLine(self::SPACE_WITH_TITLE),$title);
+    }
+
+    /**
+     * Fonction qui retourne le nom des colonnes de la table
+     * @return array[string]
+     */
+    public function getNameColumns() {
+        return ['nom', 'Etat', 'Téléphone', 'Gsm', 'Mail', 'Budget', 'Remarques'];
     }
 
 }

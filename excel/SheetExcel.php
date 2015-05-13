@@ -9,59 +9,27 @@ abstract class SheetExcel {
     const FIRST_LINE = 1;
     const SPACE_WITH_TITLE = 2;
     const HEIGHT_TITLE_QUESTION = 30;
+    const FIRST_COL = 'A';
    
 //<editor-fold defaultstate="collapsed" desc="list style">
     protected $STYLE_DEFAULT = array(
                         'font' => array(
-                            'size' => 10,
+                            'size' => 12,
                             'name' => 'Verdana'
+                        ),
+                        'alignment' => array (
+                            'wrap' => true
                         )
                     );
     protected $STYLE_TITLE= array(
                         'font'  => array(
                             'bold'  => true,
-                            'size'  => 9,
+                            'size'  => 15,
                             'underline' => 'single'
                         )
                     );
     
-    protected $STYLE_INFO = array(
-                        'font'  => array(
-                            'bold'  => true
-                        ),
-                        'alignment' =>array(
-                            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
-                        )
-                    );
-    
-    protected $STYLE_QUESTION_TITLE = array(
-                        'alignment' =>array(
-                            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER,
-                        )
-                    );
-    
-    protected $STYLE_PROPOSITION = array(
-                            'borders'  => array(
-                                'allborders' => array(
-                                    'style' => \PHPExcel_style_Border::BORDER_THIN
-                                )
-                            ),
-                            'alignment' => array(
-                                'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER
-                            )
-                        );
-    
-    protected $STYLE_QUESTIONNEMENT = array(
-                            'borders' => array(
-                                'allborders' => array(
-                                    'style' => \PHPExcel_Style_Border::BORDER_THIN
-                                )
-                            ),
-                            'alignment' => array(
-                                'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
-                            )
-                        );
-    protected $STYLE_RESULT = array(
+    protected $STYLE_HEADER_COLUMN = array(
                             'borders' => array(
                                 'allborders' => array(
                                     'style' => \PHPExcel_Style_Border::BORDER_THIN
@@ -71,9 +39,18 @@ abstract class SheetExcel {
                                 'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
                                 'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
                             ),
-                            'font' => array(
-                                'bold' => true,
-                                'size' => 14
+                            'font' => array (
+                                'bold' => true
+                            )
+                        );
+    protected $STYLE_DATA = array(
+                            'borders' => array(
+                                'allborders' => array(
+                                    'style' => \PHPExcel_Style_Border::BORDER_THIN
+                                )
+                            ),
+                            'alignment' => array(
+                                'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
                             )
                         );
 //</editor-fold>
@@ -131,12 +108,28 @@ abstract class SheetExcel {
     /**
      * Méthode qui écrit les entêtes des tableaux
      */
-    protected abstract function writeHeaderTable();
+    protected function writeHeaderTable() {
+        $col = self::FIRST_COL;
+        foreach ($this->getNameColumns() as $name_column) {
+            $this->getSheet()->setCellValue(($col++). $this->getCurrentLine(),
+                    $name_column);   
+        }
+        $this->setStyleHeaderTable(chr(ord($col) - 1));
+    }
     
     /**
      * Méthode qui écrit les données du tableau dans le tableau
      */
-    protected abstract function writeDataTable();
+    protected function writeDataTable() {
+        foreach ($this->getData() as $item) {
+            $col = self::FIRST_COL;
+            foreach ($item as $key => $value) {
+                $this->getSheet()->setCellValue(($col++). $this->getCurrentLine(),
+                ((!strpos($key, 'num'))? ' ' : '') . $value);
+            }
+            $this->setStyleLineTable(chr(ord($col) - 1));
+        }
+    }
     
     /**
      * Méthode qui vérrouille la feuille excel
@@ -158,24 +151,34 @@ abstract class SheetExcel {
     
     /**
      * Méthode pour ajouter les styles à l'entête du tableau
+     * @param string $end_col La derniere colonne avec des données
      */
-    protected function setStyleHeaderTable() {
-        //à coder
+    protected function setStyleHeaderTable($end_col) {
+        $this->getSheet()->getStyle(self::FIRST_COL. $this->getCurrentLine() 
+                . ':' . $end_col . $this->moveCurrentLine())
+                ->applyFromArray($this->STYLE_HEADER_COLUMN);
     }
     
     /**
      * Méthode pour ajouter les styles à une ligne du tableau
+     * @param string $end_col La derniere colonne avec des données
      */
-    protected function setStyleLineTable() {
-        //à coder
+    protected function setStyleLineTable($end_col) {
+        $this->getSheet()->getStyle(self::FIRST_COL. $this->getCurrentLine() 
+                . ':' . $end_col 
+                . $this->moveCurrentLine())->applyFromArray($this->STYLE_DATA);
     }
     
     /**
      * Méthode pour ajouter les styles au titre
      */
     protected function setStyleTitle() {
+        $this->getSheet()->mergeCells('A' . $this->getCurrentLine() . ':G' 
+                . $this->getCurrentLine());
         $this->getSheet()->getStyle('A'. $this->getCurrentLine())
                 ->applyFromArray($this->STYLE_TITLE);
+        $this->getSheet()->getRowDimension($this->getCurrentLine())
+                     ->setRowHeight(self::HEIGHT_TITLE_QUESTION);
     }
 //</editor-fold>
     
@@ -255,5 +258,11 @@ abstract class SheetExcel {
      * @return string Nom de la feuille excel
      */
     public abstract function getSheetName();
+    
+    /**
+     * Fonction qui retourne le nom des colonnes de la table
+     * @return array[string]
+     */
+    public abstract function getNameColumns();
 //</editor-fold>
 }
