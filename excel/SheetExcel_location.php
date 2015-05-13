@@ -11,14 +11,15 @@ class SheetExcel_location extends SheetExcel{
      * Méthode pour définir la taille des colonnes
      */
     protected function setColWidth() {
-        $this->getSheet()->getColumnDimension('A')->setWidth(20);
-        $this->getSheet()->getColumnDimension('B')->setWidth(30);
-        $this->getSheet()->getColumnDimension('C')->setWidth(12);
-        $this->getSheet()->getColumnDimension('D')->setWidth(10);
-        $this->getSheet()->getColumnDimension('E')->setWidth(10);
-        $this->getSheet()->getColumnDimension('F')->setWidth(10);
-        $this->getSheet()->getColumnDimension('G')->setWidth(15);
-        $this->getSheet()->getColumnDimension('H')->setWidth(15);
+        $col = self::FIRST_COL;
+        $this->getSheet()->getColumnDimension($col++)->setWidth(20);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(30);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(12);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(10);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(10);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(10);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(15);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(15);
     }
 
     /**

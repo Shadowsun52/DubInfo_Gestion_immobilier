@@ -11,13 +11,14 @@ class SheetExcel_locataire extends SheetExcel{
      * Méthode pour définir la taille des colonnes
      */
     protected function setColWidth() {
-        $this->getSheet()->getColumnDimension('A')->setWidth(20);
-        $this->getSheet()->getColumnDimension('B')->setWidth(20);
-        $this->getSheet()->getColumnDimension('C')->setWidth(15);
-        $this->getSheet()->getColumnDimension('D')->setWidth(15);
-        $this->getSheet()->getColumnDimension('E')->setWidth(35);
-        $this->getSheet()->getColumnDimension('F')->setWidth(10);
-        $this->getSheet()->getColumnDimension('G')->setWidth(45);
+        $col = self::FIRST_COL;
+        $this->getSheet()->getColumnDimension($col++)->setWidth(20);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(20);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(15);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(15);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(35);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(10);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(45);
     }
 
     /**

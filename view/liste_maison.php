@@ -124,9 +124,9 @@
                 <th class="sort" data-sort="cout_totale">Coût total</th>
                 <th class="sort" data-sort="chambres">Nbre chambres</th>
                 <th class="sort" data-sort="sdb">Nbre Sdb</th>
-                <th class="sort" data-sort="rendement">rendement</th>
-                <th class="sort" data-sort="localisation">localisation</th>
-                <th class="sort" data-sort="localisation_indice">localisation indice</th>
+                <th class="sort" data-sort="rendement">Rendement</th>
+                <th class="sort" data-sort="localisation">Localisation</th>
+                <th class="sort" data-sort="localisation_indice">Localisation indice</th>
                 <th class="sort" data-sort="qualite">Qualité</th>
                 <th class="sort" data-sort="qualite_indice">Qualité indice</th>
                 <th class="sort" data-sort="remarques">Remarques</th>
@@ -189,5 +189,7 @@
         ?>
         </tbody>
     </table>
+    <a id="generate_excel">Générer excel</a>
+    <div id="doc_excel"></div>
 </div>
 <script src="./js/liste.js"></script>

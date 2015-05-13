@@ -12,11 +12,12 @@ class SheetExcel_visiteMaisonInvestisseur extends SheetExcel{
      * Méthode pour définir la taille des colonnes
      */
     protected function setColWidth() {
-        $this->getSheet()->getColumnDimension('A')->setWidth(20);
-        $this->getSheet()->getColumnDimension('B')->setWidth(20);
-        $this->getSheet()->getColumnDimension('C')->setWidth(30);
-        $this->getSheet()->getColumnDimension('D')->setWidth(20);
-        $this->getSheet()->getColumnDimension('E')->setWidth(45);
+        $col = self::FIRST_COL;
+        $this->getSheet()->getColumnDimension($col++)->setWidth(20);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(20);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(30);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(20);
+        $this->getSheet()->getColumnDimension($col++)->setWidth(45);
     }
 
     /**
