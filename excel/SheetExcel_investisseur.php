@@ -1,11 +1,12 @@
 <?php
 namespace DubInfo_gestion_immobilier\excel;
+
 /**
- * Description of SheetExcel_locataire
+ * Description of SheetExcel_investisseur
  *
  * @author Jenicot Alexandre
  */
-class SheetExcel_locataire extends SheetExcel{
+class SheetExcel_investisseur extends SheetExcel{
     
     /**
      * Méthode pour définir la taille des colonnes
@@ -33,7 +34,6 @@ class SheetExcel_locataire extends SheetExcel{
      * @return string 
      */
     public function getDocTitle() {
-        return 'Liste des locataires';
+        return 'Liste des investisseurs';
     }
-
 }
