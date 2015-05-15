@@ -22,6 +22,7 @@
     <!-- Fin de la partie "Menu" -->
 
     <?php
+    require './view/connexion.php';
     if(!isset($_SESSION['login_crm'])) {
     ?>
         <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
@@ -57,6 +58,17 @@
 
         <div class="logo"><img src="images/logo.png" alt=""> </div>
         <h1>CRM</h1>
+    <?php
+        if(isset($_SESSION['login_crm'])) {
+    ?>
+        <form id="form_deco" method="post">
+            <label>Vous êtes connecté en tant que <?php echo $_SESSION['login_crm'] ?> </label>
+            <input type="hidden" name="deconnexion" value="true"/>
+            <input id="bnt_deco" type="submit" value="Déconnexion"/>
+        </form>
+    <?php
+        }
+    ?>
         <nav class="menuIntranet">
             <ul id="main-menu"class="sm sm-blue ">
                 <li><a href="index.php">Accueil</a></li>

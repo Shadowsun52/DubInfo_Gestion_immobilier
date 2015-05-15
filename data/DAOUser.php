@@ -17,8 +17,27 @@ class DAOUser extends AbstractDAO{
         throw new Exception("Action pas implémentée");
     }
 
-    public function read($id) {
-        throw new Exception("Action pas implémentée");
+    /**
+     * Fonction qui lit un user en fonction de sont login
+     * @param type $login
+     * @return User 
+     * @throws Exception
+     */
+    public function read($login) {
+        $sql = "SELECT id, password FROM users_table WHERE login = :login";
+        $request = $this->getConnection()->prepare($sql);
+        $request->execute(array(":login" => $login));
+        $result = $request->fetch();
+
+        if(!$result) {
+            return false;
+        }
+
+        $user = new User($result['id']);
+        $user->setLogin($login);
+        $user->setPassword($result['password']);
+
+        return $user;
     }
 
     /**
