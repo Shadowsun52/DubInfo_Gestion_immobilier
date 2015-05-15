@@ -22,22 +22,30 @@
     <!-- Fin de la partie "Menu" -->
 
     <?php
-    if(isset($_GET['action'])) {
-        if($_GET['action'] === 'gestion') {
-            ?>
-            <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
-            <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
-            <script src="js/crud_ajax.js"></script>
-            <script src="js/adresse_list.js"></script>
-            <script src="js/visite.js"></script>
-            <?php
-        }
-        elseif ($_GET['action'] === 'liste') {
-            ?>
-            <link rel="stylesheet" href="librairies/Zebra_date_picker/public/css/default.css">
-            <script src="./librairies/list_js/list.js"></script>
-            <script src="librairies/Zebra_date_picker/public/javascript/zebra_datepicker.js"></script>
-            <?php
+    if(!isset($_SESSION['login_crm'])) {
+    ?>
+        <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
+        <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
+    <?php
+    }
+    else {
+        if(isset($_GET['action'])) {
+            if($_GET['action'] === 'gestion') {
+                ?>
+                <link rel="stylesheet" href="librairies/Zebra_Form-2.9.5/public/css/zebra_form.css">
+                <script src="librairies/Zebra_Form-2.9.5/public/javascript/zebra_form.js"></script>
+                <script src="js/crud_ajax.js"></script>
+                <script src="js/adresse_list.js"></script>
+                <script src="js/visite.js"></script>
+                <?php
+            }
+            elseif ($_GET['action'] === 'liste') {
+                ?>
+                <link rel="stylesheet" href="librairies/Zebra_date_picker/public/css/default.css">
+                <script src="./librairies/list_js/list.js"></script>
+                <script src="librairies/Zebra_date_picker/public/javascript/zebra_datepicker.js"></script>
+                <?php
+            }
         }
     }
     ?>
