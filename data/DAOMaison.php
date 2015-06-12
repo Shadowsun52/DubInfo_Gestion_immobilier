@@ -280,14 +280,7 @@ class DAOMaison extends AbstractDAO{
                 //ajout des nouvelles chambres
                 $this->createChambres($maison);
                 
-                //suppression de la version actuelle de la maison dans maison_table
-                $this->deleteMaisonLocation($maison->getIdProposition());
-                
-                /*
-                 * ajout de la nouvelle version, si dans le bon état, de la 
-                 * maison dans maisons_table
-                 */
-                $this->addMaisonLocation($maison);
+                $this->updateMaisonLocation($maison);
             }
             else {
                 throw new PDOException('Erreur durant l\'update');
@@ -435,14 +428,11 @@ class DAOMaison extends AbstractDAO{
     
 //<editor-fold defaultstate="collapsed" desc="Gestion Maison location">
     /**
-     * Méthode qui permet d'ajouter une maison dans la table maisons_table si
-     * sont état est location
+     * Méthode qui permet d'ajouter une maison dans la table maisons_table
      * @param Maison $maison
      */
     protected  function addMaisonLocation($maison) {
-        if($maison->getEtat()->getId() == self::ETAT_LOCATION) {
-            $this->getDaoMaisonLocation()->add($maison);
-        }
+        $this->getDaoMaisonLocation()->add($maison);
     }
     
     /**
@@ -452,6 +442,10 @@ class DAOMaison extends AbstractDAO{
      */
     protected function deleteMaisonLocation($id) {
         $this->getDaoMaisonLocation()->delete($id);
+    }
+    
+    protected function updateMaisonLocation($maison) {
+        $this->getDaoMaisonLocation()->update($maison);
     }
 //</editor-fold>
     

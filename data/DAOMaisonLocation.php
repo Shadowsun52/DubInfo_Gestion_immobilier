@@ -58,7 +58,7 @@ class DAOMaisonLocation extends AbstractDAO{
 
     /**
      * Méthode qui lit une maison prête à louer selon un identifiant donné pour 
-     * voir s'il existe
+     * voir si elle existe
      * @param int $id Identifiant de la maison dans la table propositions
      * @return boolean 
      * @throws PDOException

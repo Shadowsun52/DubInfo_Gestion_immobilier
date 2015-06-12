@@ -10,6 +10,7 @@
     use DubInfo_gestion_immobilier\business\CommuneCRUD;
     
     define('MAX_NB_CHAMBRES', 20);
+    define('MAX_NB_SDB', 20);
     //formulaire qui permet de gérer les maisons
     
     $form_maison = new Zebra_Form('form_maison');
@@ -145,16 +146,13 @@
     $chambres->add_options($nb_chambres, true);
     
     //salle de bain (sdb)
+    $nb_sdb[''] = '- Combien de chambres ? -';
+    for ($i=1; $i <= MAX_NB_SDB; $i++) {
+        $nb_sdb[$i] = $i;
+    }
     $form_maison->add("label","label_sdb","select_sdb","Nombre de salle de bain");
     $sdb = $form_maison->add('select', 'select_sdb');
-    $sdb->add_options(array( 
-    ''  => '- Combien de salle de bain ? -',
-    '1' => '1',
-    '2' => '2',
-    '3' => '3',
-    '4' => '4',
-    '5' => '5'
-    ), true);
+    $sdb->add_options($nb_sdb, true);
     
     $form_maison->add('label','label_rendement', 'rendement', 'Rendement');
     $rendement = $form_maison->add('text', 'rendement', null, array(

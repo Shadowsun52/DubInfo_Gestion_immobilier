@@ -434,6 +434,7 @@ function feedMaisonForm(data) {
     $("#prix").val(data.prix);
     $("#prix_conseille").val(data.prix_conseille);
     $("#superficie_habitable").val(data.superficie);
+    $("#superficie_habitable").change();
     $("#select_chambres").val(data.nb_chambres);
     $("#select_sdb").val(data.nb_sdb);
     $("#rendement").val(data.rendement);

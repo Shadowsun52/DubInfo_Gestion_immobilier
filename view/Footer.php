@@ -5,7 +5,6 @@
 <?php
     if(isset($_GET['action'])) {
         if($_GET['action'] === 'gestion') {
-            ?>
 ?>
     <script type="text/javascript">
         addAjaxListener("btnsubmit");
