@@ -28,7 +28,7 @@ function initValueNames(item_name) {
             return ['nom', 'etat', 'num_tel', 'num_gsm', 'mail', 'budget', 'remarques'];
         case 'location':
             return ['locataire', 'maison', 'chambre', 'bail', 'etat_lieu', 'charte',
-                'garantie_totale', 'garantie_payee'];
+                'garantie_totale', 'garantie_payee', 'date_debut', 'date_fin'];
         case 'rencontreInvestisseur':
             return ['nom', 'etat', 'date', 'budget', 'rapport'];
         case 'paiementLoyer':
@@ -76,6 +76,9 @@ function initDatePicker(item_name) {
         case 'projet' :
             addDatePicker(item_name, "compromis");
             addDatePicker(item_name, "acte");
+        case 'location' : 
+            addDatePicker(item_name, "date_debut");
+            addDatePicker(item_name, "date_fin");
             break;
     }
 }
@@ -138,7 +141,9 @@ function checkFilter(item_name, values) {
                     && filterYesNo("bail", values) 
                     && filterYesNo("charte", values)
                     && filterYesNo("etat_lieu", values)
-                    && filterAllIsPaid("garantie_payee", "garantie_totale", values);
+                    && filterAllIsPaid("garantie_payee", "garantie_totale", values)
+                    && filterBorneDate("date_debut", values)
+                    && filterBorneDate("date_fin", values);
         case 'rencontreInvestisseur' :
             return filterSelect("etat", values) && filterBorne("budget", values) 
                     && filterBorneDate("date", values);

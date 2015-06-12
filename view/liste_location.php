@@ -58,6 +58,24 @@
                        class="filter_option"/>
             </p> 
         </div>
+        <div>
+            <p><label>Date début: </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_date_debut" type="text" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_date_debut" type="text" class="filter_option"/>
+            </p> 
+        </div>
+        <div>
+            <p><label>Date fin: </label></p>
+            <p>
+                <span class="low_size">min: </span>
+                <input id="min_date_fin" type="text" class="filter_option"/>
+                <span class="low_size">max: </span> 
+                <input id="max_date_fin" type="text" class="filter_option"/>
+            </p> 
+        </div>
     </div>
     <table id="locataire-list">
         <thead>
@@ -70,6 +88,8 @@
                 <th class="sort" data-sort="charte">Charte</th>
                 <th class="sort" data-sort="garantie_totale">Garantie à payer</th>
                 <th class="sort" data-sort="garantie_payee">Garantie payée</th>
+                <th class="sort" data-sort="date_debut">Date début</th>
+                <th class="sort" data-sort="date_fin">Date fin</th>
             </tr>
         </thead>
     
@@ -98,6 +118,12 @@
                         . $location->getGarantieLocativeTotal() . '</td>';
                 echo '<td class="garantie_payee center">' 
                         . $location->getGarantieLocativePayee() . '</td>';
+                echo '<td class="date_debut center">' 
+                        . ((is_null($location->getDateDebut()))? ' '
+                        : $location->getDateDebut()->format('Y/m/d')) . '</td>';
+                echo '<td class="date_fin center">' 
+                        . ((is_null($location->getDateFin()))? ' '
+                        : $location->getDateFin()->format('Y/m/d')) . '</td>';
                 echo '</tr>';
             }
         ?>
