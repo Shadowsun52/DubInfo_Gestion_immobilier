@@ -42,6 +42,12 @@
                'required' => array('error', 'Titre requis!'), 
             ));
     
+    $form_maison->add('label','label_titre_site', 'titre_site', 
+            'Titre à afficher sur le site');
+    $titre_site = $form_maison->add('text', 'titre_site', null, array(
+                                    'maxlength' => Maison::MAX_SIZE_TITRE
+                                ));
+    
     $form_maison->add('label','label_rue', 'rue', 'Rue');
     $rue = $form_maison->add('text', 'rue', null, array(
                                     'maxlength' => Adresse::MAX_SIZE_RUE

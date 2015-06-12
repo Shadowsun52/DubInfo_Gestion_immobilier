@@ -44,19 +44,21 @@ class DAOMaison extends AbstractDAO{
      */
     public function add($maison) {
         try {
-            $sql = "INSERT INTO propositions_table (titre_fr, date_creation, 
-                    commentaire, adresse_rue, adresse_numero, commune_id, prix,
-                    prix_conseille, superficie_habitable, nb_salle_de_bain, 
-                    cout_travaux, raison_abandon, reference, rendement, show_on_web,
-                    localisation, localisation_indice, qualite, qualite_indice, 
-                    dossier_realise, etat_id) VALUES (:titre, :date_creation, 
-                    :commentaire, :adresse_rue, :adresse_numero, :commune, :prix, 
+            $sql = "INSERT INTO propositions_table (titre_crm, titre_fr, 
+                    date_creation, commentaire, adresse_rue, adresse_numero, 
+                    commune_id, prix, prix_conseille, superficie_habitable, 
+                    nb_salle_de_bain, cout_travaux, raison_abandon, reference, 
+                    rendement, show_on_web, localisation, localisation_indice, 
+                    qualite, qualite_indice, dossier_realise, etat_id) 
+                    VALUES (:titre_crm, :titre, :date_creation, :commentaire, 
+                    :adresse_rue, :adresse_numero, :commune, :prix, 
                     :prix_conseille, :superficie, :nb_sdb, :cout_travaux, 
                     :raison_abandon, :reference, :rendement, :show, :localisation, 
                     :localisation_indice, :qualite, :qualite_indice, :dossier, :etat)";
             $request = $this->getConnection()->prepare($sql);
             $date = new \DateTime();
             $result = $request->execute(array(
+                ':titre_crm' => $maison->getTitre(Maison::TITRE_CRM),
                 ':titre' => $maison->getTitre(Maison::LANGUAGE_FR),
                 ':date_creation' => $date->getTimestamp(),
                 ':commentaire' => $maison->getCommentaire(),
@@ -167,6 +169,7 @@ class DAOMaison extends AbstractDAO{
                     $result['qualite'], $result['qualite_indice'], $result['commentaire'], 
                     $result['raison_abandon'], $result['show_on_web'], $etat, 
                     $commune, $adresse, $date);
+            $maison->addTitre(Maison::TITRE_CRM, $result['titre_crm']);
             $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
             $maison->addSource($source);
             $maison->setContacts($this->readContactsMaison($id));
@@ -193,7 +196,7 @@ class DAOMaison extends AbstractDAO{
      */
     public function readList($filter = NULL) {
         try{
-            $sql = "SELECT pt.id, pt.titre_fr, cbt.name, e.id as 'id_etat', e.libelle
+            $sql = "SELECT pt.id, pt.titre_crm, cbt.name, e.id as 'id_etat', e.libelle
                     FROM propositions_table pt LEFT JOIN etat e ON pt.etat_id = e.id
                     LEFT JOIN communes_bruxelles_table cbt ON pt.commune_id = cbt.id";
             
@@ -208,7 +211,7 @@ class DAOMaison extends AbstractDAO{
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
             {
                 $maison = new Maison($result['id']);
-                $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
+                $maison->addTitre(Maison::TITRE_CRM, $result['titre_crm']);
                 $maison->setCommune(new Commune(null, $result['name']));
                 $maison->setEtat(new Etat($result['id_etat'], $result['libelle']));
                 $maisons[] = $maison;
@@ -227,8 +230,8 @@ class DAOMaison extends AbstractDAO{
      */
     public function update($maison) {
         try {
-            $sql = "UPDATE propositions_table SET titre_fr = :titre, 
-                    commentaire = :commentaire, adresse_rue = :rue, 
+            $sql = "UPDATE propositions_table SET titre_crm = :titre_crm, 
+                    titre_fr = :titre, commentaire = :commentaire, adresse_rue = :rue, 
                     adresse_numero = :numero, commune_id = :commune, prix = :prix, 
                     prix_conseille = :prix_conseille, superficie_habitable = :superficie, 
                     nb_salle_de_bain = :nb_sdb, cout_travaux = :cout_travaux, 
@@ -239,6 +242,7 @@ class DAOMaison extends AbstractDAO{
                     etat_id = :etat WHERE id = :id";
             $request = $this->getConnection()->prepare($sql);            
             $result = $request->execute(array(
+                ':titre_crm' => $maison->getTitre(Maison::TITRE_CRM),
                 ':titre' => $maison->getTitre(Maison::LANGUAGE_FR),
                 ':commentaire' => $maison->getCommentaire(),
                 ':rue' => $maison->getAdresse()->getRue(),
@@ -327,6 +331,7 @@ class DAOMaison extends AbstractDAO{
                         $result['qualite'], $result['qualite_indice'], $result['commentaire'], 
                         $result['raison_abandon'], $result['show_on_web'], $etat, 
                         $commune, $adresse, $date);
+                $maison->addTitre(Maison::TITRE_CRM, $result['titre_crm']);
                 $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
                 $maison->setContacts($this->readContactsMaison($result['id']));
 

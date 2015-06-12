@@ -42,7 +42,8 @@ class MaisonCRUD extends AbstractBusiness{
                 $data['localisation'], $data['select_localisation_indice'], 
                 $data['qualite'], $data['select_qualite_indice'], $data['remarque'], 
                 $data['raison_abandon'], $data['show'], $etat, $commune, $adresse);
-        $maison->addTitre(Maison::LANGUAGE_FR, $data['titre']);
+        $maison->addTitre(Maison::TITRE_CRM, $data['titre']);
+        $maison->addTitre(Maison::LANGUAGE_FR, $data['titre_site']);
         $maison->addSource($source);
         $maison->setContacts($contacts);
         $maison->setChambres($this->createChambres($data));

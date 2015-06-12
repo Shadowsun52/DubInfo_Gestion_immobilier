@@ -23,6 +23,7 @@ class Maison implements \JsonSerializable{
     const LANGUAGE_FR = "french";
     const LANGUAGE_NE = "dutch";
     const LANGUAGE_EN = "english";
+    const TITRE_CRM = "crm";
     
     /**
      *
@@ -346,7 +347,7 @@ class Maison implements \JsonSerializable{
     public function setTitres($titres) {
         if($titres != NULL) {
             foreach ($titres as $language => $titre) {
-                if($this->languageExist($language) 
+                if($this->verifKey($language) 
                         && strlen($titre) > self::MAX_SIZE_TITRE) {
                     throw new StringAttributeTooLong('titres', __CLASS__);
                 }
@@ -362,7 +363,7 @@ class Maison implements \JsonSerializable{
      * @throws KeyDontExistException
      */
     public function getTitre($language) {
-        if($this->languageExist($language) && isset($this->_titres[$language])) {
+        if($this->verifKey($language) && isset($this->_titres[$language])) {
             return $this->_titres[$language];
         }
         else {
@@ -378,10 +379,24 @@ class Maison implements \JsonSerializable{
      * @throws BadTypeException
      */
     public function addTitre($language, $titre) {
-        if($this->languageExist($language) && strlen($titre) > self::MAX_SIZE_TITRE) {
+        if($this->verifKey($language) && strlen($titre) > self::MAX_SIZE_TITRE) {
             throw new StringAttributeTooLong('titre', __CLASS__);
         }
         $this->_titres[$language] = CheckTyper::isString($titre, 'titre', __CLASS__);
+    }
+    
+    /**
+     * Verifie que la clé existe pour les titres si oui retourne true. 
+     * Sinon retour une erreur du type KeyDontExistException
+     * @param string $language
+     * @return boolean
+     * @throws KeyDontExistException
+     */
+    protected function verifKey($language) {
+        //on regarde si c'est le titre CRM ou une langue gérer
+        if($language === self::TITRE_CRM || $this->languageExist($language)) {
+            return true;
+        }
     }
     
     /**
@@ -1210,7 +1225,8 @@ class Maison implements \JsonSerializable{
         return [
             'id' => $this->getIdProposition(),
             'id_maison' => $this->getIdMaison(),
-            'titre' => $this->getTitre(self::LANGUAGE_FR),
+            'titre' => $this->getTitre(self::TITRE_CRM),
+            'titre_site' => $this->getTitre(self::LANGUAGE_FR),
             'date_creation' => $this->getStringOfDate($this->getDateCreation()),
             'adresse' => $this->getAdresse(),
             'commune' => $this->getCommune(),
@@ -1251,7 +1267,7 @@ class Maison implements \JsonSerializable{
     }
     
     public function toString() {
-        return $this->getTitre(self::LANGUAGE_FR) . ' ' 
+        return $this->getTitre(self::TITRE_CRM) . ' ' 
                 . $this->getCommune()->getLibelle() . ' (' 
                 . $this->getEtat()->getLibelle() .')';
     }
