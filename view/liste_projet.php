@@ -100,9 +100,9 @@
                 echo '<td class="maison">' . $projet->getMaison()
                         ->getTitre(Maison::LANGUAGE_FR) . '</td>';
                 echo '<td class="compromis center">' 
-                    . $projet->getDateSignatureCompromis()->format('Y/m/d') . '</td>';
+                    . ((is_null($projet->getDateSignatureCompromis()))? ' ': $projet->getDateSignatureCompromis()->format('Y/m/d')) . '</td>';
                 echo '<td class="acte center">' 
-                    . $projet->getDateSignatureActe()->format('Y/m/d') . '</td>';
+                    . ((is_null($projet->getDateSignatureActe()))? ' ': $projet->getDateSignatureActe()->format('Y/m/d')) . '</td>';
                 echo '<td class="plan_metre center">' 
                         . (($projet->getPlanMetreFait()) ? 'Oui' : 'Non') . '</td>';
                 echo '<td class="devis center">' 
