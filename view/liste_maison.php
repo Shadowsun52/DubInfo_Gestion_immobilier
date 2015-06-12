@@ -3,7 +3,7 @@
     use DubInfo_gestion_immobilier\business\CommuneCRUD;
     use DubInfo_gestion_immobilier\model\Maison;
 ?>
-<h2>Liste des visites de maison par un investisseur</h2>
+<h2>Liste des maisons</h2>
 <div id="table_of_item">
     <div id="filter">
         <div>
@@ -15,9 +15,10 @@
             <p>
                 <select id="select_etat" class="filter_option">
                     <option value="">- Filtrer les états -</option>
-                    <option value="Potentiel">Potentiel</option>
-                    <option value="Actif">Actif</option>
-                    <option value="Propriétaire">Propriétaire</option>
+                    <option value="Retenu">A suivre</option>
+                    <option value="A suivre">Actif</option>
+                    <option value="Projet">Projet</option>
+                    <option value="Location">Location</option>
                     <option value="Abandonné">Abandonné</option>
                 </select>
             </p>

@@ -2,7 +2,7 @@
     use DubInfo_gestion_immobilier\business\ChambreCRUD;
     use DubInfo_gestion_immobilier\model\Maison;
 ?>
-<h2>Liste des Locations</h2>
+<h2>Liste des chambres</h2>
 <div id="table_of_item">
     <div id="filter">
         <div>

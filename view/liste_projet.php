@@ -2,7 +2,7 @@
     use DubInfo_gestion_immobilier\business\ProjetCRUD;
     use DubInfo_gestion_immobilier\model\Maison;
 ?>
-<h2>Liste des visites de maison par un investisseur</h2>
+<h2>Liste des projets</h2>
 <div id="table_of_item">
     <div id="filter">
         <div>

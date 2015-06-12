@@ -406,6 +406,7 @@ function feedLocataireForm(data) {
     $("#select_source").val(data.sources[0].id);
     $("#budget").val(data.budget);
     $("#date_rentree").val(data.date_emmenagement);
+    $("#select_etat").val(data.etat.id);
     communes_preferees = new Array();
     data.communes_preferees.forEach(function(entry) {
         communes_preferees.push(entry.id);
