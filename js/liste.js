@@ -45,7 +45,7 @@ function initValueNames(item_name) {
                 'chambres', 'sdb', 'rendement', 'localisation', 
                 'localisation_indice', 'qualite', 'qualite_indice', 'remarques'];
         case 'chambre':
-            return ['maison', 'chambre', 'prix', 'charges', 'prix_charges',
+            return ['maison', 'etat', 'chambre', 'prix', 'charges', 'prix_charges',
                 'remarques'];
         default:
             return [];    
@@ -161,7 +161,8 @@ function checkFilter(item_name, values) {
                     && filterBorne("rendement", values) 
                     && filterBorne("prix_conseille", values);
         case 'chambre' :
-            return filterBorne("prix", values) && filterBorne("charges", values);
+            return filterSelect("etat", values) && filterBorne("prix", values) 
+                    && filterBorne("charges", values);
         default:
             return true;
     }

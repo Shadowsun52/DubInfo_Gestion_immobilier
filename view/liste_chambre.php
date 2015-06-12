@@ -10,6 +10,20 @@
             <p><input class="search filter_option"/></p>
         </div>
         <div>
+            <p><label>Etat : </label></p>
+            <p>
+                <select id="select_etat" class="filter_option">
+                    <option value="">- Filtrer les états -</option>
+                    <option value="Potentiel">Potentiel</option>
+                    <option value="Retenu">A suivre</option>
+                    <option value="A suivre">Actif</option>
+                    <option value="Projet">Projet</option>
+                    <option value="Location">Location</option>
+                    <option value="Abandonné">Abandonné</option>
+                </select>
+            </p>
+        </div>
+        <div>
             <p><label>Prix : </label></p>
             <p>
                 <span class="low_size">min: </span>
@@ -32,6 +46,7 @@
         <thead>
             <tr>
                 <th class="sort" data-sort="maison">Maison</th>
+                <th class="sort" data-sort="etat">Etat</th>
                 <th class="sort" data-sort="chambre">Chambre</th>
                 <th class="sort" data-sort="prix">Prix</th>
                 <th class="sort" data-sort="charges">Charges</th>
@@ -49,6 +64,8 @@
                 echo '<tr>';
                 echo '<td class="maison">' . $chambre->getMaison()
                         ->getTitre(Maison::LANGUAGE_FR) . '</td>';
+                echo '<td class="etat">' . $chambre->getMaison()->getEtat()
+                        ->getLibelle() . '</td>';
                 echo '<td class="chambre">N°' . $chambre->getNumero()
                         . (($chambre->getEtage() === NULL) ? '' :
                         ' (' . $chambre->getEtage(). ')') . '</td>';

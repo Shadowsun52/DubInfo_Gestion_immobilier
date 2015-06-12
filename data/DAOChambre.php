@@ -3,6 +3,7 @@ namespace DubInfo_gestion_immobilier\data;
 
 use DubInfo_gestion_immobilier\model\Chambre;
 use DubInfo_gestion_immobilier\model\Maison;
+use DubInfo_gestion_immobilier\model\Etat;
 use DateTime;
 /**
  * Description of DAOChambre
@@ -88,19 +89,22 @@ class DAOChambre extends AbstractDAO{
      */
     public function readAll() {
         try {
-            $sql = "SELECT ct.*, pt.titre_fr, pt.commentaire FROM chambres_table ct
+            $sql = "SELECT ct.*, pt.titre_fr, pt.commentaire, pt.etat_id, e.libelle
+                    FROM chambres_table ct
                     JOIN propositions_table pt ON ct.propositions_table_id = pt.id
+                    JOIN etat e ON pt.etat_id = e.id
                     ORDER BY pt.titre_fr, ct.numero";
             $request = $this->getConnection()->prepare($sql);
             $request->execute();
             
             foreach ($request->fetchAll(\PDO::FETCH_ASSOC) as $result)
             {
+                $etat = new Etat($result['etat_id'], $result['libelle']);
                 $maison = new Maison($result['propositions_table_id'], 
                         $result['maison_id']);
                 $maison->addTitre(Maison::LANGUAGE_FR, $result['titre_fr']);
                 $maison->setCommentaire($result['commentaire']);
-
+                $maison->setEtat($etat);
                 //création de la date disponible
                 $date = $this->readDate($result['date_disponibilite']);
                 

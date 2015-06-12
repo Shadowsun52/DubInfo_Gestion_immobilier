@@ -15,6 +15,7 @@
             <p>
                 <select id="select_etat" class="filter_option">
                     <option value="">- Filtrer les états -</option>
+                    <option value="Potentiel">Potentiel</option>
                     <option value="Retenu">A suivre</option>
                     <option value="A suivre">Actif</option>
                     <option value="Projet">Projet</option>
